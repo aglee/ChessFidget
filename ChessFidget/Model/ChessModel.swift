@@ -51,16 +51,27 @@ struct Square: CustomStringConvertible {
 	}
 }
 
-struct Board<T> {
-	private var contents: [T]
+struct Board {
+	private var contents: [Piece?] = Array<Piece?>(repeating: nil, count: 64)
 
-	init(value: T) {
-		contents = Array<T>(repeating: value, count: 64)
+	init(newGame: Bool = true) {
+		if newGame {
+			placePiecesForNewGame()
+		}
+	}
+
+	mutating func removeAllPieces() {
+		contents = Array<Piece?>(repeating: nil, count: 64)
+	}
+
+	mutating func setUpNewGame() {
+		removeAllPieces()
+		placePiecesForNewGame()
 	}
 
 	// MARK: Subscripting
 
-	subscript(_ x: Int, _ y: Int) -> T {
+	subscript(_ x: Int, _ y: Int) -> Piece? {
 		get {
 			assert(indexIsValid(x, y), "Index out of range")
 			return contents[(y * 8) + x]
@@ -71,49 +82,49 @@ struct Board<T> {
 		}
 	}
 
-	// MARK: Private
+	subscript(_ square: Square) -> Piece? {
+		get {
+			return self[square.x, square.y]
+		}
+		set {
+			self[square.x, square.y] = newValue
+		}
+	}
+
+	// MARK: Private functions
 
 	private func indexIsValid(_ x: Int, _ y: Int) -> Bool {
 		return x >= 0 && x < 8 && y >= 0 && y < 8
 	}
+
+	mutating func placePiecesForNewGame() {
+		for x in 0...7 {
+			self[x, 1] = Piece(.White, .Pawn)
+			self[x, 6] = Piece(.Black, .Pawn)
+		}
+
+		let types: [PieceType] = [.Rook, .Knight, .Bishop, .Queen, .King, .Bishop, .Knight, .Rook]
+		for (index, pieceType) in types.enumerated() {
+			self[index, 0] = Piece(.White, pieceType)
+			self[index, 7] = Piece(.Black, pieceType)
+		}
+	}
 }
 
-typealias BoardMask = Board<Bool>
-typealias PieceLayout = Board<Piece?>
-
-extension String {
-	init(_ board: BoardMask) {
-		self.init()
-
+extension Board {
+	func text() -> String {
 		var text = ""
 
 		for y in stride(from:7, through:0, by: -1) {
 			for x in 0...7 {
-				text.append(board[x, y] ? "X" : "•")
+				text.append(Board.pieceCharacter(self[x, y]))
 			}
 			if y > 0 {
 				text.append("\n")
 			}
 		}
 
-		self.append(text)
-	}
-
-	init(_ board: PieceLayout) {
-		self.init()
-
-		var text = ""
-
-		for y in stride(from:7, through:0, by: -1) {
-			for x in 0...7 {
-				text.append(String.pieceCharacter(board[x, y]))
-			}
-			if y > 0 {
-				text.append("\n")
-			}
-		}
-
-		self.append(text)
+		return text
 	}
 
 	// MARK: Private functions
@@ -165,62 +176,42 @@ struct PositionMeta {
 	var whoseTurn: PieceColor = .White
 	var whiteCastlingFlags: CastlingFlags = CastlingFlags()
 	var blackCastlingFlags: CastlingFlags = CastlingFlags()
-	var twoSquarePawn: Square? = nil
+	var squareWithTwoSquarePawn: Square? = nil
 }
 
 /**
-Represents the state of a game, including all information needed to
-determine whether any proposed move is legal.
+Represents the state of a game, including all information needed to determine whether any proposed move is legal.
 
 The default initializer uses the settings that are in effect at the beginning of a game.
 */
 struct Position: CustomStringConvertible {
-	//MARK: - Properties
+	//MARK: Properties
 
-	let board: PieceLayout
+	let board: Board
 	let meta: PositionMeta
 
 	init() {
-		board = Position.boardForNewGame()
+		board = Board()
 		meta = PositionMeta()
 	}
 
-	init(board: PieceLayout, meta: PositionMeta) {
+	init(board: Board, meta: PositionMeta) {
 		self.board = board
 		self.meta = meta
 	}
 
-	//MARK: - Making moves
+	//MARK: Making moves
 
 	func move(from: Square, to: Square) -> Position? {
 		return nil
 	}
 
-	//MARK: - CustomStringConvertible
+	//MARK: CustomStringConvertible
 
 	var description: String {
 		get {
 			return "hello"
 		}
-	}
-
-	// MARK: Private functions
-
-	private static func boardForNewGame() -> PieceLayout {
-		var board = PieceLayout(value: nil)
-
-		for x in 0...7 {
-			board[x, 1] = Piece(.White, .Pawn)
-			board[x, 6] = Piece(.Black, .Pawn)
-		}
-
-		let types: [PieceType] = [.Rook, .Knight, .Bishop, .Queen, .King, .Bishop, .Knight, .Rook]
-		for (index, pieceType) in types.enumerated() {
-			board[index, 0] = Piece(.White, pieceType)
-			board[index, 7] = Piece(.Black, pieceType)
-		}
-
-		return board
 	}
 }
 
@@ -229,19 +220,36 @@ enum MoveType {
 	case PawnPromotion(type: PieceType)
 }
 
+/**
+Technically a misnomer.  This actually represents one "turn", or "ply".
+*/
 struct Move {
 	let oldPosition: Position  // The position *preceding* the move.
 	let fromSquare: Square
 	let toSquare: Square
-	let type: MoveType
+	var type: MoveType
 }
 
 class Game {
-	var currentPosition: Position = Position()
+	var position: Position = Position()
 	var moves: [Move] = []
-	
-	
-	
+
+	func playerHasPiece(at square: Square) -> Bool {
+		if let piece = position.board[square] {
+			return piece.color == position.meta.whoseTurn
+		} else {
+			return false
+		}
+	}
+
+	// Returns nil if the move is illegal.
+	func proposeMove(from fromSquare: Square, to toSquare: Square) -> Move? {
+		return nil
+	}
+
+	func move(from fromSquare: Square, to toSquare: Square) -> Bool {
+		return true
+	}
 }
 
 

@@ -11,16 +11,25 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-	@IBOutlet weak var window: NSWindow!
+	//@IBOutlet weak var window: NSWindow!
+	var gameWindowController: GameWindowController!
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		// Insert code here to initialize your application
+		gameWindowController = GameWindowController(windowNibName: "GameWindowController")
+		gameWindowController.game = Game()
+
+
+		// FIXME: set game properly
+		let _ = gameWindowController.window
+		gameWindowController.boardViewController.game = gameWindowController.game
+		gameWindowController.boardViewController.boardView.game = gameWindowController.game
+
+		gameWindowController.window!.center()
+		gameWindowController.showWindow(nil)
 	}
 
 	func applicationWillTerminate(_ aNotification: Notification) {
-		// Insert code here to tear down your application
 	}
-
 
 }
 
