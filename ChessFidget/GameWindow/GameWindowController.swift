@@ -14,7 +14,7 @@ class GameWindowController: NSWindowController {
 
 	var game: Game?
 
-	// MARK: NSWindowController methods
+	// MARK: - NSWindowController methods
 	
     override func windowDidLoad() {
         super.windowDidLoad()

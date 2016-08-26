@@ -64,7 +64,7 @@ class BoardView: NSView {
 		              Int(floor((point.y - boardRect.origin.y) / squareHeight)))
 	}
 
-	// MARK: NSView methods
+	// MARK: - NSView methods
 
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
@@ -75,7 +75,7 @@ class BoardView: NSView {
 		highlightSelectedSquare()
 	}
 
-	// MARK: NSResponder methods
+	// MARK: - NSResponder methods
 
 	override func mouseDown(with event: NSEvent) {
 		let localPoint = convert(event.locationInWindow, from: nil)
@@ -91,7 +91,7 @@ class BoardView: NSView {
 		}
 	}
 
-	// MARK: Private methods called by drawRect
+	// MARK: - Private methods called by drawRect
 
 	private func drawBackground() {
 		NSColor.white.set()

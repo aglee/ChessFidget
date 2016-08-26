@@ -24,7 +24,7 @@ extension Board {
 		return text
 	}
 
-	// MARK: Private functions
+	// MARK: - Private functions
 
 	private static func pieceCharacter(_ piece: Piece?) -> Character {
 		if let piece = piece {
