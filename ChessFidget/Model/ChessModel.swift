@@ -30,7 +30,7 @@ struct Piece {
 	}
 }
 
-struct Square: CustomStringConvertible {
+struct Square: Equatable, CustomStringConvertible {
 	static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]
 	static let rankCharacters: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
@@ -48,6 +48,12 @@ struct Square: CustomStringConvertible {
 		get {
 			return "\(Square.fileCharacters[x])\(Square.rankCharacters[y])"
 		}
+	}
+
+	// MARK: Equatable
+
+	public static func ==(lhs: Square, rhs: Square) -> Bool {
+		return lhs.x == rhs.x && lhs.y == rhs.y
 	}
 }
 
