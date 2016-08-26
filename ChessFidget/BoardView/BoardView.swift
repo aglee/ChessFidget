@@ -17,12 +17,25 @@ class BoardView: NSView {
 	var whiteSquareColor = NSColor.yellow
 	var blackSquareColor = NSColor.brown
 	var pieceIcons = PieceIconSet()
+	var boardRect: NSRect {
+		get {
+			return bounds.insetBy(dx: 12.0, dy: 12.0)
+		}
+	}
+	var squareWidth: CGFloat {
+		get {
+			return boardRect.size.width / 8.0
+		}
+	}
+	var squareHeight: CGFloat {
+		get {
+			return boardRect.size.height / 8.0
+		}
+	}
 
 	func rectForSquare(_ x: Int, _ y: Int) -> NSRect {
-		let squareWidth = bounds.size.width / 8.0
-		let squareHeight = bounds.size.height / 8.0
-		return NSRect(x: CGFloat(x) * squareWidth,
-		              y: CGFloat(y) * squareHeight,
+		return NSRect(x: boardRect.origin.x + CGFloat(x) * squareWidth,
+		              y: boardRect.origin.y + CGFloat(y) * squareHeight,
 		              width: squareWidth,
 		              height: squareHeight);
 	}
@@ -32,15 +45,21 @@ class BoardView: NSView {
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 
+		drawBackground()
 		drawGrid()
 		drawPieces()
 	}
 
 	// MARK: Private methods called by drawRect
 
+	private func drawBackground() {
+		NSColor.white.set()
+		NSRectFill(bounds)
+	}
+
 	private func drawGrid() {
 		whiteSquareColor.set()
-		NSRectFill(bounds)
+		NSRectFill(boardRect)
 
 		blackSquareColor.set()
 		for x in 0...7 {
