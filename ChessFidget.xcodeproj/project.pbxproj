@@ -104,6 +104,7 @@
 		73963E351D6E833800C9D78B /* wq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wq.png; sourceTree = "<group>"; };
 		73963E361D6E833800C9D78B /* wr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wr.png; sourceTree = "<group>"; };
 		73963E4F1D6E837A00C9D78B /* _about.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = _about.md; sourceTree = "<group>"; };
+		73963E521D6F991600C9D78B /* ScratchCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				7352F7A31D6E08D000EF9B5F /* AppDelegate.swift */,
+				73963E521D6F991600C9D78B /* ScratchCode.swift */,
 				7352F7CC1D6E158F00EF9B5F /* Model */,
 				73963DEE1D6E607600C9D78B /* GameWindow */,
 				73963DF51D6E630C00C9D78B /* BoardView */,
