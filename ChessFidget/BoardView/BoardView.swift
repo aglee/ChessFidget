@@ -14,6 +14,7 @@ For a first pass I will have the view own a Game instance
 class BoardView: NSView {
 
 	var game: Game?
+	var backgroundColor = NSColor.white
 	var whiteSquareColor = NSColor.yellow
 	var blackSquareColor = NSColor.brown
 	var pieceIcons = PieceIconSet()
@@ -94,7 +95,7 @@ class BoardView: NSView {
 	// MARK: - Private methods called by drawRect
 
 	private func drawBackground() {
-		NSColor.white.set()
+		backgroundColor.set()
 		NSRectFill(bounds)
 	}
 
