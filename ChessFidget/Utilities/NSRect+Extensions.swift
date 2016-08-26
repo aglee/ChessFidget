@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+extension NSRect {
+	func insetBy(fraction: CGFloat) -> NSRect {
+		return insetBy(dx: fraction * size.width, dy: fraction * size.height)
+	}
+}
+
+
+
