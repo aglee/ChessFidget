@@ -22,6 +22,11 @@ class BoardView: NSView {
 			return bounds.insetBy(dx: 12.0, dy: 12.0)
 		}
 	}
+	var selectedSquare: Square? = nil {
+		didSet {
+			needsDisplay = true
+		}
+	}
 	var squareWidth: CGFloat {
 		get {
 			return boardRect.size.width / 8.0
@@ -40,6 +45,25 @@ class BoardView: NSView {
 		              height: squareHeight);
 	}
 
+	func rectForSquare(_ square: Square) -> NSRect {
+		return rectForSquare(square.x, square.y)
+	}
+
+	func squareContaining(_ localPoint: NSPoint) -> Square? {
+		if squareWidth == 0.0 || squareHeight == 0.0 {
+			return nil
+		}
+
+		let point = NSPointToCGPoint(localPoint)
+
+		if !boardRect.contains(point) {
+			return nil
+		}
+
+		return Square(Int(floor((point.x - boardRect.origin.x) / squareWidth)),
+		              Int(floor((point.y - boardRect.origin.y) / squareHeight)))
+	}
+
 	// MARK: NSView methods
 
 	override func draw(_ dirtyRect: NSRect) {
@@ -48,6 +72,23 @@ class BoardView: NSView {
 		drawBackground()
 		drawGrid()
 		drawPieces()
+		highlightSelectedSquare()
+	}
+
+	// MARK: NSResponder methods
+
+	override func mouseDown(with event: NSEvent) {
+		let localPoint = convert(event.locationInWindow, from: nil)
+		if let square = squareContaining(localPoint) {
+			if selectedSquare != nil && square == selectedSquare! {
+				// Clicking the selected square unselects it.
+				selectedSquare = nil
+			} else {
+				selectedSquare = square
+			}
+		} else {
+			selectedSquare = nil
+		}
 	}
 
 	// MARK: Private methods called by drawRect
@@ -79,6 +120,13 @@ class BoardView: NSView {
 					icon.draw(in: rectForSquare(x, y).insetBy(fraction: 0.1))
 				}
 			}
+		}
+	}
+
+	private func highlightSelectedSquare() {
+		if let square = selectedSquare {
+			NSColor.blue.set()
+			NSFrameRectWithWidth(rectForSquare(square), 6)
 		}
 	}
 }
