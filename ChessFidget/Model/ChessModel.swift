@@ -10,10 +10,6 @@ import Foundation
 
 enum PieceColor {
 	case Black, White
-
-	func opponent() -> PieceColor {
-		return self == .White ? .Black : .White
-	}
 }
 
 enum PieceType {
