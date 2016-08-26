@@ -57,11 +57,7 @@ class BoardView: NSView {
 			for y in 0...7 {
 				if let piece = game?.position.board[x, y] {
 					let icon = pieceIcons.icon(piece)
-					let rect = rectForSquare(x, y)
-					let insetFraction: CGFloat = 0.1
-					let smallerRect = rect.insetBy(dx: insetFraction * rect.size.width,
-					                               dy: insetFraction * rect.size.height)
-					icon.draw(in: smallerRect)
+					icon.draw(in: rectForSquare(x, y).insetBy(fraction: 0.1))
 				}
 			}
 		}

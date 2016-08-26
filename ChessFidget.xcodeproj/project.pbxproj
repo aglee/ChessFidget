@@ -53,6 +53,9 @@
 		73963E4E1D6E833800C9D78B /* wr.png in Resources */ = {isa = PBXBuildFile; fileRef = 73963E361D6E833800C9D78B /* wr.png */; };
 		73963E501D6E837A00C9D78B /* _about.md in Resources */ = {isa = PBXBuildFile; fileRef = 73963E4F1D6E837A00C9D78B /* _about.md */; };
 		73963E511D6E837A00C9D78B /* _about.md in Resources */ = {isa = PBXBuildFile; fileRef = 73963E4F1D6E837A00C9D78B /* _about.md */; };
+		73963E551D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */; };
+		73963E561D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */; };
+		73963E571D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +108,7 @@
 		73963E361D6E833800C9D78B /* wr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wr.png; sourceTree = "<group>"; };
 		73963E4F1D6E837A00C9D78B /* _about.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = _about.md; sourceTree = "<group>"; };
 		73963E521D6F991600C9D78B /* ScratchCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCode.swift; sourceTree = "<group>"; };
+		73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRect+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +161,7 @@
 			children = (
 				7352F7A31D6E08D000EF9B5F /* AppDelegate.swift */,
 				73963E521D6F991600C9D78B /* ScratchCode.swift */,
+				73963E531D6FC06700C9D78B /* Utilities */,
 				7352F7CC1D6E158F00EF9B5F /* Model */,
 				73963DEE1D6E607600C9D78B /* GameWindow */,
 				73963DF51D6E630C00C9D78B /* BoardView */,
@@ -234,6 +239,14 @@
 			name = "Piece Icons";
 			path = "ChessFidget/Piece Icons";
 			sourceTree = SOURCE_ROOT;
+		};
+		73963E531D6FC06700C9D78B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -400,6 +413,7 @@
 			files = (
 				7352F7CE1D6E15A400EF9B5F /* ChessModel.swift in Sources */,
 				73963DF91D6E630C00C9D78B /* BoardView.swift in Sources */,
+				73963E551D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				73963E001D6E6DB700C9D78B /* PieceIconSet.swift in Sources */,
 				73963DF11D6E608D00C9D78B /* GameWindowController.swift in Sources */,
 				7352F7A41D6E08D000EF9B5F /* AppDelegate.swift in Sources */,
@@ -412,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7352F7CF1D6E15A400EF9B5F /* ChessModel.swift in Sources */,
+				73963E561D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				7352F7B41D6E08D100EF9B5F /* ChessFidgetTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +437,7 @@
 			files = (
 				7352F7D01D6E15A400EF9B5F /* ChessModel.swift in Sources */,
 				73963DFA1D6E630C00C9D78B /* BoardView.swift in Sources */,
+				73963E571D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				73963E261D6E745E00C9D78B /* PieceIconSet.swift in Sources */,
 				73963DF21D6E608D00C9D78B /* GameWindowController.swift in Sources */,
 				7352F7BF1D6E08D100EF9B5F /* ChessFidgetUITests.swift in Sources */,
