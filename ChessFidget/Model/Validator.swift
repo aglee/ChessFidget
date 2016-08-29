@@ -13,6 +13,10 @@ class Validator {
 		self.position = position
 	}
 
+	func validateMove(from fromSquare: Square, to toSquare: Square) -> MoveType {
+		return MoveType.Plain(capturing: nil)
+	}
+
 	func canMove(from: Square, to: Square) -> Bool {
 		if !playerHasPiece(at: from) {
 			return false
@@ -23,7 +27,7 @@ class Validator {
 	// MARK: - Private functions
 
 	private func playerHasPiece(at square: Square) -> Bool {
-		if let piece = position.board[square] {
+		if let piece = position[square] {
 			return piece.color == position.meta.whoseTurn
 		} else {
 			return false

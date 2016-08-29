@@ -85,14 +85,20 @@ class BoardView: NSView {
 				// Clicking the selected square unselects it.
 				selectedSquare = nil
 			} else {
-				selectedSquare = square
+				tryMove(to: square)
 			}
 		} else {
 			selectedSquare = nil
 		}
 	}
 
-	// MARK: - Private methods called by drawRect
+	// MARK: - Private methods -- user interaction
+
+	private func tryMove(to toSquare: Square) {
+
+	}
+
+	// MARK: - Private methods  -- drawing
 
 	private func drawBackground() {
 		backgroundColor.set()
@@ -116,7 +122,7 @@ class BoardView: NSView {
 	private func drawPieces() {
 		for x in 0...7 {
 			for y in 0...7 {
-				if let piece = game?.position.board[x, y] {
+				if let piece = game?.position[x, y] {
 					let icon = pieceIcons.icon(piece)
 					icon.draw(in: rectForSquare(x, y).insetBy(fraction: 0.1))
 				}
