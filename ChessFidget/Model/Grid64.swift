@@ -22,6 +22,22 @@ class Grid64<T> {
 		}
 	}
 
+	func forAllSquares(_ action: (_ x: Int, _ y: Int) -> ()) {
+		for x in 0...7 {
+			for y in 0...7 {
+				action(x, y)
+			}
+		}
+	}
+	
+	func forAllSquares(_ action: (Square) -> ()) {
+		for x in 0...7 {
+			for y in 0...7 {
+				action(Square(x: x, y: y))
+			}
+		}
+	}
+
 	// MARK: - Subscripting
 
 	subscript(_ x: Int, _ y: Int) -> T {
