@@ -61,8 +61,8 @@ class BoardView: NSView {
 			return nil
 		}
 
-		return Square(Int(floor((point.x - boardRect.origin.x) / squareWidth)),
-		              Int(floor((point.y - boardRect.origin.y) / squareHeight)))
+		return Square(x: Int(floor((point.x - boardRect.origin.x) / squareWidth)),
+		              y: Int(floor((point.y - boardRect.origin.y) / squareHeight)))
 	}
 
 	// MARK: - NSView methods
