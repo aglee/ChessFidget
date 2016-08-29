@@ -6,8 +6,6 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-import Foundation
-
 /**
 Used (along with other logic) to determine whether a player can castle.
 

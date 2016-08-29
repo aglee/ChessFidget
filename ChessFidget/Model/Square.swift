@@ -6,8 +6,6 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-import Foundation
-
 struct Square: Equatable, CustomStringConvertible {
 	static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]
 	static let rankCharacters: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8"]

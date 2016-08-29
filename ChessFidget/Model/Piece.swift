@@ -6,8 +6,6 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-import Foundation
-
 enum PieceColor {
 	case Black, White
 }

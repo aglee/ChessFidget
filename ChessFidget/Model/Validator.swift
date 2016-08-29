@@ -6,8 +6,6 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-import Foundation
-
 struct Validator {
 	let position: Position
 

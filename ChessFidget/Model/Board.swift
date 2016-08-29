@@ -6,8 +6,6 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-import Foundation
-
 struct Board {
 	private var contents: [Piece?] = Array<Piece?>(repeating: nil, count: 64)
 

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-import Foundation
-
 enum MoveType {
 	case Plain, PawnTwoSquares, CaptureEnPassant, KingSideCastle, QueenSideCastle
 	case PawnPromotion(type: PieceType)
