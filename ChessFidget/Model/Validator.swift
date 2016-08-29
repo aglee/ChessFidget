@@ -6,7 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-struct Validator {
+class Validator {
 	let position: Position
 
 	func canMove(from: Square, to: Square) -> Bool {

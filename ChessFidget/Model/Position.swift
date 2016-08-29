@@ -32,7 +32,7 @@ Represents the state of a game, including all information needed to determine wh
 
 The default initializer uses the settings that are in effect at the beginning of a game.
 */
-struct Position {
+class Position {
 	// MARK: - Properties
 
 	var board: Board
