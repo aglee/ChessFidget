@@ -74,6 +74,9 @@
 		73963E6D1D6FC5A200C9D78B /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E6C1D6FC5A200C9D78B /* Move.swift */; };
 		73963E6E1D6FC5A200C9D78B /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E6C1D6FC5A200C9D78B /* Move.swift */; };
 		73963E6F1D6FC5A200C9D78B /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E6C1D6FC5A200C9D78B /* Move.swift */; };
+		73E31C1A1D74B8FF0013A33D /* Grid64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E31C191D74B8FF0013A33D /* Grid64.swift */; };
+		73E31C1B1D74B8FF0013A33D /* Grid64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E31C191D74B8FF0013A33D /* Grid64.swift */; };
+		73E31C1C1D74B8FF0013A33D /* Grid64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E31C191D74B8FF0013A33D /* Grid64.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +136,7 @@
 		73963E641D6FC57000C9D78B /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		73963E681D6FC58E00C9D78B /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		73963E6C1D6FC5A200C9D78B /* Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
+		73E31C191D74B8FF0013A33D /* Grid64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid64.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				73963E681D6FC58E00C9D78B /* Square.swift */,
+				73E31C191D74B8FF0013A33D /* Grid64.swift */,
 				7352F7CD1D6E15A400EF9B5F /* Piece.swift */,
 				73963E581D6FC51600C9D78B /* Board.swift */,
 				73963E5C1D6FC53B00C9D78B /* Position.swift */,
@@ -442,6 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73963E691D6FC58E00C9D78B /* Square.swift in Sources */,
+				73E31C1A1D74B8FF0013A33D /* Grid64.swift in Sources */,
 				7352F7CE1D6E15A400EF9B5F /* Piece.swift in Sources */,
 				73963DF91D6E630C00C9D78B /* BoardView.swift in Sources */,
 				73963E6D1D6FC5A200C9D78B /* Move.swift in Sources */,
@@ -462,6 +468,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73963E6A1D6FC58E00C9D78B /* Square.swift in Sources */,
+				73E31C1B1D74B8FF0013A33D /* Grid64.swift in Sources */,
 				73963E6E1D6FC5A200C9D78B /* Move.swift in Sources */,
 				7352F7CF1D6E15A400EF9B5F /* Piece.swift in Sources */,
 				73963E561D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
@@ -478,6 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73963E6B1D6FC58E00C9D78B /* Square.swift in Sources */,
+				73E31C1C1D74B8FF0013A33D /* Grid64.swift in Sources */,
 				7352F7D01D6E15A400EF9B5F /* Piece.swift in Sources */,
 				73963DFA1D6E630C00C9D78B /* BoardView.swift in Sources */,
 				73963E6F1D6FC5A200C9D78B /* Move.swift in Sources */,
