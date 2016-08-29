@@ -56,9 +56,9 @@
 		73963E551D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */; };
 		73963E561D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */; };
 		73963E571D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */; };
-		73963E591D6FC51600C9D78B /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E581D6FC51600C9D78B /* Board.swift */; };
-		73963E5A1D6FC51600C9D78B /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E581D6FC51600C9D78B /* Board.swift */; };
-		73963E5B1D6FC51600C9D78B /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E581D6FC51600C9D78B /* Board.swift */; };
+		73963E591D6FC51600C9D78B /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E581D6FC51600C9D78B /* Position.swift */; };
+		73963E5A1D6FC51600C9D78B /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E581D6FC51600C9D78B /* Position.swift */; };
+		73963E5B1D6FC51600C9D78B /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E581D6FC51600C9D78B /* Position.swift */; };
 		73963E611D6FC55600C9D78B /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E601D6FC55600C9D78B /* Validator.swift */; };
 		73963E621D6FC55600C9D78B /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E601D6FC55600C9D78B /* Validator.swift */; };
 		73963E631D6FC55600C9D78B /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E601D6FC55600C9D78B /* Validator.swift */; };
@@ -130,7 +130,7 @@
 		73963E4F1D6E837A00C9D78B /* _about.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = _about.md; sourceTree = "<group>"; };
 		73963E521D6F991600C9D78B /* ScratchCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCode.swift; sourceTree = "<group>"; };
 		73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRect+Extensions.swift"; sourceTree = "<group>"; };
-		73963E581D6FC51600C9D78B /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		73963E581D6FC51600C9D78B /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		73963E601D6FC55600C9D78B /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		73963E641D6FC57000C9D78B /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		73963E681D6FC58E00C9D78B /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 				73E31C191D74B8FF0013A33D /* Grid64.swift */,
 				73E31C1D1D74BD3B0013A33D /* BoardMask.swift */,
 				7352F7CD1D6E15A400EF9B5F /* Piece.swift */,
-				73963E581D6FC51600C9D78B /* Board.swift */,
+				73963E581D6FC51600C9D78B /* Position.swift */,
 				73963E6C1D6FC5A200C9D78B /* Move.swift */,
 				73963E641D6FC57000C9D78B /* Game.swift */,
 				73963E601D6FC55600C9D78B /* Validator.swift */,
@@ -458,7 +458,7 @@
 				73963DF11D6E608D00C9D78B /* GameWindowController.swift in Sources */,
 				73963E651D6FC57000C9D78B /* Game.swift in Sources */,
 				7352F7A41D6E08D000EF9B5F /* AppDelegate.swift in Sources */,
-				73963E591D6FC51600C9D78B /* Board.swift in Sources */,
+				73963E591D6FC51600C9D78B /* Position.swift in Sources */,
 				73963DFB1D6E630C00C9D78B /* BoardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -474,7 +474,7 @@
 				73963E561D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				73963E661D6FC57000C9D78B /* Game.swift in Sources */,
 				73E31C1F1D74BD3B0013A33D /* BoardMask.swift in Sources */,
-				73963E5A1D6FC51600C9D78B /* Board.swift in Sources */,
+				73963E5A1D6FC51600C9D78B /* Position.swift in Sources */,
 				73963E621D6FC55600C9D78B /* Validator.swift in Sources */,
 				7352F7B41D6E08D100EF9B5F /* ChessFidgetTests.swift in Sources */,
 			);
@@ -496,7 +496,7 @@
 				73963DF21D6E608D00C9D78B /* GameWindowController.swift in Sources */,
 				73963E671D6FC57000C9D78B /* Game.swift in Sources */,
 				7352F7BF1D6E08D100EF9B5F /* ChessFidgetUITests.swift in Sources */,
-				73963E5B1D6FC51600C9D78B /* Board.swift in Sources */,
+				73963E5B1D6FC51600C9D78B /* Position.swift in Sources */,
 				73963DFC1D6E630C00C9D78B /* BoardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
