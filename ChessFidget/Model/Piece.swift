@@ -14,13 +14,19 @@ enum PieceType {
 	case Pawn, Knight, Bishop, Rook, Queen, King
 }
 
-struct Piece {
+class Piece {
 	let color: PieceColor
 	let type: PieceType
 
-	init(_ color: PieceColor, _ type: PieceType) {
+	internal init(_ color: PieceColor, _ type: PieceType) {
 		self.color = color
 		self.type = type
+	}
+}
+
+class Pawn: Piece {
+	init(_ color: PieceColor) {
+		super.init(color, .Pawn)
 	}
 }
 
