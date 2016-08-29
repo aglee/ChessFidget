@@ -9,6 +9,10 @@
 class Validator {
 	let position: Position
 
+	init(position: Position) {
+		self.position = position
+	}
+
 	func canMove(from: Square, to: Square) -> Bool {
 		if !playerHasPiece(at: from) {
 			return false

@@ -48,7 +48,7 @@ class Position {
 		self.meta = meta
 	}
 
-	mutating func play(move: Move) {
+	func play(move: Move) {
 		let pieceMoved = board[move.fromSquare]!
 
 		// Update the board.
