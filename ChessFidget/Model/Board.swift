@@ -6,53 +6,23 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-struct Board {
-	private var contents: [Piece?] = Array<Piece?>(repeating: nil, count: 64)
-
+class Board: Grid64<Piece?> {
 	init(newGame: Bool = true) {
+		super.init(value: nil)
+
 		if newGame {
 			placePiecesForNewGame()
 		}
 	}
 
-	mutating func removeAllPieces() {
-		contents = Array<Piece?>(repeating: nil, count: 64)
-	}
-
-	mutating func setUpNewGame() {
-		removeAllPieces()
+	func setUpNewGame() {
+		fill(value: nil)
 		placePiecesForNewGame()
-	}
-
-	// MARK: - Subscripting
-
-	subscript(_ x: Int, _ y: Int) -> Piece? {
-		get {
-			assert(indexIsValid(x, y), "Index out of range")
-			return contents[(y * 8) + x]
-		}
-		set {
-			assert(indexIsValid(x, y), "Index out of range")
-			contents[(y * 8) + x] = newValue
-		}
-	}
-
-	subscript(_ square: Square) -> Piece? {
-		get {
-			return self[square.x, square.y]
-		}
-		set {
-			self[square.x, square.y] = newValue
-		}
 	}
 
 	// MARK: - Private functions
 
-	private func indexIsValid(_ x: Int, _ y: Int) -> Bool {
-		return x >= 0 && x < 8 && y >= 0 && y < 8
-	}
-
-	mutating func placePiecesForNewGame() {
+	private func placePiecesForNewGame() {
 		for x in 0...7 {
 			self[x, 1] = Piece(.White, .Pawn)
 			self[x, 6] = Piece(.Black, .Pawn)
