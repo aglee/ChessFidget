@@ -8,12 +8,8 @@
 
 class Game {
 	var position: Position = Position()
-	var moves: [Move] = []
 
-	func addMove(_ move: Move) {
-		moves.append(move)
-		position.play(move: move)
-	}
+	// TODO: Save move history and be able to (1) go back and forth in the history of the game, (2) print the game's moves.
 }
 
 
