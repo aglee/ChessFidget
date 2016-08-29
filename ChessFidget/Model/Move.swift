@@ -7,7 +7,12 @@
 //
 
 enum MoveType {
-	case Plain, PawnTwoSquares, CaptureEnPassant, KingSideCastle, QueenSideCastle
+	case Illegal(reason: String)
+	case Plain(capturing: PieceType?)
+	case PawnTwoSquares
+	case CaptureEnPassant
+	case KingSideCastle
+	case QueenSideCastle
 	case PawnPromotion(type: PieceType)
 }
 
