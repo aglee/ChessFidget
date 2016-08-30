@@ -1,0 +1,69 @@
+//
+//  Piece.swift
+//  ChessFidget
+//
+//  Created by Andy Lee on 8/24/16.
+//  Copyright © 2016 Andy Lee. All rights reserved.
+//
+
+enum PieceColor {
+	case Black, White
+
+	var opponent: PieceColor {
+		get {
+			return self == .White ? .Black : .White
+		}
+	}
+
+	var forwardDirection: Int {
+		get {
+			return self == .White ? 1 : -1
+		}
+	}
+
+	var pawnRow: Int {
+		get {
+			return self == .White ? 1 : 6
+		}
+	}
+}
+
+typealias PieceMovement = (vectors: [Vector], canRepeat: Bool)
+
+enum PieceType {
+	case Pawn
+	case Knight
+	case Bishop
+	case Rook
+	case Queen
+	case King
+
+	var movement: PieceMovement {
+		get {
+			return PieceType.pieceMovements[self]!
+		}
+	}
+
+	private static let pieceMovements: [PieceType: PieceMovement] = [
+		.Pawn: (vectors: [], canRepeat: false),
+		.Knight: (vectors: [(1, 2), (1, -2), (-1, 2), (-1, -2),
+		                    (2, 1), (2, -1), (-2, 1), (-2, -1)], canRepeat: false),
+		.Bishop: (vectors: [(1, 1), (1, -1), (-1, 1), (-1, -1)], canRepeat: true),
+		.Rook: (vectors: [(0, 1), (0, -1), (1, 0), (-1, 0)], canRepeat: true),
+		.Queen: (vectors: [(1, 1), (1, -1), (-1, 1), (-1, -1),
+		                   (0, 1), (0, -1), (1, 0), (-1, 0)], canRepeat: true),
+		.King: (vectors: [(1, 1), (1, -1), (-1, 1), (-1, -1),
+		                  (0, 1), (0, -1), (1, 0), (-1, 0)], canRepeat: false),
+	]
+}
+
+struct Piece {
+	let color: PieceColor
+	let type: PieceType
+
+	init(_ color: PieceColor, _ type: PieceType) {
+		self.color = color
+		self.type = type
+	}
+}
+

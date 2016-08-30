@@ -9,14 +9,18 @@
 /**
 An 8x8 grid of elements of type T.
 */
-class Grid64<T> {
-	var elements: [T]
+struct Grid64<T> {
+	private var elements: [T]
 
 	init(value: T) {
 		elements = Array<T>(repeating: value, count: 64)
 	}
 
-	func fill(value: T) {
+	func indexIsValid(_ x: Int, _ y: Int) -> Bool {
+		return x >= 0 && x < 8 && y >= 0 && y < 8
+	}
+
+	mutating func fill(value: T) {
 		for index in 0 ..< elements.count {
 			elements[index] = value
 		}
@@ -58,12 +62,6 @@ class Grid64<T> {
 		set {
 			self[square.x, square.y] = newValue
 		}
-	}
-
-	// MARK: - Private functions
-
-	private func indexIsValid(_ x: Int, _ y: Int) -> Bool {
-		return x >= 0 && x < 8 && y >= 0 && y < 8
 	}
 }
 

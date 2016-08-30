@@ -6,8 +6,10 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
+typealias Vector = (dx: Int, dy: Int)  // dx, dy
+
 struct Square: Equatable, CustomStringConvertible {
-	static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]
+	static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]  // TODO: Handle index not in 8x8.
 	static let rankCharacters: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
 	let x: Int
@@ -16,6 +18,10 @@ struct Square: Equatable, CustomStringConvertible {
 	init(x: Int, y: Int) {
 		self.x = x
 		self.y = y
+	}
+
+	func plus(_ delta: Vector) -> Square {
+		return Square(x: x + delta.dx, y: y + delta.dy)
 	}
 
 	// MARK: - CustomStringConvertible

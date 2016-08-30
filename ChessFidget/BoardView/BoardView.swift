@@ -8,9 +8,6 @@
 
 import Cocoa
 
-/**
-For a first pass I will have the view own a Game instance
-*/
 class BoardView: NSView {
 
 	var game: Game?
@@ -25,7 +22,7 @@ class BoardView: NSView {
 	}
 	var selectedSquare: Square? = nil {
 		didSet {
-			needsDisplay = true
+			needsDisplay = true  //TODO: Use KVC.
 		}
 	}
 	var squareWidth: CGFloat {
@@ -50,7 +47,7 @@ class BoardView: NSView {
 		return rectForSquare(square.x, square.y)
 	}
 
-	func squareContaining(_ localPoint: NSPoint) -> Square? {
+	func squareContaining(localPoint: NSPoint) -> Square? {
 		if squareWidth == 0.0 || squareHeight == 0.0 {
 			return nil
 		}
@@ -80,12 +77,16 @@ class BoardView: NSView {
 
 	override func mouseDown(with event: NSEvent) {
 		let localPoint = convert(event.locationInWindow, from: nil)
-		if let square = squareContaining(localPoint) {
-			if selectedSquare != nil && square == selectedSquare! {
+		if let clickedSquare = squareContaining(localPoint: localPoint) {
+			if selectedSquare == nil {
+				if game!.position.canSelect(square: clickedSquare) {
+					selectedSquare = clickedSquare
+				}
+			} else if clickedSquare == selectedSquare! {
 				// Clicking the selected square unselects it.
 				selectedSquare = nil
 			} else {
-				tryMove(to: square)
+				tryMove(to: clickedSquare)
 			}
 		} else {
 			selectedSquare = nil
@@ -95,7 +96,24 @@ class BoardView: NSView {
 	// MARK: - Private methods -- user interaction
 
 	private func tryMove(to toSquare: Square) {
+		// TODO: should maybe assert
+		if selectedSquare == nil {
+			return
+		}
 
+		// Bail if the move would be illegal.
+		if !game!.position.canMove(from: selectedSquare!, to: toSquare) {
+			Swift.print("Illegal move: \(selectedSquare!)-\(toSquare)")
+			return
+		}
+
+		// TODO: Ask the user for promotion info if necessary.
+		let promotion: PieceType? = nil
+
+		// Play the move.
+		game?.position.play(move: Move(from: selectedSquare!, to: toSquare, promotion: promotion))
+		selectedSquare = nil
+		needsDisplay = true
 	}
 
 	// MARK: - Private methods  -- drawing
@@ -122,7 +140,7 @@ class BoardView: NSView {
 	private func drawPieces() {
 		for x in 0...7 {
 			for y in 0...7 {
-				if let piece = game?.position[x, y] {
+				if let piece = game?.position.board[x, y] {
 					let icon = pieceIcons.icon(piece)
 					icon.draw(in: rectForSquare(x, y).insetBy(fraction: 0.1))
 				}
