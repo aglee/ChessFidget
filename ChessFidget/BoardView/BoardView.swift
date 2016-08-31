@@ -71,7 +71,7 @@ class BoardView: NSView {
 		drawBackground()
 		drawGrid()
 		drawPieces()
-		highlightSelectedSquare()
+		drawHighlightOnSelectedSquare()
 	}
 
 	// MARK: - NSResponder methods
@@ -149,7 +149,7 @@ class BoardView: NSView {
 		}
 	}
 
-	private func highlightSelectedSquare() {
+	private func drawHighlightOnSelectedSquare() {
 		if let square = selectedSquare {
 			NSColor.blue.set()
 			NSFrameRectWithWidth(rectForSquare(square), 6)
