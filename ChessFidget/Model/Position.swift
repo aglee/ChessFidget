@@ -57,14 +57,15 @@ class Position {
 		guard let piece = board[fromSquare] else {
 			return
 		}
-		board[toSquare] = (promotion == nil ? piece : Piece(piece.color, promotion!))
-		board[fromSquare] = nil
 
-		// Update meta-info.
+		// Handle special cases.
 		enPassantableSquare = nil
 		if piece.type == .Pawn {
 			if toSquare.y == fromSquare.y + (2 * piece.color.forwardDirection) {
 				enPassantableSquare = toSquare
+			} else if toSquare.x != fromSquare.x && board[toSquare] == nil {
+				// This is a capture en passant.
+				board[toSquare.x, fromSquare.y] = nil
 			}
 		} else if piece.type == .King {
 			castlingFlags(piece.color).kingDidMove = true
@@ -72,11 +73,11 @@ class Position {
 			let y = piece.color.homeRow
 			if fromSquare == Square(x: 4, y: y) {
 				if toSquare == Square(x: 6, y: y) {
-					// King-side castling.
+					// This is king-side castling.
 					board[5, y] = board[7, y]
 					board[7, y] = nil
 				} else if toSquare == Square(x: 2, y: y) {
-					// Queen-side castling.
+					// This is queen-side castling.
 					board[3, y] = board[0, y]
 					board[0, y] = nil
 				}
@@ -88,6 +89,10 @@ class Position {
 				castlingFlags(piece.color).kingsRookDidMove = true
 			}
 		}
+
+		// Move the main piece.  We do this *after* the above because this allows us to check for the case of an en passant capture by seeing if toSquare is empty.
+		board[toSquare] = (promotion == nil ? piece : Piece(piece.color, promotion!))
+		board[fromSquare] = nil
 		whoseTurn = whoseTurn.opponent
 	}
 

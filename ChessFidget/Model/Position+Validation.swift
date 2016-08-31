@@ -116,15 +116,13 @@ extension Position {
 		// Case 2: the pawn is moving diagonally forward one square.
 		if [-1, 1].contains(fromSquare.x - toSquare.x)
 			&& fromSquare.y + piece.color.forwardDirection == toSquare.y {
-			// Plain diagonal capture.
-			if board[toSquare]?.color == piece.color.opponent {
+			if board[toSquare] == nil {
+				// Possibly a capture en passant.
+				return enPassantableSquare?.x == toSquare.x && enPassantableSquare?.y == fromSquare.y
+			} else if board[toSquare]!.color == piece.color.opponent {
+				// Plain diagonal capture.
 				return true
 			}
-
-			// En passant capture.  TODO: Fill this in.
-
-			// If we got this far, the move is invalid.
-			return false
 		}
 
 		// If we got this far, the move is invalid.
