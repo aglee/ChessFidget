@@ -8,6 +8,7 @@
 
 import Cocoa
 
+// TODO: Add an option to display the board flipped.
 class BoardView: NSView {
 
 	var game: Game?
@@ -111,7 +112,7 @@ class BoardView: NSView {
 		let promotion: PieceType? = nil
 
 		// Play the move.
-		game?.position.play(move: Move(from: selectedSquare!, to: toSquare, promotion: promotion))
+		game?.position.move(from: selectedSquare!, to: toSquare, promotion: promotion)
 		selectedSquare = nil
 		needsDisplay = true
 	}

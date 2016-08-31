@@ -11,7 +11,7 @@ Used (along with other logic) to determine whether a player can castle.
 
 The default initializer uses the settings that are in effect at the beginning of a game.
 */
-struct CastlingFlags {
+class CastlingFlags {
 	var queensRookDidMove: Bool = false
 	var kingsRookDidMove: Bool = false
 	var kingDidMove: Bool = false
@@ -23,10 +23,10 @@ Represents the state of a game, including all information needed to determine wh
 The default initializer uses the settings that are in effect at the beginning of a game.
 */
 class Position {
-	var board = Grid64<Piece?>(value: nil)
+	var board = Board()
 	var whoseTurn: PieceColor = .White
-	var castlingFlags: [PieceColor : CastlingFlags] = [ .White: CastlingFlags(),
-	                                                    .Black: CastlingFlags() ]
+	let whiteCastlingFlags = CastlingFlags()
+	let blackCastlingFlags = CastlingFlags()
 	var enPassantableSquare: Square? = nil
 
 	init(newGame: Bool = true) {
@@ -35,26 +35,57 @@ class Position {
 		}
 	}
 
+	func castlingFlags(_ color: PieceColor) -> CastlingFlags {
+		switch color {
+		case .White: return whiteCastlingFlags
+		case .Black: return blackCastlingFlags
+		}
+	}
+
+	func castlingFlags() -> CastlingFlags {
+		return castlingFlags(whoseTurn)
+	}
+
 	func setUpNewGame() {
-		board.fill(value: nil)
+		board = Board()
 		placePiecesForNewGame()
 	}
 
-	func play(move: Move) {
-		let pieceMoved = board[move.fromSquare]!
-
-		// Update the board.
-		board[move.toSquare] = board[move.fromSquare]
-		board[move.fromSquare] = nil
+	// Assumes the move is valid.
+	func move(from fromSquare: Square, to toSquare: Square, promotion: PieceType? = nil) {
+		// Update the pieces on the board.
+		guard let piece = board[fromSquare] else {
+			return
+		}
+		board[toSquare] = (promotion == nil ? piece : Piece(piece.color, promotion!))
+		board[fromSquare] = nil
 
 		// Update meta-info.
-		if pieceMoved.type == .King {
-			castlingFlags[pieceMoved.color]?.kingDidMove = true
-		} else if pieceMoved.type == .Rook {
-			if move.fromSquare.x == 0 {
-				castlingFlags[pieceMoved.color]?.queensRookDidMove = true
-			} else if move.fromSquare.x == 7 {
-				castlingFlags[pieceMoved.color]?.kingsRookDidMove = true
+		enPassantableSquare = nil
+		if piece.type == .Pawn {
+			if toSquare.y == fromSquare.y + (2 * piece.color.forwardDirection) {
+				enPassantableSquare = toSquare
+			}
+		} else if piece.type == .King {
+			castlingFlags(piece.color).kingDidMove = true
+
+			let y = piece.color.homeRow
+			if fromSquare == Square(x: 4, y: y) {
+				if toSquare == Square(x: 6, y: y) {
+					// King-side castling.
+					board[5, y] = board[7, y]
+					board[7, y] = nil
+				} else if toSquare == Square(x: 2, y: y) {
+					// Queen-side castling.
+					board[3, y] = board[0, y]
+					board[0, y] = nil
+				}
+			}
+		} else if piece.type == .Rook {
+			if fromSquare.x == 0 {
+				castlingFlags(piece.color).queensRookDidMove = true
+			} else if fromSquare.x == 7 {
+				castlingFlags(piece.color).kingsRookDidMove = true
 			}
 		}
 		whoseTurn = whoseTurn.opponent
@@ -69,10 +100,10 @@ class Position {
 			board[x, 6] = Piece(.Black, .Pawn)
 		}
 
-		let types: [PieceType] = [.Rook, .Knight, .Bishop, .Queen, .King, .Bishop, .Knight, .Rook]
-		for (index, pieceType) in types.enumerated() {
-			board[index, 0] = Piece(.White, pieceType)
-			board[index, 7] = Piece(.Black, pieceType)
+		let pieceTypes: [PieceType] = [.Rook, .Knight, .Bishop, .Queen, .King, .Bishop, .Knight, .Rook]
+		for (x, pieceType) in pieceTypes.enumerated() {
+			board[x, 0] = Piece(.White, pieceType)
+			board[x, 7] = Piece(.Black, pieceType)
 		}
 	}
 }

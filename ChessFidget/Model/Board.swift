@@ -1,29 +1,16 @@
 //
-//  Grid64.swift
+//  Board.swift
 //  ChessFidget
 //
 //  Created by Andy Lee on 8/29/16.
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-/**
-An 8x8 grid of elements of type T.
-*/
-struct Grid64<T> {
-	private var elements: [T]
-
-	init(value: T) {
-		elements = Array<T>(repeating: value, count: 64)
-	}
+struct Board {
+	private var elements: [Piece?] = Array<Piece?>(repeating: nil, count: 64)
 
 	func indexIsValid(_ x: Int, _ y: Int) -> Bool {
 		return x >= 0 && x < 8 && y >= 0 && y < 8
-	}
-
-	mutating func fill(value: T) {
-		for index in 0 ..< elements.count {
-			elements[index] = value
-		}
 	}
 
 	func forAllSquares(_ action: (_ x: Int, _ y: Int) -> ()) {
@@ -44,7 +31,7 @@ struct Grid64<T> {
 
 	// MARK: - Subscripting
 
-	subscript(_ x: Int, _ y: Int) -> T {
+	subscript(_ x: Int, _ y: Int) -> Piece? {
 		get {
 			assert(indexIsValid(x, y), "Index out of range")
 			return elements[(y * 8) + x]
@@ -55,7 +42,7 @@ struct Grid64<T> {
 		}
 	}
 
-	subscript(_ square: Square) -> T {
+	subscript(_ square: Square) -> Piece? {
 		get {
 			return self[square.x, square.y]
 		}

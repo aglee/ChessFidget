@@ -21,9 +21,15 @@ enum PieceColor {
 		}
 	}
 
+	var homeRow: Int {
+		get {
+			return self == .White ? 0 : 7
+		}
+	}
+
 	var pawnRow: Int {
 		get {
-			return self == .White ? 1 : 6
+			return homeRow + forwardDirection
 		}
 	}
 }

@@ -105,7 +105,7 @@ extension Position {
 
 			// Two-square advance from the pawn's home square, not blocked by any pieces.
 			if fromSquare.y == piece.color.pawnRow
-				&& toSquare.y == fromSquare.y + 2*piece.color.forwardDirection
+				&& toSquare.y == fromSquare.y + (2 * piece.color.forwardDirection)
 				&& board[fromSquare.x, fromSquare.y + piece.color.forwardDirection] == nil {
 				return true
 			}
@@ -140,12 +140,62 @@ extension Position {
 			return false
 		}
 
-		// TODO: Finish the castling check.
+		// See if it's a castling.
+		if canCastleKingSide(from: fromSquare, to: toSquare) {
+			return true
+		}
+		if canCastleQueenSide(from: fromSquare, to: toSquare) {
+			return true
+		}
 
 		// If we got this far, the move is invalid.
 		return false
 	}
 
+	// Called by canCastle.  Assumes some checking has already been done.
+	private func canCastleKingSide(from fromSquare: Square, to toSquare: Square) -> Bool {
+		// The king and the king's rook must not have moved yet.
+		if castlingFlags().kingDidMove || castlingFlags().kingsRookDidMove {
+			return false
+		}
+
+		// The king must be moving two squares to the right.
+		let y = whoseTurn.homeRow
+		if toSquare != Square(x: 6, y: y) {
+			return false
+		}
+
+		// The squares between the king and the king's rook must be empty.
+		if board[5, y] != nil || board[6, y] != nil {
+			return false
+		}
+
+		// If we got this far, the move passes this test.
+		return true
+	}
+	
+	// Called by canCastle.  Assumes some checking has already been done.
+	private func canCastleQueenSide(from fromSquare: Square, to toSquare: Square) -> Bool {
+		// The king and the queen's rook must not have moved yet.
+		if castlingFlags().kingDidMove || castlingFlags().queensRookDidMove {
+			return false
+		}
+
+		// The king must be moving two squares to the left.
+		let y = whoseTurn.homeRow
+		if toSquare != Square(x: 2, y: y) {
+			return false
+		}
+
+		// The squares between the king and the king's rook must be empty.
+		if board[1, y] != nil || board[2, y] != nil || board[3, y] != nil {
+			return false
+		}
+
+		// If we got this far, the move passes this test.
+		return true
+	}
+	
 	private func checkVectors(from fromSquare: Square, to toSquare: Square) -> Bool {
 		// The fromSquare must contain a non-pawn piece owned by the current player.
 		guard let piece = board[fromSquare] else {
