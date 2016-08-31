@@ -130,6 +130,52 @@ extension Position {
 	}
 
 	private func canCastle(from fromSquare: Square, to toSquare: Square) -> Bool {
+		// Called by canCastle.  Assumes some checking has already been done.
+		func canCastleKingSide(from fromSquare: Square, to toSquare: Square) -> Bool {
+			// The king and the king's rook must not have moved yet.
+			if castlingFlags().kingDidMove || castlingFlags().kingsRookDidMove {
+				return false
+			}
+
+			// The king must be moving two squares to the right.
+			let y = whoseTurn.homeRow
+			if toSquare != Square(x: 6, y: y) {
+				return false
+			}
+
+			// The squares between the king and the king's rook must be empty.
+			if board[5, y] != nil || board[6, y] != nil {
+				return false
+			}
+
+			// If we got this far, the move passes this test.
+			return true
+		}
+
+		// Called by canCastle.  Assumes some checking has already been done.
+		func canCastleQueenSide(from fromSquare: Square, to toSquare: Square) -> Bool {
+			// The king and the queen's rook must not have moved yet.
+			if castlingFlags().kingDidMove || castlingFlags().queensRookDidMove {
+				return false
+			}
+
+			// The king must be moving two squares to the left.
+			let y = whoseTurn.homeRow
+			if toSquare != Square(x: 2, y: y) {
+				return false
+			}
+
+			// The squares between the king and the king's rook must be empty.
+			if board[1, y] != nil || board[2, y] != nil || board[3, y] != nil {
+				return false
+			}
+
+			// If we got this far, the move passes this test.
+			return true
+		}
+
+
+
 		// The fromSquare must contain a king owned by the current player.
 		guard let piece = board[fromSquare] else {
 			return false
@@ -155,50 +201,6 @@ extension Position {
 		return false
 	}
 
-	// Called by canCastle.  Assumes some checking has already been done.
-	private func canCastleKingSide(from fromSquare: Square, to toSquare: Square) -> Bool {
-		// The king and the king's rook must not have moved yet.
-		if castlingFlags().kingDidMove || castlingFlags().kingsRookDidMove {
-			return false
-		}
-
-		// The king must be moving two squares to the right.
-		let y = whoseTurn.homeRow
-		if toSquare != Square(x: 6, y: y) {
-			return false
-		}
-
-		// The squares between the king and the king's rook must be empty.
-		if board[5, y] != nil || board[6, y] != nil {
-			return false
-		}
-
-		// If we got this far, the move passes this test.
-		return true
-	}
-	
-	// Called by canCastle.  Assumes some checking has already been done.
-	private func canCastleQueenSide(from fromSquare: Square, to toSquare: Square) -> Bool {
-		// The king and the queen's rook must not have moved yet.
-		if castlingFlags().kingDidMove || castlingFlags().queensRookDidMove {
-			return false
-		}
-
-		// The king must be moving two squares to the left.
-		let y = whoseTurn.homeRow
-		if toSquare != Square(x: 2, y: y) {
-			return false
-		}
-
-		// The squares between the king and the king's rook must be empty.
-		if board[1, y] != nil || board[2, y] != nil || board[3, y] != nil {
-			return false
-		}
-
-		// If we got this far, the move passes this test.
-		return true
-	}
-	
 	private func checkVectors(from fromSquare: Square, to toSquare: Square) -> Bool {
 		// The fromSquare must contain a non-pawn piece owned by the current player.
 		guard let piece = board[fromSquare] else {
