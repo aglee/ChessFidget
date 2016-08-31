@@ -138,7 +138,12 @@ extension Position {
 			return false
 		}
 
-		// See if it's a castling.
+		// Not allowed to castle if currently in check.
+		if board.isInCheck(piece.color) {
+			return false
+		}
+
+		// Check the two cases: king-side castling and queen-side castling.
 		if canCastleKingSide(from: fromSquare, to: toSquare) {
 			return true
 		}
@@ -213,28 +218,13 @@ extension Position {
 
 		// See if there exists an unobstructed line from the fromSquare to the toSquare along one of the moving piece's vectors.
 		for vector in piece.type.movement.vectors {
-			if checkVector(vector: vector, canRepeat: piece.type.movement.canRepeat, from: fromSquare, to: toSquare) {
+			if board.pathIsClear(from: fromSquare, to: toSquare, vector: vector, canRepeat: piece.type.movement.canRepeat) {
 				return true
 			}
 		}
 
 		// If we got this far, the move is invalid.
 		return false
-	}
-
-	private func checkVector(vector: Vector, canRepeat: Bool, from fromSquare: Square, to toSquare: Square) -> Bool {
-		var sq = fromSquare
-		while true {
-			sq = sq.plus(vector)
-
-			if !board.indexIsValid(sq.x, sq.y) {
-				return false
-			} else if sq == toSquare {
-				return true
-			} else if !canRepeat {
-				return false
-			}
-		}
 	}
 
 	private func moveWouldPutKingInCheck(from fromSquare: Square, to toSquare: Square) -> Bool {

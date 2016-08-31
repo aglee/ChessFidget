@@ -50,7 +50,7 @@ enum PieceType {
 		}
 	}
 
-	private static let pieceMovements: [PieceType: PieceMovement] = [
+	private static let pieceMovements: [PieceType: PieceMovement] = [  // TODO: What's the right way to do this?
 		.Pawn: (vectors: [], canRepeat: false),
 		.Knight: (vectors: [(1, 2), (1, -2), (-1, 2), (-1, -2),
 		                    (2, 1), (2, -1), (-2, 1), (-2, -1)], canRepeat: false),
@@ -63,13 +63,19 @@ enum PieceType {
 	]
 }
 
-struct Piece {
+struct Piece: Equatable {
 	let color: PieceColor
 	let type: PieceType
 
 	init(_ color: PieceColor, _ type: PieceType) {
 		self.color = color
 		self.type = type
+	}
+
+	// MARK: - Equatable
+
+	public static func ==(lhs: Piece, rhs: Piece) -> Bool {
+		return lhs.color == rhs.color && lhs.type == rhs.type
 	}
 }
 

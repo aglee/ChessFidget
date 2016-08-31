@@ -13,20 +13,74 @@ struct Board {
 		return x >= 0 && x < 8 && y >= 0 && y < 8
 	}
 
-	func forAllSquares(_ action: (_ x: Int, _ y: Int) -> ()) {
-		for x in 0...7 {
-			for y in 0...7 {
-				action(x, y)
+	func pathIsClear(from fromSquare: Square, to toSquare: Square, vector: Vector, canRepeat: Bool) -> Bool {
+		var sq = fromSquare
+		while true {
+			sq = sq.plus(vector)
+
+			if !self.indexIsValid(sq.x, sq.y) {
+				return false
+			} else if sq == toSquare {
+				return true
+			} else if self[sq] != nil {
+				return false
+			} else if !canRepeat {
+				return false
 			}
 		}
 	}
-	
-	func forAllSquares(_ action: (Square) -> ()) {
+
+	// Assumes there is at most one square with a king of the given color.
+	func squareWithKing(_ color: PieceColor) -> Square? {
+		let king = Piece(color, .King)
 		for x in 0...7 {
 			for y in 0...7 {
-				action(Square(x: x, y: y))
+				if let piece = self[x, y] {
+					if piece == king {
+						return Square(x: x, y: y)
+					}
+				}
 			}
 		}
+		return nil
+	}
+
+	func isInCheck(_ color: PieceColor) -> Bool {
+		guard let kingSquare = squareWithKing(color) else {
+			return false
+		}
+
+		// Find all enemy pieces on the board and see if they attack the square the king is on.
+		for x in 0...7 {
+			for y in 0...7 {
+				guard let piece = self[x, y] else {
+					continue
+				}
+				if piece.color != color.opponent {
+					continue
+				}
+
+				if piece.type == .Pawn {
+					// Special handling for pawns.
+					if [-1, 1].contains(x - kingSquare.x)
+						&& kingSquare.y == y + piece.color.forwardDirection {
+						return true
+					}
+				} else {
+					// All other piece types.
+					for vec in piece.type.movement.vectors {
+						if pathIsClear(from: Square(x: x, y: y),
+						               to: kingSquare,
+						               vector: vec,
+						               canRepeat: piece.type.movement.canRepeat) {
+							return true
+						}
+					}
+				}
+			}
+		}
+
+		return false
 	}
 
 	// MARK: - Subscripting
