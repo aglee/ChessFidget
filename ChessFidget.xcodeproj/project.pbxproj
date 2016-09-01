@@ -12,6 +12,9 @@
 		7352F7A91D6E08D000EF9B5F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7352F7A71D6E08D000EF9B5F /* MainMenu.xib */; };
 		7352F7B41D6E08D100EF9B5F /* ChessFidgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352F7B31D6E08D100EF9B5F /* ChessFidgetTests.swift */; };
 		7352F7BF1D6E08D100EF9B5F /* ChessFidgetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352F7BE1D6E08D100EF9B5F /* ChessFidgetUITests.swift */; };
+		735824BD1D78BDCE0019D7B1 /* CastlingFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */; };
+		735824BE1D78BDD30019D7B1 /* CastlingFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */; };
+		735824BF1D78BDD40019D7B1 /* CastlingFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */; };
 		737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
 		737EE93B1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
 		737EE93C1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
@@ -102,6 +105,7 @@
 		7352F7BA1D6E08D100EF9B5F /* ChessFidgetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChessFidgetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7352F7BE1D6E08D100EF9B5F /* ChessFidgetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessFidgetUITests.swift; sourceTree = "<group>"; };
 		7352F7C01D6E08D100EF9B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CastlingFlags.swift; sourceTree = "<group>"; };
 		737EE9391D75CC1F00B5144B /* Piece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		73963DEF1D6E608D00C9D78B /* GameWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWindowController.swift; sourceTree = "<group>"; };
 		73963DF01D6E608D00C9D78B /* GameWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameWindowController.xib; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 				73963E681D6FC58E00C9D78B /* Square.swift */,
 				737EE9391D75CC1F00B5144B /* Piece.swift */,
 				73E31C191D74B8FF0013A33D /* Board.swift */,
+				735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */,
 				73963E581D6FC51600C9D78B /* Position.swift */,
 				73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */,
 				73963E641D6FC57000C9D78B /* Game.swift */,
@@ -446,6 +451,7 @@
 				7352F7A41D6E08D000EF9B5F /* AppDelegate.swift in Sources */,
 				73963E591D6FC51600C9D78B /* Position.swift in Sources */,
 				73963DFB1D6E630C00C9D78B /* BoardViewController.swift in Sources */,
+				735824BD1D78BDCE0019D7B1 /* CastlingFlags.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +461,7 @@
 			files = (
 				73963E6A1D6FC58E00C9D78B /* Square.swift in Sources */,
 				73E31C1B1D74B8FF0013A33D /* Board.swift in Sources */,
+				735824BE1D78BDD30019D7B1 /* CastlingFlags.swift in Sources */,
 				73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
 				737EE93B1D75CC1F00B5144B /* Piece.swift in Sources */,
 				73963E561D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
@@ -480,6 +487,7 @@
 				7352F7BF1D6E08D100EF9B5F /* ChessFidgetUITests.swift in Sources */,
 				73963E5B1D6FC51600C9D78B /* Position.swift in Sources */,
 				73963DFC1D6E630C00C9D78B /* BoardViewController.swift in Sources */,
+				735824BF1D78BDD40019D7B1 /* CastlingFlags.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

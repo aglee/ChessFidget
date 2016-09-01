@@ -16,84 +16,52 @@ struct Position {
 	var whoseTurn = PieceColor.White
 	var enPassantableSquare: Square? = nil
 
-	var whiteCanStillCastleKingSide = true
-	var whiteCanStillCastleQueenSide = true
-	var blackCanStillCastleKingSide = true
-	var blackCanStillCastleQueenSide = true
+	var castlingFlags = CastlingFlags()
 
-	var canStillCastleKingSide: Bool {
-		get {
-			switch whoseTurn {
-			case .White: return whiteCanStillCastleKingSide
-			case .Black: return blackCanStillCastleKingSide
-			}
-		}
-	}
+	// Assumes the move is valid for the current player and current board and is correctly described by the moveType.
+	mutating func move(from fromSquare: Square, to toSquare: Square, moveType: MoveType) {
+		// In all cases we move the piece that's at fromSquare to toSquare.
+		board.blindlyMove(from: fromSquare, to: toSquare)
 
-	var canStillCastleQueenSide: Bool {
-		get {
-			switch whoseTurn {
-			case .White: return whiteCanStillCastleQueenSide
-			case .Black: return blackCanStillCastleQueenSide
-			}
-		}
-	}
-
-	// Assumes the move is valid.
-	mutating func move(from fromSquare: Square, to toSquare: Square, promotion: PieceType? = nil) {
-		// Update the pieces on the board.
-		guard let piece = board[fromSquare] else {
+		// Do additional moving/removing/replacing as needed for special cases.
+		switch moveType {
+		case .invalid(let reason):
+			print("ERROR: Invalid move: \(reason)")  // TODO: Maybe assert -- or maybe don't have .invalid as a MoveType.
 			return
+
+		case .captureEnPassant:
+			// Remove the pawn being captured.
+			board[fromSquare.x, toSquare.y] = nil
+
+		case .pawnPromotion(let promotionType):
+			// Replace the pawn with the piece it's being promoted to.
+			board[toSquare] = Piece(whoseTurn, promotionType)
+
+		case .castleKingSide:
+			// Move the king's rook.
+			board.blindlyMove(from: Square(x: 7, y: whoseTurn.homeRow),
+			                  to: Square(x: 5, y: whoseTurn.homeRow))
+
+		case .castleQueenSide:
+			// Move the queen's rook.
+			board.blindlyMove(from: Square(x: 0, y: whoseTurn.homeRow),
+			                  to: Square(x: 3, y: whoseTurn.homeRow))
+
+		default: break
 		}
 
-		// Handle special cases.
-		enPassantableSquare = nil
-		if piece.type == .Pawn {
-			if toSquare.y == fromSquare.y + (2 * piece.color.forwardDirection) {
-				enPassantableSquare = toSquare
-			} else if toSquare.x != fromSquare.x && board[toSquare] == nil {
-				// This is a capture en passant.
-				board[toSquare.x, fromSquare.y] = nil
-			}
-		} else if piece.type == .King {
-			switch piece.color {
-			case .White:
-				whiteCanStillCastleKingSide = false
-				whiteCanStillCastleQueenSide = false
-			case .Black:
-				blackCanStillCastleKingSide = false
-				blackCanStillCastleQueenSide = false
-			}
-
-			let y = piece.color.homeRow
-			if fromSquare == Square(x: 4, y: y) {
-				if toSquare == Square(x: 6, y: y) {
-					// This is king-side castling.
-					board[5, y] = board[7, y]
-					board[7, y] = nil
-				} else if toSquare == Square(x: 2, y: y) {
-					// This is queen-side castling.
-					board[3, y] = board[0, y]
-					board[0, y] = nil
-				}
-			}
-		} else if piece.type == .Rook {
+		// Update castling flags.
+		if fromSquare.y == whoseTurn.homeRow {
 			if fromSquare.x == 0 {
-				switch piece.color {
-				case .White: whiteCanStillCastleQueenSide = false
-				case .Black: blackCanStillCastleQueenSide = false
-				}
+				castlingFlags.disableCastling(whoseTurn, .queenSide)
+			} else if fromSquare.x == 4 {
+				castlingFlags.disableCastling(whoseTurn)
 			} else if fromSquare.x == 7 {
-				switch piece.color {
-				case .White: whiteCanStillCastleKingSide = false
-				case .Black: blackCanStillCastleKingSide = false
-				}
+				castlingFlags.disableCastling(whoseTurn, .kingSide)
 			}
 		}
 
-		// Move the main piece.  We do this *after* the above because this allows us to check for the case of an en passant capture by seeing if toSquare is empty.
-		board[toSquare] = (promotion == nil ? piece : Piece(piece.color, promotion!))
-		board[fromSquare] = nil
+		// It's the other player's turn now.
 		whoseTurn = whoseTurn.opponent
 	}
 }

@@ -104,16 +104,17 @@ class BoardView: NSView {
 
 		// Bail if the move would be illegal.
 		let validator = MoveValidator(position: game.position, fromSquare: selectedSquare, toSquare: toSquare)
-		if case .invalid(let reason) = validator.validateMove() {
+		let moveType = validator.validateMove()
+		if case .invalid(let reason) = moveType {
 			Swift.print("Invalid move: \(selectedSquare)-\(toSquare). \(reason)")
 			return
 		}
 
 		// TODO: Ask the user for promotion info if necessary.
-		let promotion: PieceType? = nil
+//		let promotion: PieceType? = nil
 
 		// Play the move.
-		game.position.move(from: selectedSquare, to: toSquare, promotion: promotion)
+		game.position.move(from: selectedSquare, to: toSquare, moveType: moveType)
 		self.selectedSquare = nil
 	}
 

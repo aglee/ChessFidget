@@ -27,7 +27,7 @@ enum MoveType {
 	case pawnOneSquare
 	case pawnTwoSquares
 	case captureEnPassant
-	case pawnPromotion
+	case pawnPromotion(pieceType: PieceType)
 
 	case castleKingSide
 	case castleQueenSide
@@ -104,7 +104,7 @@ struct MoveValidator {
 			// One-square advance.
 			if toSquare.y == fromSquare.y + position.whoseTurn.forwardDirection {
 				if toSquare.y == position.whoseTurn.opponent.homeRow {
-					return .pawnPromotion
+					return .pawnPromotion(pieceType: .Queen)
 				} else {
 					return .pawnOneSquare
 				}
@@ -143,7 +143,7 @@ struct MoveValidator {
 
 	private func validateKingSideCastle() -> MoveType {
 		// The king and rook must not have moved yet.
-		if !position.canStillCastleKingSide {
+		if !position.castlingFlags.canCastle(position.whoseTurn, .kingSide) {
 			return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved)
 		}
 
@@ -167,7 +167,7 @@ struct MoveValidator {
 
 	private func validateQueenSideCastle() -> MoveType {
 		// The king and rook must not have moved yet.
-		if !position.canStillCastleQueenSide {
+		if !position.castlingFlags.canCastle(position.whoseTurn, .queenSide) {
 			return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved)
 		}
 
@@ -200,7 +200,9 @@ struct MoveValidator {
 	}
 
 	private func moveWouldLeaveKingInCheck(from fromSquare: Square, to toSquare: Square) -> Bool {
-		return position.board.afterBlindlyMoving(from: fromSquare, to: toSquare).isInCheck(position.whoseTurn)
+		var tempBoard = position.board
+		tempBoard.blindlyMove(from: fromSquare, to: toSquare)
+		return tempBoard.isInCheck(position.whoseTurn)
 	}
 
 	private func moveWouldLeaveKingInCheck() -> Bool {

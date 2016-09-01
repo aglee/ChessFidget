@@ -22,11 +22,9 @@ struct Board {
 		}
 	}
 
-	func afterBlindlyMoving(from fromSquare: Square, to toSquare: Square) -> Board {
-		var newBoard = self
-		newBoard[toSquare] = newBoard[fromSquare]
-		newBoard[fromSquare] = nil
-		return newBoard
+	mutating func blindlyMove(from fromSquare: Square, to toSquare: Square) {
+		self[toSquare] = self[fromSquare]
+		self[fromSquare] = nil
 	}
 
 	func indexIsValid(_ x: Int, _ y: Int) -> Bool {
