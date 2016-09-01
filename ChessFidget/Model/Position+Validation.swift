@@ -55,12 +55,6 @@ extension Position {
 
 	// "STAGE 2" as described above.
 	func canMove(from fromSquare: Square, to toSquare: Square) -> Bool {
-		return canMoveIgnoringKingVulnerability(from: fromSquare, to: toSquare)
-	}
-
-	// MARK: - Private functions
-
-	private func canMoveIgnoringKingVulnerability(from fromSquare: Square, to toSquare: Square) -> Bool {
 		guard let piece = board[fromSquare] else {
 			return false
 		}
@@ -81,6 +75,8 @@ extension Position {
 		// In all non-special cases, the piece must satisfy its move vectors.
 		return checkVectors(from: fromSquare, to: toSquare)
 	}
+
+	// MARK: - Private functions
 
 	private func canMovePawn(from fromSquare: Square, to toSquare: Square) -> Bool {
 		// The fromSquare must contain a pawn owned by the current player.
