@@ -17,7 +17,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	@IBAction func newDocument(_ sender: AnyObject?) {
 		let wc = GameWindowController(game: Game())
-		print("newDocument \(wc)")
 		gameWindowControllers.append(wc)
 		if gameWindowControllers.count == 1 {
 			wc.window?.center()
