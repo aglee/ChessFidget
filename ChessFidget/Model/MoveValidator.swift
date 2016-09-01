@@ -21,18 +21,6 @@ enum MoveError: String {
 	case moveIsBlockedByOccupiedSquare
 }
 
-enum MoveType {
-	case pawnOneSquare
-	case pawnTwoSquares
-	case captureEnPassant
-	case pawnPromotion(pieceType: PieceType)
-
-	case castleKingSide
-	case castleQueenSide
-
-	case plain
-}
-
 enum MoveValidity {
 	case valid(type: MoveType)
 	case invalid(reason: MoveError)
