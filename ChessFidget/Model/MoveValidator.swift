@@ -32,6 +32,24 @@ struct MoveValidator {
 	let toSquare: Square
 
 	func validateMove() -> MoveValidity {
+		let validity = mostlyValidateMove()
+
+		switch validity {
+		case .invalid:
+			return validity
+		case .valid(let moveType):
+			// Would the move leave the king in check?
+			if moveWouldLeaveKingInCheck(moveType: moveType) {
+				return .invalid(reason: .cannotLeaveKingInCheck)
+			} else {
+				return validity
+			}
+		}
+	}
+
+	// MARK: - Private functions
+
+	private func mostlyValidateMove() -> MoveValidity {
 		// The fromSquare must contain a piece owned by the current player.
 		guard let piece = position.board[fromSquare] else {
 			return .invalid(reason: .fromSquareMustContainPiece)
@@ -71,16 +89,9 @@ struct MoveValidator {
 			return .invalid(reason: .pieceDoesNotMoveThatWay)
 		}
 
-		// Would the move leave the king in check?
-		if moveWouldLeaveKingInCheck() {
-			return .invalid(reason: .cannotLeaveKingInCheck)
-		}
-
-		// If we got this far, the move is a valid plain move.
+		// If we got this far, the move seems like a valid plain move -- but note again, we have not checked whether it would put the player in check.
 		return .valid(type: .plain)
 	}
-
-	// MARK: - Private functions
 
 	private func validatePawnMove() -> MoveValidity {
 		if fromSquare.x == toSquare.x {
@@ -145,10 +156,10 @@ struct MoveValidator {
 		}
 
 		// The squares the king would cross must not put it in check.
-		if moveWouldLeaveKingInCheck(from: fromSquare, to: Square(x: fromSquare.x + 1, y: y)) {
+		if blindMoveWouldLeaveKingInCheck(from: fromSquare, to: Square(x: fromSquare.x + 1, y: y)) {
 			return .invalid(reason: .castlingCannotMoveKingAcrossAttackedSquare)
 		}
-		if moveWouldLeaveKingInCheck(from: fromSquare, to: Square(x: fromSquare.x + 2, y: y)) {
+		if blindMoveWouldLeaveKingInCheck(from: fromSquare, to: Square(x: fromSquare.x + 2, y: y)) {
 			return .invalid(reason: .castlingCannotMoveKingAcrossAttackedSquare)
 		}
 
@@ -169,10 +180,10 @@ struct MoveValidator {
 		}
 
 		// The squares the king would cross must not put it in check.
-		if moveWouldLeaveKingInCheck(from: fromSquare, to: Square(x: fromSquare.x - 1, y: y)) {
+		if blindMoveWouldLeaveKingInCheck(from: fromSquare, to: Square(x: fromSquare.x - 1, y: y)) {
 			return .invalid(reason: .castlingCannotMoveKingAcrossAttackedSquare)
 		}
-		if moveWouldLeaveKingInCheck(from: fromSquare, to: Square(x: fromSquare.x - 2, y: y)) {
+		if blindMoveWouldLeaveKingInCheck(from: fromSquare, to: Square(x: fromSquare.x - 2, y: y)) {
 			return .invalid(reason: .castlingCannotMoveKingAcrossAttackedSquare)
 		}
 
@@ -190,14 +201,16 @@ struct MoveValidator {
 		return false
 	}
 
-	private func moveWouldLeaveKingInCheck(from fromSquare: Square, to toSquare: Square) -> Bool {
+	private func blindMoveWouldLeaveKingInCheck(from fromSquare: Square, to toSquare: Square) -> Bool {
 		var tempBoard = position.board
 		tempBoard.blindlyMove(from: fromSquare, to: toSquare)
 		return tempBoard.isInCheck(position.whoseTurn)
 	}
 
-	private func moveWouldLeaveKingInCheck() -> Bool {
-		return moveWouldLeaveKingInCheck(from: fromSquare, to: toSquare);
+	private func moveWouldLeaveKingInCheck(moveType: MoveType) -> Bool {
+		var tempBoard = position.board
+		tempBoard.move(from: fromSquare, to: toSquare, moveType: moveType)
+		return tempBoard.isInCheck(position.whoseTurn)
 	}
 }
 

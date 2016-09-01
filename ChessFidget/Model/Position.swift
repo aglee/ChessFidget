@@ -20,31 +20,8 @@ struct Position {
 
 	// Assumes the move is valid for the current player and current board and is correctly described by the moveType.
 	mutating func move(from fromSquare: Square, to toSquare: Square, moveType: MoveType) {
-		// In all cases we move the piece that's at fromSquare to toSquare.
-		board.blindlyMove(from: fromSquare, to: toSquare)
-
-		// Do additional moving/removing/replacing as needed for special cases.
-		switch moveType {
-		case .captureEnPassant:
-			// Remove the pawn being captured.
-			board[fromSquare.x, toSquare.y] = nil
-
-		case .pawnPromotion(let promotionType):
-			// Replace the pawn with the piece it's being promoted to.
-			board[toSquare] = Piece(whoseTurn, promotionType)
-
-		case .castleKingSide:
-			// Move the king's rook.
-			board.blindlyMove(from: Square(x: 7, y: whoseTurn.homeRow),
-			                  to: Square(x: 5, y: whoseTurn.homeRow))
-
-		case .castleQueenSide:
-			// Move the queen's rook.
-			board.blindlyMove(from: Square(x: 0, y: whoseTurn.homeRow),
-			                  to: Square(x: 3, y: whoseTurn.homeRow))
-
-		default: break
-		}
+		// Update the board.
+		board.move(from: fromSquare, to: toSquare, moveType: moveType)
 
 		// Update castling flags.
 		if fromSquare.y == whoseTurn.homeRow {

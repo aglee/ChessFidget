@@ -48,20 +48,6 @@ struct Board {
 		}
 	}
 
-	func squareWithKing(_ color: PieceColor) -> Square? {
-		let king = Piece(color, .King)
-		for x in 0...7 {
-			for y in 0...7 {
-				if let piece = self[x, y] {
-					if piece == king {
-						return Square(x: x, y: y)
-					}
-				}
-			}
-		}
-		return nil
-	}
-
 	func isInCheck(_ color: PieceColor) -> Bool {
 		guard let kingSquare = squareWithKing(color) else {
 			return false
@@ -100,6 +86,42 @@ struct Board {
 		return false
 	}
 
+	// MARK: - Making moves
+
+	// Assumes the move is valid and is correctly described by moveType.
+	mutating func move(from fromSquare: Square, to toSquare: Square, moveType: MoveType) {
+		guard let piece = self[fromSquare] else {
+			print("ERROR: There's no piece on the from-square.")
+			return
+		}
+
+		// In all cases we move the piece that's at fromSquare to toSquare.
+		self.blindlyMove(from: fromSquare, to: toSquare)
+
+		// Do additional moving/removing/replacing as needed for special cases.
+		switch moveType {
+		case .captureEnPassant:
+			// Remove the pawn being captured.
+			self[fromSquare.x, toSquare.y] = nil
+
+		case .pawnPromotion(let promotionType):
+			// Replace the pawn with the piece it's being promoted to.
+			self[toSquare] = Piece(piece.color, promotionType)
+
+		case .castleKingSide:
+			// Move the king's rook.
+			self.blindlyMove(from: Square(x: 7, y: piece.color.homeRow),
+			                 to: Square(x: 5, y: piece.color.homeRow))
+
+		case .castleQueenSide:
+			// Move the queen's rook.
+			self.blindlyMove(from: Square(x: 0, y: piece.color.homeRow),
+			                 to: Square(x: 3, y: piece.color.homeRow))
+
+		default: break
+		}
+	}
+
 	// MARK: - Subscripting
 
 	subscript(_ x: Int, _ y: Int) -> Piece? {
@@ -120,6 +142,22 @@ struct Board {
 		set {
 			self[square.x, square.y] = newValue
 		}
+	}
+
+	// MARK: - Private functions
+
+	private func squareWithKing(_ color: PieceColor) -> Square? {
+		let king = Piece(color, .King)
+		for x in 0...7 {
+			for y in 0...7 {
+				if let piece = self[x, y] {
+					if piece == king {
+						return Square(x: x, y: y)
+					}
+				}
+			}
+		}
+		return nil
 	}
 }
 
