@@ -7,7 +7,27 @@
 //
 
 struct Board {
-	private var elements: [Piece?] = Array<Piece?>(repeating: nil, count: 64)
+	private var pieces: [Piece?] = Array<Piece?>(repeating: nil, count: 64)
+
+	init(newGame: Bool = true) {
+		for x in 0...7 {
+			self[x, 1] = Piece(.White, .Pawn)
+			self[x, 6] = Piece(.Black, .Pawn)
+		}
+
+		let pieceTypes: [PieceType] = [.Rook, .Knight, .Bishop, .Queen, .King, .Bishop, .Knight, .Rook]
+		for (x, pieceType) in pieceTypes.enumerated() {
+			self[x, 0] = Piece(.White, pieceType)
+			self[x, 7] = Piece(.Black, pieceType)
+		}
+	}
+
+	func afterBlindlyMoving(from fromSquare: Square, to toSquare: Square) -> Board {
+		var newBoard = self
+		newBoard[toSquare] = newBoard[fromSquare]
+		newBoard[fromSquare] = nil
+		return newBoard
+	}
 
 	func indexIsValid(_ x: Int, _ y: Int) -> Bool {
 		return x >= 0 && x < 8 && y >= 0 && y < 8
@@ -30,7 +50,6 @@ struct Board {
 		}
 	}
 
-	// Assumes there is at most one square with a king of the given color.
 	func squareWithKing(_ color: PieceColor) -> Square? {
 		let king = Piece(color, .King)
 		for x in 0...7 {
@@ -88,11 +107,11 @@ struct Board {
 	subscript(_ x: Int, _ y: Int) -> Piece? {
 		get {
 			assert(indexIsValid(x, y), "Index out of range")
-			return elements[(y * 8) + x]
+			return pieces[(y * 8) + x]
 		}
 		set {
 			assert(indexIsValid(x, y), "Index out of range")
-			elements[(y * 8) + x] = newValue
+			pieces[(y * 8) + x] = newValue
 		}
 	}
 

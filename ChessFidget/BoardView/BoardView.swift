@@ -80,41 +80,43 @@ class BoardView: NSView {
 		let localPoint = convert(event.locationInWindow, from: nil)
 		if let clickedSquare = squareContaining(localPoint: localPoint) {
 			if selectedSquare == nil {
-				if game!.position.canSelect(square: clickedSquare) {
+				if game?.position.board[clickedSquare]?.color == game?.position.whoseTurn {
 					selectedSquare = clickedSquare
 				}
-			} else if clickedSquare == selectedSquare! {
-				// Clicking the selected square unselects it.
-				selectedSquare = nil
 			} else {
-				tryMove(to: clickedSquare)
+				if clickedSquare != selectedSquare {
+					tryMove(to: clickedSquare)
+				}
+				selectedSquare = nil
 			}
-		} else {
-			selectedSquare = nil
 		}
 	}
 
 	// MARK: - Private methods -- user interaction
 
 	private func tryMove(to toSquare: Square) {
-		// TODO: should maybe assert
-		if selectedSquare == nil {
+		guard let game = game else {
+			return
+		}
+		guard let selectedSquare = selectedSquare else {
 			return
 		}
 
 		// Bail if the move would be illegal.
-		if !game!.position.canMove(from: selectedSquare!, to: toSquare) {
-			Swift.print("Illegal move: \(selectedSquare!)-\(toSquare)")
+		let validator = MoveValidator(position: game.position, fromSquare: selectedSquare, toSquare: toSquare)
+		switch validator.validateMove() {
+		case .invalid(let reason):
+			Swift.print("Illegal move: \(selectedSquare)-\(toSquare). \(reason)")
 			return
+		default: break
 		}
 
 		// TODO: Ask the user for promotion info if necessary.
 		let promotion: PieceType? = nil
 
 		// Play the move.
-		game?.position.move(from: selectedSquare!, to: toSquare, promotion: promotion)
-		selectedSquare = nil
-		needsDisplay = true
+		game.position.move(from: selectedSquare, to: toSquare, promotion: promotion)
+		self.selectedSquare = nil
 	}
 
 	// MARK: - Private methods  -- drawing
