@@ -25,10 +25,6 @@ struct Position {
 
 		// Do additional moving/removing/replacing as needed for special cases.
 		switch moveType {
-		case .invalid(let reason):
-			print("ERROR: Invalid move: \(reason)")  // TODO: Maybe assert -- or maybe don't have .invalid as a MoveType.
-			return
-
 		case .captureEnPassant:
 			// Remove the pawn being captured.
 			board[fromSquare.x, toSquare.y] = nil
