@@ -9,7 +9,7 @@
 typealias Vector = (dx: Int, dy: Int)  // dx, dy
 
 struct Square: Equatable, CustomStringConvertible {
-	static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]  // TODO: Handle index not in 8x8.
+	static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]
 	static let rankCharacters: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
 	let x: Int
@@ -28,7 +28,12 @@ struct Square: Equatable, CustomStringConvertible {
 
 	var description: String {
 		get {
-			return "\(Square.fileCharacters[x])\(Square.rankCharacters[y])"
+			if x == x % Square.fileCharacters.count
+				&& y == y % Square.rankCharacters.count {
+				return "\(Square.fileCharacters[x])\(Square.rankCharacters[y])"
+			} else {
+				return "Square(\(x),\(y))"
+			}
 		}
 	}
 
