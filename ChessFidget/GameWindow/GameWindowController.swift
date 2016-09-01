@@ -14,11 +14,18 @@ class GameWindowController: NSWindowController {
 
 	var game: Game?
 
+	convenience init(game: Game) {
+		self.init(windowNibName: "GameWindowController")
+		self.game = game
+	}
+
 	// MARK: - NSWindowController methods
 	
     override func windowDidLoad() {
         super.windowDidLoad()
 
+		boardViewController.game = game
+		boardViewController.boardView.game = game
     }
     
 }

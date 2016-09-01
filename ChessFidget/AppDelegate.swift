@@ -11,25 +11,37 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-	//@IBOutlet weak var window: NSWindow!
-	var gameWindowController: GameWindowController!
+	var gameWindowControllers: [GameWindowController] = []
+
+	// MARK: - Action methods
+
+	@IBAction func newDocument(_ sender: AnyObject?) {
+		let wc = GameWindowController(game: Game())
+		print("newDocument \(wc)")
+		gameWindowControllers.append(wc)
+		if gameWindowControllers.count == 1 {
+			wc.window?.center()
+		}
+		wc.showWindow(nil)
+	}
+
+	// TODO: Remove window controller when window closes.  Or better yet, convert this to document-based app.
+
+	// MARK: - NSApplicationDelegate methods
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		gameWindowController = GameWindowController(windowNibName: "GameWindowController")
-		gameWindowController.game = Game()
 
 
-		// FIXME: set game properly
-		let _ = gameWindowController.window
-		gameWindowController.boardViewController.game = gameWindowController.game
-		gameWindowController.boardViewController.boardView.game = gameWindowController.game
 
-		gameWindowController.window!.center()
-		gameWindowController.showWindow(nil)
+		newDocument(nil)
 	}
 
 	func applicationWillTerminate(_ aNotification: Notification) {
 	}
+
+	// MARK: - Private methods
+
+
 
 }
 
