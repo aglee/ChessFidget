@@ -23,6 +23,13 @@ struct Position {
 		// Update the board.
 		board.move(from: fromSquare, to: toSquare, moveType: moveType)
 
+		// Update en passant info.
+		if case .pawnTwoSquares = moveType {
+			enPassantableSquare = toSquare
+		} else {
+			enPassantableSquare = nil
+		}
+
 		// Update castling flags.
 		if fromSquare.y == whoseTurn.homeRow {
 			if fromSquare.x == 0 {
