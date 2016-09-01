@@ -102,7 +102,7 @@ struct Board {
 		switch moveType {
 		case .captureEnPassant:
 			// Remove the pawn being captured.
-			self[fromSquare.x, toSquare.y] = nil
+			self[toSquare.x, fromSquare.y] = nil
 
 		case .pawnPromotion(let promotionType):
 			// Replace the pawn with the piece it's being promoted to.
