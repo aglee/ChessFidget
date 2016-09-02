@@ -11,14 +11,22 @@ import Cocoa
 // TODO: Add an option to display the board flipped.
 class BoardView: NSView {
 
-	var game: Game?
 	// MARK: - Properties - game logic
 
+	var game: Game? {
+		didSet {
+			selectedSquare = nil
+			if let game = game {
+				validMoves = MoveGenerator(position: game.position).moves
+			}
+		}
+	}
 	var selectedSquare: Square? = nil {
 		didSet {
 			needsDisplay = true  //TODO: Use KVC.
 		}
 	}
+	private var validMoves = MoveLookup()
 
 	// MARK: Properties - appearance
 
@@ -105,30 +113,19 @@ class BoardView: NSView {
 	// MARK: - Private methods -- user interaction
 
 	private func tryMove(to toSquare: Square) {
-		guard let game = game else {
-			return
-		}
-		guard let selectedSquare = selectedSquare else {
-			return
-		}
+		guard let game = game
+			else { return }
+		guard let selectedSquare = selectedSquare
+			else { return }
+		guard let move = validMoves.move(from: selectedSquare, to: toSquare)
+			else { return }
 
-		// Bail if the move would be illegal.
-		let validator = MoveValidator(position: game.position, fromSquare: selectedSquare, toSquare: toSquare)
-		let validity = validator.validateMove()
-		switch validity {
-		case .invalid(let reason):
-			Swift.print("Invalid move: \(selectedSquare)-\(toSquare). \(reason)")
+		// TODO: Before making the move, if the move type is .pawnPromotion, ask the user to select a piece type to promote to, and modify move.moveType accordingly.  Currently pawns are always promoted to queens.
+		game.position.makeMove(move)
 
-		case .valid(let moveType):
-			// TODO: Ask the user for promotion info if necessary.
-//			let promotion: PieceType? = nil
-
-			// Play the move.
-			game.position.move(from: selectedSquare, to: toSquare, moveType: moveType)
-		}
-
-		// Regardless of the move's validity, unselect the selected square.
-		self.selectedSquare = nil
+		// Recalculate the set of valid moves given the new state of the board.
+		validMoves = MoveGenerator(position: game.position).moves
+		Swift.print(validMoves.allMoves().map({ "\($0.fromSquare)-\($0.toSquare)" }).sorted())
 	}
 
 	// MARK: - Private methods  -- drawing

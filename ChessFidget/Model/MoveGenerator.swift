@@ -218,7 +218,7 @@ struct MoveGenerator {
 
 	private func moveWouldLeaveKingInCheck(from fromSquare: Square, to toSquare: Square, moveType: MoveType) -> Bool {
 		var tempBoard = position.board
-		tempBoard.move(from: fromSquare, to: toSquare, moveType: moveType)
+		tempBoard.makeMove(from: fromSquare, to: toSquare, moveType: moveType)
 		return tempBoard.isInCheck(position.whoseTurn)
 	}
 }

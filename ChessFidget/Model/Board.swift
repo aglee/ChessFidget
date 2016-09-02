@@ -93,8 +93,12 @@ struct Board {
 
 	// MARK: - Making moves
 
+	mutating func makeMove(_ move: Move) {
+		makeMove(from: move.fromSquare, to: move.toSquare, moveType: move.moveType)
+	}
+
 	// Assumes the move is valid and is correctly described by moveType.
-	mutating func move(from fromSquare: Square, to toSquare: Square, moveType: MoveType) {
+	mutating func makeMove(from fromSquare: Square, to toSquare: Square, moveType: MoveType) {
 		guard let piece = self[fromSquare] else {
 			print("ERROR: There's no piece on the from-square.")
 			return
