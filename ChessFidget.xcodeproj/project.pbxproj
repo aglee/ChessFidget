@@ -15,9 +15,9 @@
 		735824BD1D78BDCE0019D7B1 /* CastlingFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */; };
 		735824BE1D78BDD30019D7B1 /* CastlingFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */; };
 		735824BF1D78BDD40019D7B1 /* CastlingFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */; };
-		735824C11D78CA000019D7B1 /* MoveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C01D78CA000019D7B1 /* MoveType.swift */; };
-		735824C21D78CA000019D7B1 /* MoveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C01D78CA000019D7B1 /* MoveType.swift */; };
-		735824C31D78CA000019D7B1 /* MoveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C01D78CA000019D7B1 /* MoveType.swift */; };
+		735824C11D78CA000019D7B1 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C01D78CA000019D7B1 /* Move.swift */; };
+		735824C21D78CA000019D7B1 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C01D78CA000019D7B1 /* Move.swift */; };
+		735824C31D78CA000019D7B1 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C01D78CA000019D7B1 /* Move.swift */; };
 		737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
 		737EE93B1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
 		737EE93C1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
@@ -109,7 +109,7 @@
 		7352F7BE1D6E08D100EF9B5F /* ChessFidgetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessFidgetUITests.swift; sourceTree = "<group>"; };
 		7352F7C01D6E08D100EF9B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CastlingFlags.swift; sourceTree = "<group>"; };
-		735824C01D78CA000019D7B1 /* MoveType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveType.swift; sourceTree = "<group>"; };
+		735824C01D78CA000019D7B1 /* Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
 		737EE9391D75CC1F00B5144B /* Piece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		73963DEF1D6E608D00C9D78B /* GameWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWindowController.swift; sourceTree = "<group>"; };
 		73963DF01D6E608D00C9D78B /* GameWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameWindowController.xib; sourceTree = "<group>"; };
@@ -221,7 +221,7 @@
 			children = (
 				73963E681D6FC58E00C9D78B /* Square.swift */,
 				737EE9391D75CC1F00B5144B /* Piece.swift */,
-				735824C01D78CA000019D7B1 /* MoveType.swift */,
+				735824C01D78CA000019D7B1 /* Move.swift */,
 				73E31C191D74B8FF0013A33D /* Board.swift */,
 				735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */,
 				73963E581D6FC51600C9D78B /* Position.swift */,
@@ -450,7 +450,7 @@
 				73C1D7861D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
 				73963E551D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				73963E001D6E6DB700C9D78B /* PieceIconSet.swift in Sources */,
-				735824C11D78CA000019D7B1 /* MoveType.swift in Sources */,
+				735824C11D78CA000019D7B1 /* Move.swift in Sources */,
 				737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */,
 				73963DF11D6E608D00C9D78B /* GameWindowController.swift in Sources */,
 				73963E651D6FC57000C9D78B /* Game.swift in Sources */,
@@ -467,7 +467,7 @@
 			files = (
 				73963E6A1D6FC58E00C9D78B /* Square.swift in Sources */,
 				73E31C1B1D74B8FF0013A33D /* Board.swift in Sources */,
-				735824C21D78CA000019D7B1 /* MoveType.swift in Sources */,
+				735824C21D78CA000019D7B1 /* Move.swift in Sources */,
 				735824BE1D78BDD30019D7B1 /* CastlingFlags.swift in Sources */,
 				73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
 				737EE93B1D75CC1F00B5144B /* Piece.swift in Sources */,
@@ -488,7 +488,7 @@
 				73C1D7881D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
 				73963E571D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				73963E261D6E745E00C9D78B /* PieceIconSet.swift in Sources */,
-				735824C31D78CA000019D7B1 /* MoveType.swift in Sources */,
+				735824C31D78CA000019D7B1 /* Move.swift in Sources */,
 				737EE93C1D75CC1F00B5144B /* Piece.swift in Sources */,
 				73963DF21D6E608D00C9D78B /* GameWindowController.swift in Sources */,
 				73963E671D6FC57000C9D78B /* Game.swift in Sources */,

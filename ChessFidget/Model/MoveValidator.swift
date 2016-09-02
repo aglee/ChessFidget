@@ -6,26 +6,6 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-enum MoveError: String {
-	case fromSquareMustContainPiece
-	case pieceBelongsToWrongPlayer
-
-	case cannotCastleOutOfCheck
-	case cannotCastleBecauseKingOrRookHasMoved
-	case cannotCastleAcrossOccupiedSquare
-	case castlingCannotMoveKingAcrossAttackedSquare
-
-	case cannotLeaveKingInCheck
-
-	case pieceDoesNotMoveThatWay
-	case moveIsBlockedByOccupiedSquare
-}
-
-enum MoveValidity {
-	case valid(type: MoveType)
-	case invalid(reason: MoveError)
-}
-
 struct MoveValidator {
 	let position: Position
 	let fromSquare: Square
