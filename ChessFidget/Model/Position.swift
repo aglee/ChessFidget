@@ -15,11 +15,16 @@ struct Position {
 	var board = Board()
 	var whoseTurn = PieceColor.White
 	var enPassantableSquare: Square? = nil
-
 	var castlingFlags = CastlingFlags()
-
-	func canCastle(_ side: CastlingSide) -> Bool {
-		return castlingFlags.canCastle(whoseTurn, side)
+	var canCastleKingSide: Bool {
+		get {
+			return castlingFlags.canCastle(whoseTurn, .kingSide)
+		}
+	}
+	var canCastleQueenSide: Bool {
+		get {
+			return castlingFlags.canCastle(whoseTurn, .queenSide)
+		}
 	}
 
 	// Assumes the move is valid for the current player and current board and is correctly described by the moveType.

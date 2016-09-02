@@ -142,7 +142,7 @@ struct MoveGenerator {
 
 	private mutating func addKingSideCastlingIfValid() {
 		// The king and rook must not have moved yet.
-		guard position.canCastle(.kingSide)
+		guard position.canCastleKingSide
 			else { return }
 		let kingHomeSquare = Square(x: 4, y: position.whoseTurn.homeRow)
 		guard position.board[kingHomeSquare] == Piece(position.whoseTurn, .King)
@@ -170,7 +170,7 @@ struct MoveGenerator {
 
 	private mutating func addQueenSideCastlingIfValid() {
 		// The king and rook must not have moved yet.
-		guard position.canCastle(.queenSide)
+		guard position.canCastleQueenSide
 			else { return }
 		let kingHomeSquare = Square(x: 4, y: position.whoseTurn.homeRow)
 		guard position.board[kingHomeSquare] == Piece(position.whoseTurn, .King)
