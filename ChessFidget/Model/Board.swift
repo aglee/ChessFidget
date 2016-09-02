@@ -27,16 +27,21 @@ struct Board {
 		self[fromSquare] = nil
 	}
 
-	func indexIsValid(_ x: Int, _ y: Int) -> Bool {
+	static func isWithinBounds(_ x: Int, _ y: Int) -> Bool {
 		return x >= 0 && x < 8 && y >= 0 && y < 8
 	}
 
+	static func isWithinBounds(_ sq: Square) -> Bool {
+		return isWithinBounds(sq.x, sq.y)
+	}
+
+	// Excluding toSquare.
 	func pathIsClear(from fromSquare: Square, to toSquare: Square, vector: Vector, canRepeat: Bool) -> Bool {
 		var sq = fromSquare
 		while true {
 			sq = sq + vector
 
-			if !self.indexIsValid(sq.x, sq.y) {
+			if !Board.isWithinBounds(sq) {
 				return false
 			} else if sq == toSquare {
 				return true
@@ -126,11 +131,11 @@ struct Board {
 
 	subscript(_ x: Int, _ y: Int) -> Piece? {
 		get {
-			assert(indexIsValid(x, y), "Index out of range")
+			assert(Board.isWithinBounds(x, y), "Index out of range")
 			return pieces[(y * 8) + x]
 		}
 		set {
-			assert(indexIsValid(x, y), "Index out of range")
+			assert(Board.isWithinBounds(x, y), "Index out of range")
 			pieces[(y * 8) + x] = newValue
 		}
 	}
