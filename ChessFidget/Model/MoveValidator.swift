@@ -128,8 +128,14 @@ struct MoveValidator {
 		guard position.canCastle(.kingSide)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 
-		// The squares between the king and the rook must be empty.
 		let y = position.whoseTurn.homeRow
+		let kingHomeSquare = Square(x: 4, y: position.whoseTurn.homeRow)
+		guard position.board[kingHomeSquare] == Piece(position.whoseTurn, .King)
+			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
+		guard position.board[7, y] == Piece(position.whoseTurn, .Rook)
+			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
+
+		// The squares between the king and the rook must be empty.
 		if position.board[5, y] != nil || position.board[6, y] != nil {
 			return .invalid(reason: .cannotCastleAcrossOccupiedSquare)
 		}
@@ -151,8 +157,14 @@ struct MoveValidator {
 		guard position.canCastle(.queenSide)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 
-		// The squares between the king and the rook must be empty.
 		let y = position.whoseTurn.homeRow
+		let kingHomeSquare = Square(x: 4, y: y)
+		guard position.board[kingHomeSquare] == Piece(position.whoseTurn, .King)
+			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
+		guard position.board[0, y] == Piece(position.whoseTurn, .Rook)
+			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
+
+		// The squares between the king and the rook must be empty.
 		if position.board[1, y] != nil || position.board[2, y] != nil || position.board[3, y] != nil {
 			return .invalid(reason: .cannotCastleAcrossOccupiedSquare)
 		}
