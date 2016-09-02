@@ -8,6 +8,10 @@
 
 typealias Vector = (dx: Int, dy: Int)  // dx, dy
 
+func +(_ square: Square, _ vector: Vector) -> Square {
+	return Square(x: square.x + vector.dx, y: square.y + vector.dy)
+}
+
 struct Square: Equatable, CustomStringConvertible {
 	static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]
 	static let rankCharacters: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8"]
@@ -18,10 +22,6 @@ struct Square: Equatable, CustomStringConvertible {
 	init(x: Int, y: Int) {
 		self.x = x
 		self.y = y
-	}
-
-	func plus(_ delta: Vector) -> Square {
-		return Square(x: x + delta.dx, y: y + delta.dy)
 	}
 
 	// MARK: - CustomStringConvertible

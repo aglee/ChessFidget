@@ -34,7 +34,7 @@ struct Board {
 	func pathIsClear(from fromSquare: Square, to toSquare: Square, vector: Vector, canRepeat: Bool) -> Bool {
 		var sq = fromSquare
 		while true {
-			sq = sq.plus(vector)
+			sq = sq + vector
 
 			if !self.indexIsValid(sq.x, sq.y) {
 				return false
