@@ -30,7 +30,7 @@ struct MoveValidator {
 	// MARK: - Private functions
 
 	private func mostlyValidateMove() -> MoveValidity {
-		// The fromSquare must contain a piece owned by the current player.
+		// The from-square must contain a piece owned by the current player.
 		guard let piece = position.board[fromSquare] else {
 			return .invalid(reason: .fromSquareMustContainPiece)
 		}
@@ -181,7 +181,7 @@ struct MoveValidator {
 		return .valid(type: .castleQueenSide)
 	}
 
-	// See if there exists an unobstructed line from the fromSquare to the toSquare along one of the moving piece's vectors.
+	// See if there exists an unobstructed line from the from-square to the to-square along one of the moving piece's vectors.
 	private func checkVectors(movement: PieceMovement) -> Bool {
 		for vector in movement.vectors {
 			if position.board.pathIsClear(from: fromSquare, to: toSquare, vector: vector, canRepeat: movement.canRepeat) {
