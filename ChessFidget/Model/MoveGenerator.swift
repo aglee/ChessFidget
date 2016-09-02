@@ -16,7 +16,7 @@ struct MoveGenerator {
 		addValidMoves()
 	}
 
-	// MARK: - Private functions
+	// MARK: - Private methods
 
 	private mutating func addValidMoves() {
 		// Scan the board for pieces owned by the current player.

@@ -24,7 +24,7 @@ struct Square: Equatable, CustomStringConvertible {
 		self.y = y
 	}
 
-	// MARK: - CustomStringConvertible
+	// MARK: - CustomStringConvertible protocol
 
 	var description: String {
 		get {
@@ -37,7 +37,7 @@ struct Square: Equatable, CustomStringConvertible {
 		}
 	}
 
-	// MARK: - Equatable
+	// MARK: - Equatable protocol
 
 	public static func ==(lhs: Square, rhs: Square) -> Bool {
 		return lhs.x == rhs.x && lhs.y == rhs.y

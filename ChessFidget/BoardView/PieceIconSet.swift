@@ -19,7 +19,7 @@ struct PieceIconSet {
 		return icon(piece.color, piece.type)
 	}
 
-	// MARK: - Private functions
+	// MARK: - Private methods
 
 	private func imageName(_ color: PieceColor, _ type: PieceType) -> String {
 		switch color {

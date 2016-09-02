@@ -27,7 +27,7 @@ struct MoveValidator {
 		}
 	}
 
-	// MARK: - Private functions
+	// MARK: - Private methods
 
 	private func mostlyValidateMove() -> MoveValidity {
 		// The from-square must contain a piece owned by the current player.

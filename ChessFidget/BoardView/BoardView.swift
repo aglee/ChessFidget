@@ -12,18 +12,26 @@ import Cocoa
 class BoardView: NSView {
 
 	var game: Game?
+	// MARK: - Properties - game logic
+
+	var selectedSquare: Square? = nil {
+		didSet {
+			needsDisplay = true  //TODO: Use KVC.
+		}
+	}
+
+	// MARK: Properties - appearance
+
 	var backgroundColor = NSColor.white
 	var whiteSquareColor = NSColor.yellow
 	var blackSquareColor = NSColor.brown
 	var pieceIcons = PieceIconSet()
+
+	// MARK: Properties - geometry
+
 	var boardRect: NSRect {
 		get {
 			return bounds.insetBy(dx: 12.0, dy: 12.0)
-		}
-	}
-	var selectedSquare: Square? = nil {
-		didSet {
-			needsDisplay = true  //TODO: Use KVC.
 		}
 	}
 	var squareWidth: CGFloat {
@@ -36,6 +44,8 @@ class BoardView: NSView {
 			return boardRect.size.height / 8.0
 		}
 	}
+
+	// MARK: - Geometry
 
 	func rectForSquare(_ x: Int, _ y: Int) -> NSRect {
 		return NSRect(x: boardRect.origin.x + CGFloat(x) * squareWidth,

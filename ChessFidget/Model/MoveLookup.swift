@@ -37,7 +37,7 @@ struct MoveLookup {
 		return lookup[lookupKeyForSquare(fromSquare)]?[lookupKeyForSquare(toSquare)]
 	}
 
-	// MARK: - Private functions
+	// MARK: - Private methods
 
 	private func lookupKeyForSquare(_ square: Square) -> Int {
 		return 10*(square.x + 1) + (square.y + 1)

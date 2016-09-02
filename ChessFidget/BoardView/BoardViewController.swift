@@ -18,7 +18,7 @@ class BoardViewController: NSViewController {
 		}
 	}
 
-	// MARK: - NSViewController overrides
+	// MARK: - NSViewController methods
 
 	override func viewDidLoad() {
 		super.viewDidLoad()

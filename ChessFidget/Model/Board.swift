@@ -149,7 +149,7 @@ struct Board {
 		}
 	}
 
-	// MARK: - Private functions
+	// MARK: - Private methods
 
 	private func squareWithKing(_ color: PieceColor) -> Square? {
 		let king = Piece(color, .King)

@@ -72,7 +72,7 @@ struct Piece: Equatable {
 		self.type = type
 	}
 
-	// MARK: - Equatable
+	// MARK: - Equatable protocol
 
 	public static func ==(lhs: Piece, rhs: Piece) -> Bool {
 		return lhs.color == rhs.color && lhs.type == rhs.type
