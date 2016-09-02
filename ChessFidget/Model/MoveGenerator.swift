@@ -94,6 +94,10 @@ struct MoveGenerator {
 		for dx in [-1, 1] {
 			guard let fromSquare = validSquareOrNil(enPassantableSquare + (dx, 0))
 				else { continue }
+			guard let piece = position.board[fromSquare]
+				else { continue }
+			guard piece == Piece(position.whoseTurn, .Pawn)
+				else { continue }
 			let toSquare = enPassantableSquare + (0, forward)
 			if position.board[toSquare] == nil {
 				addMoveIfNoCheck(fromSquare, toSquare, .captureEnPassant)
