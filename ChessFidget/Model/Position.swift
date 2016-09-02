@@ -18,6 +18,10 @@ struct Position {
 
 	var castlingFlags = CastlingFlags()
 
+	func canCastle(_ side: CastlingSide) -> Bool {
+		return castlingFlags.canCastle(whoseTurn, side)
+	}
+
 	// Assumes the move is valid for the current player and current board and is correctly described by the moveType.
 	mutating func move(from fromSquare: Square, to toSquare: Square, moveType: MoveType) {
 		// Update the board.

@@ -125,9 +125,8 @@ struct MoveValidator {
 
 	private func validateKingSideCastle() -> MoveValidity {
 		// The king and rook must not have moved yet.
-		if !position.castlingFlags.canCastle(position.whoseTurn, .kingSide) {
-			return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved)
-		}
+		guard position.canCastle(.kingSide)
+			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 
 		// The squares between the king and the rook must be empty.
 		let y = position.whoseTurn.homeRow
@@ -149,9 +148,8 @@ struct MoveValidator {
 
 	private func validateQueenSideCastle() -> MoveValidity {
 		// The king and rook must not have moved yet.
-		if !position.castlingFlags.canCastle(position.whoseTurn, .queenSide) {
-			return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved)
-		}
+		guard position.canCastle(.queenSide)
+			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 
 		// The squares between the king and the rook must be empty.
 		let y = position.whoseTurn.homeRow
