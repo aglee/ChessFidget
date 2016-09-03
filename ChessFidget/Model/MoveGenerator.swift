@@ -33,55 +33,55 @@ struct MoveGenerator {
 	}
 
 	private mutating func addValidMovesFromSquare(_ x: Int, _ y: Int) {
-		let fromSquare = Square(x: x, y: y)
-		guard let piece = position.board[fromSquare]
+		let startSquare = Square(x: x, y: y)
+		guard let piece = position.board[startSquare]
 			else { return }
 		guard piece.color == position.whoseTurn
 			else { return }
 
 		if piece.type == .Pawn {
-			addPawnForwardMoves(from: fromSquare)
-			addRegularPawnCaptures(from: fromSquare)
+			addPawnForwardMoves(from: startSquare)
+			addRegularPawnCaptures(from: startSquare)
 		} else {
 			for vector in piece.type.movement.vectors {
-				addMovesAlongVector(from: fromSquare, vector: vector, canRepeat: piece.type.movement.canRepeat)
+				addMovesAlongVector(from: startSquare, vector: vector, canRepeat: piece.type.movement.canRepeat)
 			}
 		}
 	}
 
-	private mutating func addPawnForwardMoves(from fromSquare: Square) {
+	private mutating func addPawnForwardMoves(from startSquare: Square) {
 		let forward = position.whoseTurn.forwardDirection
 
 		// Can the pawn move one square forward?
-		let oneSquareForward = fromSquare + (0, forward)
+		let oneSquareForward = startSquare + (0, forward)
 		guard position.board[oneSquareForward] == nil
 			else { return }
 		if oneSquareForward.y == position.whoseTurn.opponent.homeRow {
-			addPawnPromotionMoves(from: fromSquare, to: oneSquareForward)
+			addPawnPromotionMoves(from: startSquare, to: oneSquareForward)
 		} else {
-			addMoveIfNoCheck(fromSquare, oneSquareForward, .pawnOneSquare)
+			addMoveIfNoCheck(startSquare, oneSquareForward, .pawnOneSquare)
 		}
 
 		// Can the pawn move two squares forward?
-		if fromSquare.y == position.whoseTurn.pawnRow {
+		if startSquare.y == position.whoseTurn.pawnRow {
 			let twoSquaresForward = oneSquareForward + (0, forward)
 			if position.board[twoSquaresForward] == nil {
-				addMoveIfNoCheck(fromSquare, twoSquaresForward, .pawnTwoSquares)
+				addMoveIfNoCheck(startSquare, twoSquaresForward, .pawnTwoSquares)
 			}
 		}
 	}
 
-	private mutating func addRegularPawnCaptures(from fromSquare: Square) {
+	private mutating func addRegularPawnCaptures(from startSquare: Square) {
 		let forward = position.whoseTurn.forwardDirection
 		for dx in [-1, 1] {
-			guard let toSquare = validSquareOrNil(fromSquare + (dx, forward))
+			guard let endSquare = validSquareOrNil(startSquare + (dx, forward))
 				else { continue }
-			guard position.board[toSquare]?.color == position.whoseTurn.opponent
+			guard position.board[endSquare]?.color == position.whoseTurn.opponent
 				else { continue }
-			if toSquare.y == position.whoseTurn.opponent.homeRow {
-				addPawnPromotionMoves(from: fromSquare, to: toSquare)
+			if endSquare.y == position.whoseTurn.opponent.homeRow {
+				addPawnPromotionMoves(from: startSquare, to: endSquare)
 			} else {
-				addMoveIfNoCheck(fromSquare, toSquare, .plain)
+				addMoveIfNoCheck(startSquare, endSquare, .plain)
 			}
 		}
 	}
@@ -92,46 +92,46 @@ struct MoveGenerator {
 
 		let forward = position.whoseTurn.forwardDirection
 		for dx in [-1, 1] {
-			guard let fromSquare = validSquareOrNil(enPassantableSquare + (dx, 0))
+			guard let startSquare = validSquareOrNil(enPassantableSquare + (dx, 0))
 				else { continue }
-			guard let piece = position.board[fromSquare]
+			guard let piece = position.board[startSquare]
 				else { continue }
 			guard piece == Piece(position.whoseTurn, .Pawn)
 				else { continue }
-			let toSquare = enPassantableSquare + (0, forward)
-			if position.board[toSquare] == nil {
-				addMoveIfNoCheck(fromSquare, toSquare, .captureEnPassant)
+			let endSquare = enPassantableSquare + (0, forward)
+			if position.board[endSquare] == nil {
+				addMoveIfNoCheck(startSquare, endSquare, .captureEnPassant)
 			}
 		}
 	}
 	
-	private mutating func addPawnPromotionMoves(from fromSquare: Square, to toSquare: Square) {
-		if !blindMoveWouldLeaveKingInCheck(from: fromSquare, to: toSquare) {
-			addMoveConfirmedValid(fromSquare, toSquare, .pawnPromotion(pieceType: .Queen))
-			addMoveConfirmedValid(fromSquare, toSquare, .pawnPromotion(pieceType: .Rook))
-			addMoveConfirmedValid(fromSquare, toSquare, .pawnPromotion(pieceType: .Bishop))
-			addMoveConfirmedValid(fromSquare, toSquare, .pawnPromotion(pieceType: .Knight))
+	private mutating func addPawnPromotionMoves(from startSquare: Square, to endSquare: Square) {
+		if !blindMoveWouldLeaveKingInCheck(from: startSquare, to: endSquare) {
+			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Queen))
+			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Rook))
+			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Bishop))
+			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Knight))
 		}
 	}
 
-	private mutating func addMovesAlongVector(from fromSquare: Square, vector: Vector, canRepeat: Bool) {
+	private mutating func addMovesAlongVector(from startSquare: Square, vector: Vector, canRepeat: Bool) {
 		assert(vector.dx != 0 || vector.dy != 0, "Piece movement can't have a zero-length vector.")
-		var toSquare = fromSquare
+		var end = startSquare
 		while true {
-			toSquare = toSquare + vector
-			if !Board.isWithinBounds(toSquare) {
+			end = end + vector
+			if !Board.isWithinBounds(end) {
 				break
 			}
 
-			if let piece = position.board[toSquare] {
+			if let piece = position.board[end] {
 				if piece.color == position.whoseTurn.opponent {
 					// Capturing a piece.
-					addMoveIfNoCheck(fromSquare, toSquare, .plain)
+					addMoveIfNoCheck(startSquare, end, .plain)
 				}
 				break
 			} else {
 				// Moving to an empty square.
-				addMoveIfNoCheck(fromSquare, toSquare, .plain)
+				addMoveIfNoCheck(startSquare, end, .plain)
 			}
 
 			if !canRepeat {
@@ -196,29 +196,29 @@ struct MoveGenerator {
 		addMoveConfirmedValid(kingHomeSquare, kingHomeSquare + (-2, 0), .castleQueenSide)
 	}
 
-	private mutating func addMoveIfNoCheck(_ fromSquare: Square, _ toSquare: Square, _ moveType: MoveType) {
-		if !moveWouldLeaveKingInCheck(from: fromSquare, to: toSquare, moveType: moveType) {
-			addMoveConfirmedValid(fromSquare, toSquare, moveType)
+	private mutating func addMoveIfNoCheck(_ startSquare: Square, _ endSquare: Square, _ moveType: MoveType) {
+		if !moveWouldLeaveKingInCheck(from: startSquare, to: endSquare, type: moveType) {
+			addMoveConfirmedValid(startSquare, endSquare, moveType)
 		}
 	}
 
-	private mutating func addMoveConfirmedValid(_ fromSquare: Square, _ toSquare: Square, _ moveType: MoveType) {
-		validMoves.add(move: Move(from: fromSquare, to: toSquare, moveType: moveType))
+	private mutating func addMoveConfirmedValid(_ startSquare: Square, _ endSquare: Square, _ moveType: MoveType) {
+		validMoves.add(move: Move(from: startSquare, to: endSquare, type: moveType))
 	}
 
 	private func validSquareOrNil(_ sq: Square) -> Square? {
 		return Board.isWithinBounds(sq) ? sq : nil
 	}
 
-	private func blindMoveWouldLeaveKingInCheck(from fromSquare: Square, to toSquare: Square) -> Bool {
+	private func blindMoveWouldLeaveKingInCheck(from startSquare: Square, to endSquare: Square) -> Bool {
 		var tempBoard = position.board
-		tempBoard.blindlyMove(from: fromSquare, to: toSquare)
+		tempBoard.blindlyMove(from: startSquare, to: endSquare)
 		return tempBoard.isInCheck(position.whoseTurn)
 	}
 
-	private func moveWouldLeaveKingInCheck(from fromSquare: Square, to toSquare: Square, moveType: MoveType) -> Bool {
+	private func moveWouldLeaveKingInCheck(from startSquare: Square, to endSquare: Square, type moveType: MoveType) -> Bool {
 		var tempBoard = position.board
-		tempBoard.makeMove(from: fromSquare, to: toSquare, moveType: moveType)
+		tempBoard.makeMove(from: startSquare, to: endSquare, type: moveType)
 		return tempBoard.isInCheck(position.whoseTurn)
 	}
 }

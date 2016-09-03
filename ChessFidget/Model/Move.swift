@@ -19,7 +19,7 @@ enum MoveType {
 }
 
 enum MoveError: String {
-	case fromSquareMustContainPiece
+	case startSquareMustContainPiece
 	case pieceBelongsToWrongPlayer
 
 	case cannotCastleOutOfCheck
@@ -39,13 +39,13 @@ enum MoveValidity {
 }
 
 struct Move {
-	let fromSquare: Square
-	let toSquare: Square
-	let moveType: MoveType
+	let start: Square
+	let end: Square
+	let type: MoveType
 
-	init(from fromSquare: Square, to toSquare: Square, moveType: MoveType) {
-		self.fromSquare = fromSquare
-		self.toSquare = toSquare
-		self.moveType = moveType
+	init(from start: Square, to end: Square, type: MoveType) {
+		self.start = start
+		self.end = end
+		self.type = type
 	}
 }

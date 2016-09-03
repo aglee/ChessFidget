@@ -11,12 +11,12 @@ struct MoveLookup {
 	private var lookup: [Int: [Int: Move]] = [:]
 
 	mutating func add(move: Move) {
-		let fromKey = lookupKeyForSquare(move.fromSquare)
+		let fromKey = lookupKeyForSquare(move.start)
 		if lookup[fromKey] == nil {
 			lookup[fromKey] = [:]
 		}
 
-		let toKey = lookupKeyForSquare(move.toSquare)
+		let toKey = lookupKeyForSquare(move.end)
 		lookup[fromKey]![toKey] = move
 	}
 
@@ -24,17 +24,17 @@ struct MoveLookup {
 		return Array(lookup.values.map({ return $0.values }).joined())
 	}
 
-	// All moves with the given from-square.
-	func moves(from fromSquare: Square) -> [Move] {
-		if let lookupByToSquares = lookup[lookupKeyForSquare(fromSquare)] {
-			return Array(lookupByToSquares.values)
+	// All moves with the given starting square.
+	func moves(from startSquare: Square) -> [Move] {
+		if let lookupByends = lookup[lookupKeyForSquare(startSquare)] {
+			return Array(lookupByends.values)
 		} else {
 			return []
 		}
 	}
 
-	func move(from fromSquare: Square, to toSquare: Square) -> Move? {
-		return lookup[lookupKeyForSquare(fromSquare)]?[lookupKeyForSquare(toSquare)]
+	func move(from startSquare: Square, to endSquare: Square) -> Move? {
+		return lookup[lookupKeyForSquare(startSquare)]?[lookupKeyForSquare(endSquare)]
 	}
 
 	// MARK: - Private methods

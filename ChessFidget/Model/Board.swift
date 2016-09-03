@@ -22,9 +22,9 @@ struct Board {
 		}
 	}
 
-	mutating func blindlyMove(from fromSquare: Square, to toSquare: Square) {
-		self[toSquare] = self[fromSquare]
-		self[fromSquare] = nil
+	mutating func blindlyMove(from startSquare: Square, to endSquare: Square) {
+		self[endSquare] = self[startSquare]
+		self[startSquare] = nil
 	}
 
 	static func isWithinBounds(_ x: Int, _ y: Int) -> Bool {
@@ -35,15 +35,15 @@ struct Board {
 		return isWithinBounds(sq.x, sq.y)
 	}
 
-	// Excluding toSquare.
-	func pathIsClear(from fromSquare: Square, to toSquare: Square, vector: Vector, canRepeat: Bool) -> Bool {
-		var sq = fromSquare
+	// Excluding endSquare.
+	func pathIsClear(from startSquare: Square, to endSquare: Square, vector: Vector, canRepeat: Bool) -> Bool {
+		var sq = startSquare
 		while true {
 			sq = sq + vector
 
 			if !Board.isWithinBounds(sq) {
 				return false
-			} else if sq == toSquare {
+			} else if sq == endSquare {
 				return true
 			} else if self[sq] != nil {
 				return false
@@ -94,28 +94,28 @@ struct Board {
 	// MARK: - Making moves
 
 	mutating func makeMove(_ move: Move) {
-		makeMove(from: move.fromSquare, to: move.toSquare, moveType: move.moveType)
+		makeMove(from: move.start, to: move.end, type: move.type)
 	}
 
 	// Assumes the move is valid and is correctly described by moveType.
-	mutating func makeMove(from fromSquare: Square, to toSquare: Square, moveType: MoveType) {
-		guard let piece = self[fromSquare] else {
-			print("ERROR: There's no piece on the from-square.")
+	mutating func makeMove(from startSquare: Square, to endSquare: Square, type moveType: MoveType) {
+		guard let piece = self[startSquare] else {
+			print("ERROR: There's no piece on the starting square.")
 			return
 		}
 
-		// In all cases we move the piece that's at fromSquare to toSquare.
-		self.blindlyMove(from: fromSquare, to: toSquare)
+		// In all cases we move the piece that's at start to end.
+		self.blindlyMove(from: startSquare, to: endSquare)
 
 		// Do additional moving/removing/replacing as needed for special cases.
 		switch moveType {
 		case .captureEnPassant:
 			// Remove the pawn being captured.
-			self[toSquare.x, fromSquare.y] = nil
+			self[endSquare.x, startSquare.y] = nil
 
 		case .pawnPromotion(let promotionType):
 			// Replace the pawn with the piece it's being promoted to.
-			self[toSquare] = Piece(piece.color, promotionType)
+			self[endSquare] = Piece(piece.color, promotionType)
 
 		case .castleKingSide:
 			// Move the king's rook.

@@ -157,13 +157,13 @@ class BoardView: NSView {
 		}
 	}
 
-	private func tryProposedHumanMove(from fromSquare: Square, to toSquare: Square) -> Bool {
+	private func tryProposedHumanMove(from startSquare: Square, to endSquare: Square) -> Bool {
 		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
 
-		guard let move = validMoves.move(from: fromSquare, to: toSquare)
+		guard let move = validMoves.move(from: startSquare, to: endSquare)
 			else { return false }
 
-		// TODO: Before making the move, if the move type is .pawnPromotion, ask the user to select a piece type to promote to, and modify move.moveType accordingly.  Currently pawns are always promoted to queens.
+		// TODO: Before making the move, if the move type is .pawnPromotion, ask the user to select a piece type to promote to, and modify move.type accordingly.  Currently pawns are always promoted to queens.
 		makeMove(move)
 
 		return true
@@ -194,7 +194,7 @@ class BoardView: NSView {
 
 		// Recalculate the set of valid moves given the new state of the board.
 		validMoves = MoveGenerator(position: game.position).validMoves
-		Swift.print(validMoves.allMoves().map({ "\($0.fromSquare)-\($0.toSquare)" }).sorted())
+		Swift.print(validMoves.allMoves().map({ "\($0.start)-\($0.end)" }).sorted())
 	}
 
 	// MARK: - Private methods  -- drawing

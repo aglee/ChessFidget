@@ -28,28 +28,28 @@ struct Position {
 	}
 
 	mutating func makeMove(_ move: Move) {
-		makeMove(from: move.fromSquare, to: move.toSquare, moveType: move.moveType)
+		makeMove(from: move.start, to: move.end, type: move.type)
 	}
 
 	// Assumes the move is valid for the current player and current board and is correctly described by the moveType.
-	mutating func makeMove(from fromSquare: Square, to toSquare: Square, moveType: MoveType) {
+	mutating func makeMove(from startSquare: Square, to endSquare: Square, type moveType: MoveType) {
 		// Update the board.
-		board.makeMove(from: fromSquare, to: toSquare, moveType: moveType)
+		board.makeMove(from: startSquare, to: endSquare, type: moveType)
 
 		// Update en passant info.
 		if case .pawnTwoSquares = moveType {
-			enPassantableSquare = toSquare
+			enPassantableSquare = endSquare
 		} else {
 			enPassantableSquare = nil
 		}
 
 		// Update castling flags.
-		if fromSquare.y == whoseTurn.homeRow {
-			if fromSquare.x == 0 {
+		if startSquare.y == whoseTurn.homeRow {
+			if startSquare.x == 0 {
 				castlingFlags.disableCastling(whoseTurn, .queenSide)
-			} else if fromSquare.x == 4 {
+			} else if startSquare.x == 4 {
 				castlingFlags.disableCastling(whoseTurn)
-			} else if fromSquare.x == 7 {
+			} else if startSquare.x == 7 {
 				castlingFlags.disableCastling(whoseTurn, .kingSide)
 			}
 		}
