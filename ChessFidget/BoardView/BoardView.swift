@@ -11,19 +11,42 @@ import Cocoa
 // TODO: Add an option to display the board flipped.
 class BoardView: NSView {
 
-	// MARK: - Properties - game logic
+	// BoardView uses these to decide what to display and how to react to user inputs.
+	private enum StateOfPlay {
+		case initializing
+		case awaitingHumanMove
+		case awaitingComputerMove
+		case awaitingPromotionSelection
+		case gameIsOver
+	}
+
+	// MARK: - Properties - game play
 
 	var game: Game? {
 		didSet {
-			selectedSquare = nil
 			if let game = game {
 				validMoves = MoveGenerator(position: game.position).moves
 			}
 		}
 	}
-	var selectedSquare: Square? = nil {
+	private var stateOfPlay: StateOfPlay = .awaitingHumanMove { //.initializing {  //TODO: fix
 		didSet {
-			needsDisplay = true  //TODO: Use KVC.
+			Swift.print("state of play is now \(stateOfPlay)")
+			guard stateOfPlay != oldValue
+				else { return }
+
+			switch stateOfPlay {
+			case .awaitingComputerMove:
+				makeMoveOnBehalfOfComputer()
+			default:
+				break
+			}
+			needsDisplay = true
+		}
+	}
+	var selectedSquare: Square? {
+		didSet {
+			needsDisplay = true
 		}
 	}
 	private var validMoves = MoveLookup()
@@ -96,31 +119,77 @@ class BoardView: NSView {
 
 	override func mouseDown(with event: NSEvent) {
 		let localPoint = convert(event.locationInWindow, from: nil)
-		if let clickedSquare = squareContaining(localPoint: localPoint) {
-			if selectedSquare == nil {
-				if game?.position.board[clickedSquare]?.color == game?.position.whoseTurn {
-					selectedSquare = clickedSquare
-				}
-			} else {
-				if clickedSquare != selectedSquare {
-					tryMove(to: clickedSquare)
-				}
-				selectedSquare = nil
-			}
+		guard let clickedSquare = squareContaining(localPoint: localPoint)
+			else { return }
+
+		switch stateOfPlay {
+		case .awaitingHumanMove:
+			handleClickWhileAwaitingHumanMove(clickedSquare)
+		default:
+			break
 		}
 	}
 
 	// MARK: - Private methods -- user interaction
 
-	private func tryMove(to toSquare: Square) {
+	private func handleClickWhileAwaitingHumanMove(_ clickedSquare: Square) {
+		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
+
 		guard let game = game
 			else { return }
-		guard let selectedSquare = selectedSquare
-			else { return }
-		guard let move = validMoves.move(from: selectedSquare, to: toSquare)
-			else { return }
+
+		if selectedSquare == nil {
+			if game.position.board[clickedSquare]?.color == game.position.whoseTurn {
+				selectedSquare = clickedSquare
+			}
+		} else {
+			if clickedSquare != selectedSquare! {
+				if tryProposedHumanMove(from: selectedSquare!, to: clickedSquare) {
+					// We're currently hardwired to alternate turns between the human and the computer.
+					if validMoves.allMoves().count == 0 {
+						stateOfPlay = .gameIsOver
+					} else {
+						stateOfPlay = .awaitingComputerMove
+					}
+				}
+			}
+			selectedSquare = nil
+		}
+	}
+
+	private func tryProposedHumanMove(from fromSquare: Square, to toSquare: Square) -> Bool {
+		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
+
+		guard let move = validMoves.move(from: fromSquare, to: toSquare)
+			else { return false }
 
 		// TODO: Before making the move, if the move type is .pawnPromotion, ask the user to select a piece type to promote to, and modify move.moveType accordingly.  Currently pawns are always promoted to queens.
+		makeMove(move)
+
+		return true
+	}
+
+	private func makeMoveOnBehalfOfComputer() {
+		assert(stateOfPlay == .awaitingComputerMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingComputerMove)")
+
+		let moveArray = validMoves.allMoves()
+		let moveIndex = Int(arc4random_uniform(UInt32(moveArray.count)))
+		let move = moveArray[moveIndex]
+		makeMove(move)
+
+		// We're currently hardwired to alternate turns between the human and the computer.
+		if validMoves.allMoves().count == 0 {
+			stateOfPlay = .gameIsOver
+		} else {
+			stateOfPlay = .awaitingHumanMove
+		}
+	}
+
+	// The given move MUST be valid.
+	private func makeMove(_ move: Move) {
+		guard let game = game
+			else { return }
+
 		game.position.makeMove(move)
 
 		// Recalculate the set of valid moves given the new state of the board.
