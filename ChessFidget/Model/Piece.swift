@@ -50,7 +50,7 @@ enum PieceType {
 		}
 	}
 
-	private static let pieceMovements: [PieceType: PieceMovement] = [  // TODO: What's the right way to do this?
+	private static let pieceMovements: [PieceType: PieceMovement] = [
 		.Pawn: (vectors: [], canRepeat: false),
 		.Knight: (vectors: [(1, 2), (1, -2), (-1, 2), (-1, -2),
 		                    (2, 1), (2, -1), (-2, 1), (-2, -1)], canRepeat: false),

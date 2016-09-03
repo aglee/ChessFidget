@@ -145,7 +145,7 @@ class BoardView: NSView {
 		} else {
 			if clickedSquare != selectedSquare! {
 				if tryProposedHumanMove(from: selectedSquare!, to: clickedSquare) {
-					// We're currently hardwired to alternate turns between the human and the computer.
+					// TODO: We're currently hardwired to alternate turns between the human and the computer.
 					if validMoves.allMoves().count == 0 {
 						stateOfPlay = .gameIsOver
 					} else {
@@ -177,7 +177,7 @@ class BoardView: NSView {
 		let move = moveArray[moveIndex]
 		makeMove(move)
 
-		// We're currently hardwired to alternate turns between the human and the computer.
+		// TODO: We're currently hardwired to alternate turns between the human and the computer.
 		if validMoves.allMoves().count == 0 {
 			stateOfPlay = .gameIsOver
 		} else {
