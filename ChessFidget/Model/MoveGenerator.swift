@@ -9,7 +9,7 @@
 struct MoveGenerator {
 	let position: Position
 
-	var moves = MoveLookup()
+	var validMoves = MoveLookup()
 
 	init(position: Position) {
 		self.position = position
@@ -203,7 +203,7 @@ struct MoveGenerator {
 	}
 
 	private mutating func addMoveConfirmedValid(_ fromSquare: Square, _ toSquare: Square, _ moveType: MoveType) {
-		moves.add(move: Move(from: fromSquare, to: toSquare, moveType: moveType))
+		validMoves.add(move: Move(from: fromSquare, to: toSquare, moveType: moveType))
 	}
 
 	private func validSquareOrNil(_ sq: Square) -> Square? {

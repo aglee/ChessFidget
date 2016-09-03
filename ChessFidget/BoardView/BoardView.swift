@@ -25,7 +25,7 @@ class BoardView: NSView {
 	var game: Game? {
 		didSet {
 			if let game = game {
-				validMoves = MoveGenerator(position: game.position).moves
+				validMoves = MoveGenerator(position: game.position).validMoves
 			}
 		}
 	}
@@ -193,7 +193,7 @@ class BoardView: NSView {
 		game.position.makeMove(move)
 
 		// Recalculate the set of valid moves given the new state of the board.
-		validMoves = MoveGenerator(position: game.position).moves
+		validMoves = MoveGenerator(position: game.position).validMoves
 		Swift.print(validMoves.allMoves().map({ "\($0.fromSquare)-\($0.toSquare)" }).sorted())
 	}
 
