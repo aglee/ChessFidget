@@ -165,7 +165,7 @@ struct MoveGenerator {
 		}
 
 		// If we got this far, the move is valid.
-		addMoveConfirmedValid(kingHomeSquare, kingHomeSquare + (2, 0), .castleQueenSide)
+		addMoveConfirmedValid(kingHomeSquare, kingHomeSquare + (2, 0), .castleKingSide)
 	}
 
 	private mutating func addQueenSideCastlingIfValid() {
