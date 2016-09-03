@@ -106,7 +106,7 @@ struct MoveGenerator {
 	}
 	
 	private mutating func addPawnPromotionMoves(from startSquare: Square, to endSquare: Square) {
-		if !blindMoveWouldLeaveKingInCheck(from: startSquare, to: endSquare) {
+		if !position.board.blindMoveWouldLeaveKingInCheck(from: startSquare, to: endSquare) {
 			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Queen))
 			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Rook))
 			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Bishop))
@@ -159,7 +159,7 @@ struct MoveGenerator {
 
 		// The two squares the king would cross must not put it in check.
 		for vector in [(1, 0), (2, 0)] {
-			if blindMoveWouldLeaveKingInCheck(from: kingHomeSquare, to: kingHomeSquare + vector) {
+			if position.board.blindMoveWouldLeaveKingInCheck(from: kingHomeSquare, to: kingHomeSquare + vector) {
 				return
 			}
 		}
@@ -187,7 +187,7 @@ struct MoveGenerator {
 
 		// The two squares the king would cross must not put it in check.
 		for vector in [(-1, 0), (-2, 0)] {
-			if blindMoveWouldLeaveKingInCheck(from: kingHomeSquare, to: kingHomeSquare + vector) {
+			if position.board.blindMoveWouldLeaveKingInCheck(from: kingHomeSquare, to: kingHomeSquare + vector) {
 				return
 			}
 		}
@@ -197,7 +197,8 @@ struct MoveGenerator {
 	}
 
 	private mutating func addMoveIfNoCheck(_ startSquare: Square, _ endSquare: Square, _ moveType: MoveType) {
-		if !moveWouldLeaveKingInCheck(from: startSquare, to: endSquare, type: moveType) {
+		let move = Move(from: startSquare, to: endSquare, type: moveType)
+		if !position.board.moveWouldLeaveKingInCheck(move) {
 			addMoveConfirmedValid(startSquare, endSquare, moveType)
 		}
 	}
@@ -208,18 +209,6 @@ struct MoveGenerator {
 
 	private func validSquareOrNil(_ sq: Square) -> Square? {
 		return Board.isWithinBounds(sq) ? sq : nil
-	}
-
-	private func blindMoveWouldLeaveKingInCheck(from startSquare: Square, to endSquare: Square) -> Bool {
-		var tempBoard = position.board
-		tempBoard.blindlyMove(from: startSquare, to: endSquare)
-		return tempBoard.isInCheck(position.whoseTurn)
-	}
-
-	private func moveWouldLeaveKingInCheck(from startSquare: Square, to endSquare: Square, type moveType: MoveType) -> Bool {
-		var tempBoard = position.board
-		tempBoard.makeMove(from: startSquare, to: endSquare, type: moveType)
-		return tempBoard.isInCheck(position.whoseTurn)
 	}
 }
 

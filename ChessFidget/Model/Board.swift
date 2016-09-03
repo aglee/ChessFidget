@@ -22,10 +22,7 @@ struct Board {
 		}
 	}
 
-	mutating func blindlyMove(from startSquare: Square, to endSquare: Square) {
-		self[endSquare] = self[startSquare]
-		self[startSquare] = nil
-	}
+	// MARK: - Bounds checking
 
 	static func isWithinBounds(_ x: Int, _ y: Int) -> Bool {
 		return x >= 0 && x < 8 && y >= 0 && y < 8
@@ -34,6 +31,8 @@ struct Board {
 	static func isWithinBounds(_ sq: Square) -> Bool {
 		return isWithinBounds(sq.x, sq.y)
 	}
+
+	// MARK: - Evaluating moves
 
 	// Excluding endSquare.
 	func pathIsClear(from startSquare: Square, to endSquare: Square, vector: Vector, canRepeat: Bool) -> Bool {
@@ -91,6 +90,24 @@ struct Board {
 		return false
 	}
 
+	// Returns false if startSquare is empty.
+	func blindMoveWouldLeaveKingInCheck(from startSquare: Square, to endSquare: Square) -> Bool {
+		guard let piece = self[startSquare]
+			else { return false }
+		var tempBoard = self
+		tempBoard.blindlyMove(from: startSquare, to: endSquare)
+		return tempBoard.isInCheck(piece.color)
+	}
+
+	// Returns false if startSquare is empty.
+	func moveWouldLeaveKingInCheck(_ move: Move) -> Bool {
+		guard let piece = self[move.start]
+			else { return false }
+		var tempBoard = self
+		tempBoard.makeMove(move)
+		return tempBoard.isInCheck(piece.color)
+	}
+	
 	// MARK: - Making moves
 
 	mutating func makeMove(_ move: Move) {
@@ -154,6 +171,12 @@ struct Board {
 	}
 
 	// MARK: - Private methods
+
+	// Move whatever is at startSquare (including nil) to endSquare.
+	private mutating func blindlyMove(from startSquare: Square, to endSquare: Square) {
+		self[endSquare] = self[startSquare]
+		self[startSquare] = nil
+	}
 
 	private func squareWithKing(_ color: PieceColor) -> Square? {
 		let king = Piece(color, .King)
