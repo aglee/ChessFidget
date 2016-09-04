@@ -107,10 +107,10 @@ struct MoveGenerator {
 	
 	private mutating func addPawnPromotionMoves(from startSquare: Square, to endSquare: Square) {
 		if !position.board.blindMoveWouldLeaveKingInCheck(from: startSquare, to: endSquare) {
-			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Queen))
-			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Rook))
-			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Bishop))
-			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(pieceType: .Knight))
+			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(type: .promoteToQueen))
+			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(type: .promoteToRook))
+			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(type: .promoteToBishop))
+			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(type: .promoteToKnight))
 		}
 	}
 

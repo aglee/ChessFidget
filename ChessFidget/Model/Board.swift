@@ -132,7 +132,7 @@ struct Board {
 
 		case .pawnPromotion(let promotionType):
 			// Replace the pawn with the piece it's being promoted to.
-			self[endSquare] = Piece(piece.color, promotionType)
+			self[endSquare] = Piece(piece.color, promotionType.pieceType)
 
 		case .castleKingSide:
 			// Move the king's rook.

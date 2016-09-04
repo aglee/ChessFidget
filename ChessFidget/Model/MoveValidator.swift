@@ -87,7 +87,7 @@ struct MoveValidator {
 			// One-square advance.
 			if endSquare.y == startSquare.y + position.whoseTurn.forwardDirection {
 				if endSquare.y == position.whoseTurn.opponent.homeRow {
-					return .valid(type: .pawnPromotion(pieceType: .Queen))
+					return .valid(type: .pawnPromotion(type: .promoteToQueen))
 				} else {
 					return .valid(type: .pawnOneSquare)
 				}
