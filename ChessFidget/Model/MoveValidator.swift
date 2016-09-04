@@ -36,7 +36,7 @@ struct MoveValidator {
 			return .invalid(reason: .startSquareMustContainPiece)
 		}
 		if piece.color != position.whoseTurn {
-			return .invalid(reason: .pieceBelongsToWrongPlayer)
+			return .invalid(reason: .pieceOnStartSquareBelongsToWrongPlayer)
 		}
 		if position.board[endSquare]?.color == position.whoseTurn {
 			return .invalid(reason: .moveIsBlockedByOccupiedSquare)

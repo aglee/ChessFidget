@@ -43,7 +43,7 @@ enum MoveType {
 /** Reasons a proposed move from a given start-square to a given end-square might be invalid. */
 enum MoveError: String {
 	case startSquareMustContainPiece
-	case pieceBelongsToWrongPlayer
+	case pieceOnStartSquareBelongsToWrongPlayer
 
 	case cannotCastleOutOfCheck
 	case cannotCastleBecauseKingOrRookHasMoved
