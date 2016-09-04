@@ -59,7 +59,7 @@ struct MoveGenerator {
 		if oneSquareForward.y == position.whoseTurn.opponent.homeRow {
 			addPawnPromotionMoves(from: startSquare, to: oneSquareForward)
 		} else {
-			addMoveIfNoCheck(startSquare, oneSquareForward, .pawnOneSquare)
+			addMoveIfNoCheck(startSquare, oneSquareForward, .plain)
 		}
 
 		// Can the pawn move two squares forward?

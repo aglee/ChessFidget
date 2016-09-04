@@ -25,7 +25,6 @@ enum PromotionType {
 }
 
 enum MoveType {
-	case pawnOneSquare
 	case pawnTwoSquares
 	case captureEnPassant
 	case pawnPromotion(type: PromotionType)

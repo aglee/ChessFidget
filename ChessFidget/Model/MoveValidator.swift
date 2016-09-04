@@ -89,7 +89,7 @@ struct MoveValidator {
 				if endSquare.y == position.whoseTurn.opponent.homeRow {
 					return .valid(type: .pawnPromotion(type: .promoteToQueen))
 				} else {
-					return .valid(type: .pawnOneSquare)
+					return .valid(type: .plain)
 				}
 			}
 
