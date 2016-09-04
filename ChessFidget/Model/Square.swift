@@ -12,7 +12,7 @@ func +(_ square: Square, _ vector: Vector) -> Square {
 	return Square(x: square.x + vector.dx, y: square.y + vector.dy)
 }
 
-struct Square: Equatable, CustomStringConvertible {
+struct Square: Equatable, Hashable, CustomStringConvertible {
 	static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]
 	static let rankCharacters: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
@@ -34,6 +34,14 @@ struct Square: Equatable, CustomStringConvertible {
 			} else {
 				return "Square(\(x),\(y))"
 			}
+		}
+	}
+
+	// MARK: - Hashable protocol
+
+	var hashValue: Int {
+		get {
+			return x ^ y
 		}
 	}
 
