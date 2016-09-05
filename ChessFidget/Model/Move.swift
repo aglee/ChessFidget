@@ -1,5 +1,5 @@
 //
-//  MoveType.swift
+//  Move.swift
 //  ChessFidget
 //
 //  Created by Andy Lee on 9/1/16.
@@ -25,7 +25,7 @@ enum PromotionType {
 }
 
 enum MoveType {
-	// The most common case: move the piece from the start-square to the end-square, which might possibly contain an enemy piece being captured.
+	// The most common case: move the piece from the start square to the end square, which might possibly contain an enemy piece being captured.
 	case plain
 
 	// Special pawn moves.
@@ -36,27 +36,6 @@ enum MoveType {
 	// Castling, which can be thought of as special king moves.
 	case castleKingSide
 	case castleQueenSide
-}
-
-/** Reasons a proposed move from a given start-square to a given end-square might be invalid. */
-enum MoveError: String {
-	case startSquareMustContainPiece
-	case pieceOnStartSquareBelongsToWrongPlayer
-
-	case cannotCastleOutOfCheck
-	case cannotCastleBecauseKingOrRookHasMoved
-	case cannotCastleAcrossOccupiedSquare
-	case castlingCannotMoveKingAcrossAttackedSquare
-
-	case cannotLeaveKingInCheck
-
-	case pieceDoesNotMoveThatWay
-	case moveIsBlockedByOccupiedSquare
-}
-
-enum MoveValidity {
-	case valid(type: MoveType)
-	case invalid(reason: MoveError)
 }
 
 struct Move {

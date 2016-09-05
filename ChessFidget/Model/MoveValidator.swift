@@ -6,6 +6,27 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
+/** Reasons a proposed move from a given start square to a given end square might be invalid. */
+enum MoveError: String {
+	case startSquareMustContainPiece
+	case pieceOnStartSquareBelongsToWrongPlayer
+
+	case cannotCastleOutOfCheck
+	case cannotCastleBecauseKingOrRookHasMoved
+	case cannotCastleAcrossOccupiedSquare
+	case castlingCannotMoveKingAcrossAttackedSquare
+
+	case cannotLeaveKingInCheck
+
+	case pieceDoesNotMoveThatWay
+	case moveIsBlockedByOccupiedSquare
+}
+
+enum MoveValidity {
+	case valid(type: MoveType)
+	case invalid(reason: MoveError)
+}
+
 struct MoveValidator {
 	let position: Position
 	let startSquare: Square
