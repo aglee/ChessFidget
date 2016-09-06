@@ -126,12 +126,15 @@ struct MoveValidator {
 		} else if [-1, 1].contains(startSquare.x - endSquare.x)
 			&& startSquare.y + position.whoseTurn.forwardDirection == endSquare.y {
 
-			// Case 2: the pawn is moving diagonally forward one square (must be a capture).
+			// Case 2: the pawn is moving diagonally forward one square.  It must be a capture -- either an en passant capture, a capture that leads to pawn promotion, or a plain old capture.
 
 			if let capturedPiece = position.board[endSquare] {
 				if capturedPiece.color != position.whoseTurn {
-					// Plain diagonal capture.
-					return .valid(type: .plainMove)
+					if endSquare.y == position.whoseTurn.opponent.homeRow {
+						return .valid(type: .pawnPromotion(type: .promoteToQueen))
+					} else {
+						return .valid(type: .plainMove)
+					}
 				}
 			} else if position.board[endSquare] == nil
 				&& position.enPassantableSquare?.x == endSquare.x
