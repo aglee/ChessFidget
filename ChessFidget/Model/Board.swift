@@ -152,11 +152,11 @@ struct Board {
 
 	subscript(_ x: Int, _ y: Int) -> Piece? {
 		get {
-			assert(Board.isWithinBounds(x, y), "Index out of range")
+			assert(Board.isWithinBounds(x, y), "Index out of bounds")
 			return pieces[(y * 8) + x]
 		}
 		set {
-			assert(Board.isWithinBounds(x, y), "Index out of range")
+			assert(Board.isWithinBounds(x, y), "Index out of bounds")
 			pieces[(y * 8) + x] = newValue
 		}
 	}

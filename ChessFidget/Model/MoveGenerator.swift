@@ -54,7 +54,7 @@ struct MoveGenerator {
 
 		// Can the pawn move one square forward?
 		let oneSquareForward = startSquare + (0, forward)
-		guard position.board[oneSquareForward] == nil
+		guard Board.isWithinBounds(oneSquareForward) && position.board[oneSquareForward] == nil
 			else { return }
 		if oneSquareForward.y == position.whoseTurn.opponent.homeRow {
 			addPawnPromotionMoves(from: startSquare, to: oneSquareForward)
@@ -65,7 +65,7 @@ struct MoveGenerator {
 		// Can the pawn move two squares forward?
 		if startSquare.y == position.whoseTurn.pawnRow {
 			let twoSquaresForward = oneSquareForward + (0, forward)
-			if position.board[twoSquaresForward] == nil {
+			if Board.isWithinBounds(twoSquaresForward) && position.board[twoSquaresForward] == nil {
 				addMoveIfNoCheck(startSquare, twoSquaresForward, .pawnTwoSquares)
 			}
 		}
