@@ -24,16 +24,20 @@ class BoardViewController: NSViewController {
 	private var stateOfPlay: StateOfPlay = .awaitingHumanMove { //.initializing {  //TODO: fix
 		didSet {
 			Swift.print("state of play is now \(stateOfPlay)")
+
 			guard stateOfPlay != oldValue
 				else { return }
+
+			boardView.overlayText = nil
 
 			switch stateOfPlay {
 			case .awaitingComputerMove:
 				makeMoveOnBehalfOfComputer()
+			case .gameIsOver:
+				boardView.overlayText = "Game Over"
 			default:
 				break
 			}
-			boardView.needsDisplay = true
 		}
 	}
 

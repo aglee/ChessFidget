@@ -14,8 +14,12 @@ class BoardView: NSView {
 	// MARK: Properties - game play
 
 	var game: Game?
-
 	var selectedSquare: Square? {
+		didSet {
+			needsDisplay = true
+		}
+	}
+	var overlayText: String? = nil {
 		didSet {
 			needsDisplay = true
 		}
@@ -26,6 +30,11 @@ class BoardView: NSView {
 	var backgroundColor = NSColor.white
 	var whiteSquareColor = NSColor.yellow
 	var blackSquareColor = NSColor.brown
+	var overlayTextBackgroundColor = NSColor(calibratedWhite: 0.75, alpha: 1.0)
+
+	var overlayTextColor = NSColor.red
+	var overlayTextFont = NSFont(name: "Helvetica", size: 40.0)
+
 	var pieceIcons = PieceIconSet()
 
 	// MARK: Properties - geometry
@@ -83,6 +92,7 @@ class BoardView: NSView {
 		drawGrid()
 		drawPieces()
 		drawHighlightOnSelectedSquare()
+		drawOverlayText()
 	}
 
 	// MARK: - Private methods  -- drawing
@@ -123,4 +133,50 @@ class BoardView: NSView {
 			NSFrameRectWithWidth(rectForSquare(square), 6)
 		}
 	}
+
+	private func drawOverlayText() {
+		guard let overlayTextFont = overlayTextFont else {
+			Swift.print("wtf")
+			return
+		}
+		guard let overlayText = overlayText
+			else { return }
+		if overlayText.characters.count == 0 {
+			return
+		}
+
+		let overlayRect = bounds.insetBy(fraction: 0.1).insetBy(widthFraction: 0, heightFraction: 0.375)
+		let rr = NSBezierPath(roundedRect: overlayRect, xRadius: 8.0, yRadius: 8.0)
+		overlayTextBackgroundColor.set()
+		rr.fill()
+
+		let paraStyle = NSMutableParagraphStyle()
+		paraStyle.alignment = .center
+		let font = overlayTextFont.sizedToFit(string: overlayText, into: overlayRect.size)
+		overlayText.draw(in: overlayRect, withAttributes: [NSFontAttributeName : font, NSForegroundColorAttributeName: overlayTextColor, NSParagraphStyleAttributeName: paraStyle])
+	}
+
+}
+
+// Tweaked and converted to Swift from Peter Hosey's logic at <http://stackoverflow.com/a/7274302>.
+extension NSFont {
+
+	func sizedToFit(string: String, into area: CGSize, padding: CGFloat = 10.0) -> NSFont
+	{
+		//use standard size to prevent error accrual
+		guard let sampleFont = NSFont(descriptor: self.fontDescriptor, size: 12.0) else {
+			Swift.print("wtf")
+			return self
+		}
+		let sampleSize = string.size(withAttributes:[NSFontAttributeName: sampleFont])
+		let scale = scaleToAspectFit(source: sampleSize, into: area, padding: padding)
+
+		return NSFont(descriptor: self.fontDescriptor, size: scale * sampleFont.pointSize)!
+	}
+
+	private func scaleToAspectFit(source: CGSize, into: CGSize, padding: CGFloat) -> CGFloat
+	{
+		return min((into.width - padding)/source.width, (into.height - padding)/source.height)
+	}
+
 }
