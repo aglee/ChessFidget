@@ -9,6 +9,12 @@
 import Cocoa
 
 struct PieceIconSet {
+	private static var defaultIconSet = PieceIconSet()
+
+	static func defaultSet() -> PieceIconSet {
+		return defaultIconSet
+	}
+
 	func icon(_ color: PieceColor, _ type: PieceType) -> NSImage {
 		let name = imageName(color, type)
 		let image = NSImage(named: name)

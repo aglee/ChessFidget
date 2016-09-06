@@ -35,7 +35,7 @@ class BoardView: NSView {
 	var overlayTextColor = NSColor.red
 	var overlayTextFont = NSFont(name: "Helvetica", size: 40.0)
 
-	var pieceIcons = PieceIconSet()
+	var pieceIcons = PieceIconSet.defaultSet()
 
 	// MARK: Properties - geometry
 
