@@ -26,6 +26,8 @@
 		736C90FC1D7F22DD00A9020F /* PromotionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C90F91D7F22DD00A9020F /* PromotionSheetController.swift */; };
 		736C90FD1D7F22DD00A9020F /* PromotionSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */; };
 		736C90FE1D7F22DD00A9020F /* PromotionSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */; };
+		736C91011D7F246900A9020F /* PieceCharacterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C91001D7F246900A9020F /* PieceCharacterSet.swift */; };
+		736C91021D7F246900A9020F /* PieceCharacterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C91001D7F246900A9020F /* PieceCharacterSet.swift */; };
 		737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
 		737EE93B1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
 		737EE93C1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
@@ -123,6 +125,7 @@
 		736C90F21D7F0B5700A9020F /* NSFont+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFont+Extensions.swift"; sourceTree = "<group>"; };
 		736C90F91D7F22DD00A9020F /* PromotionSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromotionSheetController.swift; sourceTree = "<group>"; };
 		736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PromotionSheetController.xib; sourceTree = "<group>"; };
+		736C91001D7F246900A9020F /* PieceCharacterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieceCharacterSet.swift; sourceTree = "<group>"; };
 		737EE9391D75CC1F00B5144B /* Piece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		73963DEF1D6E608D00C9D78B /* GameWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWindowController.swift; sourceTree = "<group>"; };
 		73963DF01D6E608D00C9D78B /* GameWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameWindowController.xib; sourceTree = "<group>"; };
@@ -205,6 +208,7 @@
 				73963DEE1D6E607600C9D78B /* GameWindow */,
 				73963DF51D6E630C00C9D78B /* BoardView */,
 				736C90F81D7F22AB00A9020F /* PromotionWindow */,
+				736C90FF1D7F245600A9020F /* Piece Characters */,
 				7352F7A51D6E08D000EF9B5F /* Assets.xcassets */,
 				7352F7A71D6E08D000EF9B5F /* MainMenu.xib */,
 				7352F7AA1D6E08D000EF9B5F /* Info.plist */,
@@ -253,6 +257,14 @@
 				736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */,
 			);
 			path = PromotionWindow;
+			sourceTree = "<group>";
+		};
+		736C90FF1D7F245600A9020F /* Piece Characters */ = {
+			isa = PBXGroup;
+			children = (
+				736C91001D7F246900A9020F /* PieceCharacterSet.swift */,
+			);
+			path = "Piece Characters";
 			sourceTree = "<group>";
 		};
 		73963DEE1D6E607600C9D78B /* GameWindow */ = {
@@ -482,6 +494,7 @@
 				73963E001D6E6DB700C9D78B /* PieceIconSet.swift in Sources */,
 				735824C11D78CA000019D7B1 /* Move.swift in Sources */,
 				737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */,
+				736C91011D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
 				73963DF11D6E608D00C9D78B /* GameWindowController.swift in Sources */,
 				73963E651D6FC57000C9D78B /* Game.swift in Sources */,
 				7352F7A41D6E08D000EF9B5F /* AppDelegate.swift in Sources */,
@@ -524,6 +537,7 @@
 				73963E261D6E745E00C9D78B /* PieceIconSet.swift in Sources */,
 				735824C31D78CA000019D7B1 /* Move.swift in Sources */,
 				737EE93C1D75CC1F00B5144B /* Piece.swift in Sources */,
+				736C91021D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
 				73963DF21D6E608D00C9D78B /* GameWindowController.swift in Sources */,
 				73963E671D6FC57000C9D78B /* Game.swift in Sources */,
 				7352F7BF1D6E08D100EF9B5F /* ChessFidgetUITests.swift in Sources */,

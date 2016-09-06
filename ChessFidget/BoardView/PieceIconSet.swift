@@ -43,28 +43,4 @@ struct PieceIconSet {
 			}
 		}
 	}
-
-	// TODO: Do I use this anywhere?
-	private static func pieceCharacter(_ piece: Piece) -> Character {
-		switch piece.color {
-		case .White:
-			switch piece.type {
-			case .Pawn: return "♙"
-			case .Knight: return "♘"
-			case .Bishop: return "♗"
-			case .Rook: return "♖"
-			case .King: return "♔"
-			case .Queen: return "♕"
-			}
-		case .Black:
-			switch piece.type {
-			case .Pawn: return "♟"
-			case .Knight: return "♞"
-			case .Bishop: return "♝"
-			case .Rook: return "♜"
-			case .King: return "♚"
-			case .Queen: return "♛"
-			}
-		}
-	}
 }
