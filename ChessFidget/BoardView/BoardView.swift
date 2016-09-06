@@ -95,6 +95,12 @@ class BoardView: NSView {
 		drawOverlayText()
 	}
 
+	override var isFlipped: Bool {
+		guard let game = game
+			else { return false }
+		return game.humanPlayerPieceColor == .Black
+	}
+
 	// MARK: - Private methods  -- drawing
 
 	private func drawBackground() {

@@ -10,6 +10,6 @@ class Game {
 	var position: Position = Position()
 
 	// Game play alternates between the human player and the computer.
-	var humanPlayerPieceColor = PieceColor.White
+	var humanPlayerPieceColor = PieceColor.Black
 }
 
