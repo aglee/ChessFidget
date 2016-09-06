@@ -11,34 +11,10 @@ import Cocoa
 // TODO: Add an option to display the board flipped.
 class BoardView: NSView {
 
-	// BoardView uses these to decide what to display and how to react to user inputs.
-	private enum StateOfPlay {
-		case initializing
-		case awaitingHumanMove
-		case awaitingComputerMove
-		case awaitingPromotionSelection
-		case gameIsOver
-	}
-
-	// MARK: - Properties - game play
+	// MARK: Properties - game play
 
 	var game: Game?
 
-	private var stateOfPlay: StateOfPlay = .awaitingHumanMove { //.initializing {  //TODO: fix
-		didSet {
-			Swift.print("state of play is now \(stateOfPlay)")
-			guard stateOfPlay != oldValue
-				else { return }
-
-			switch stateOfPlay {
-			case .awaitingComputerMove:
-				makeMoveOnBehalfOfComputer()
-			default:
-				break
-			}
-			needsDisplay = true
-		}
-	}
 	var selectedSquare: Square? {
 		didSet {
 			needsDisplay = true
@@ -54,17 +30,17 @@ class BoardView: NSView {
 
 	// MARK: Properties - geometry
 
-	var boardRect: NSRect {
+	private var boardRect: NSRect {
 		get {
 			return bounds.insetBy(dx: 12.0, dy: 12.0)
 		}
 	}
-	var squareWidth: CGFloat {
+	private var squareWidth: CGFloat {
 		get {
 			return boardRect.size.width / 8.0
 		}
 	}
-	var squareHeight: CGFloat {
+	private var squareHeight: CGFloat {
 		get {
 			return boardRect.size.height / 8.0
 		}
@@ -72,14 +48,14 @@ class BoardView: NSView {
 
 	// MARK: - Geometry
 
-	func rectForSquare(_ x: Int, _ y: Int) -> NSRect {
+	private func rectForSquare(_ x: Int, _ y: Int) -> NSRect {
 		return NSRect(x: boardRect.origin.x + CGFloat(x) * squareWidth,
 		              y: boardRect.origin.y + CGFloat(y) * squareHeight,
 		              width: squareWidth,
 		              height: squareHeight);
 	}
 
-	func rectForSquare(_ square: Square) -> NSRect {
+	private func rectForSquare(_ square: Square) -> NSRect {
 		return rectForSquare(square.x, square.y)
 	}
 
@@ -107,103 +83,6 @@ class BoardView: NSView {
 		drawGrid()
 		drawPieces()
 		drawHighlightOnSelectedSquare()
-	}
-
-	// MARK: - NSResponder methods
-
-	override func mouseDown(with event: NSEvent) {
-		let localPoint = convert(event.locationInWindow, from: nil)
-		guard let clickedSquare = squareContaining(localPoint: localPoint)
-			else { return }
-
-		switch stateOfPlay {
-		case .awaitingHumanMove:
-			handleClickWhileAwaitingHumanMove(clickedSquare)
-		default:
-			break
-		}
-	}
-
-	// MARK: - Private methods -- user interaction
-
-	private func handleClickWhileAwaitingHumanMove(_ clickedSquare: Square) {
-		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
-
-		guard let game = game
-			else { return }
-
-		if selectedSquare == nil {
-			if game.position.board[clickedSquare]?.color == game.position.whoseTurn {
-				selectedSquare = clickedSquare
-			}
-		} else {
-			if clickedSquare != selectedSquare! {
-				tryProposedHumanMove(from: selectedSquare!, to: clickedSquare)
-				selectedSquare = nil
-			}
-		}
-	}
-
-	private func tryProposedHumanMove(from startSquare: Square, to endSquare: Square) {
-		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
-
-		guard let game = game
-			else { return }
-
-		let validator = MoveValidator(position: game.position, startSquare: startSquare, endSquare: endSquare)
-
-		switch validator.validateMove() {
-		case .invalid(let reason):
-			Swift.print("Invalid move \(startSquare)-\(endSquare): \(reason)")
-		case .valid(let moveType):
-			// TODO: Before making the move, if the move type is .pawnPromotion, ask the user to select a piece type to promote to, and modify move.type accordingly.  Currently pawns are always promoted to queens.
-			makeMove(Move(from: startSquare, to: endSquare, type: moveType))
-
-			// TODO: We're currently hardwired to alternate turns between the human and the computer.
-			if currentlyValidMoves().count == 0 {
-				stateOfPlay = .gameIsOver
-			} else {
-				stateOfPlay = .awaitingComputerMove
-			}
-		}
-	}
-
-	private func makeMoveOnBehalfOfComputer() {
-		assert(stateOfPlay == .awaitingComputerMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingComputerMove)")
-
-		let validMoves = currentlyValidMoves()
-		if validMoves.count == 0 {
-			stateOfPlay = .gameIsOver
-			return
-		}
-
-		let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
-		makeMove(validMoves[moveIndex])
-
-		let newValidMoves = currentlyValidMoves()
-		if newValidMoves.count == 0 {
-			stateOfPlay = .gameIsOver
-		} else {
-			// TODO: We're currently hardwired to alternate turns between the human and the computer.
-			stateOfPlay = .awaitingHumanMove
-		}
-	}
-
-	func currentlyValidMoves() -> [Move] {
-		guard let game = game
-			else { return [] }
-		return game.position.validMoves
-	}
-
-	// Assumes the given move is valid for the current position.
-	private func makeMove(_ move: Move) {
-		guard let game = game
-			else { return }
-
-		game.position.makeMove(move)
-
-		// Print for debugging.
-		Swift.print(currentlyValidMoves().map({ "\($0.start)-\($0.end)" }).sorted())
 	}
 
 	// MARK: - Private methods  -- drawing
