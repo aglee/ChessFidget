@@ -11,21 +11,45 @@ import Cocoa
 class GameWindowController: NSWindowController {
 
 	@IBOutlet var boardViewController: BoardViewController!
+	var game: Game
 
-	var game: Game?
-
-	convenience init(game: Game) {
-		self.init(windowNibName: "GameWindowController")
+	init(game: Game) {
 		self.game = game
+
+		// Passing window:nil causes windowNibName to be used.
+		super.init(window: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	// MARK: - Action methods
+
+	@IBAction func resetGameWithHumanPlayingWhite(_: AnyObject?) {
+		resetGame(humanPlayerPieceColor: .White)
+	}
+
+	@IBAction func resetGameWithHumanPlayingBlack(_: AnyObject?) {
+		resetGame(humanPlayerPieceColor: .Black)
 	}
 
 	// MARK: - NSWindowController methods
 	
+	override var windowNibName : String! {
+		return "GameWindowController"
+	}
+
     override func windowDidLoad() {
         super.windowDidLoad()
-
 		boardViewController.game = game
-		boardViewController.boardView.game = game
     }
+
+	// MARK: - Private methods
     
+	private func resetGame(humanPlayerPieceColor: PieceColor) {
+		game = Game(humanPlayerPieceColor: humanPlayerPieceColor)
+		boardViewController.game = game
+	}
+
 }

@@ -13,7 +13,12 @@ class BoardView: NSView {
 
 	// MARK: Properties - game play
 
-	var game: Game?
+	var game: Game? {
+		didSet {
+			needsDisplay = true
+			needsLayout = true  // Because the BoardView may need to re-reckon things if isFlipped changes depending on which color the human player is in the new value of game.
+		}
+	}
 	var selectedSquare: Square? {
 		didSet {
 			needsDisplay = true

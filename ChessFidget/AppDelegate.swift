@@ -13,34 +13,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	var gameWindowControllers: [GameWindowController] = []
 
-	// MARK: - Action methods
+	// MARK: - NSApplicationDelegate methods
 
-	@IBAction func newDocument(_ sender: AnyObject?) {
-		let wc = GameWindowController(game: Game())
+	func applicationDidFinishLaunching(_ aNotification: Notification) {
+		newGameWindow()
+	}
+
+	// MARK: - Private methods
+
+	private func newGameWindow() {
+		// TODO: Remove window controller when window closes.  Or maybe convert this to a document-based app so that will be handled automatically.
+		let wc = GameWindowController(game: Game(humanPlayerPieceColor: .White))
 		gameWindowControllers.append(wc)
 		if gameWindowControllers.count == 1 {
 			wc.window?.center()
 		}
 		wc.showWindow(nil)
 	}
-
-	// TODO: Remove window controller when window closes.  Or better yet, convert this to document-based app.
-
-	// MARK: - NSApplicationDelegate methods
-
-	func applicationDidFinishLaunching(_ aNotification: Notification) {
-
-
-
-		newDocument(nil)
-	}
-
-	func applicationWillTerminate(_ aNotification: Notification) {
-	}
-
-	// MARK: - Private methods
-
-
 
 }
 

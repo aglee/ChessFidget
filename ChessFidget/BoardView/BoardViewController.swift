@@ -21,13 +21,14 @@ class BoardViewController: NSViewController {
 
 	var game: Game? {
 		didSet {
+			boardView.game = game
 			figureOutWhetherHumanOrComputerOrNobodyMovesNext()
 		}
 	}
 
 	private var stateOfPlay: StateOfPlay = .initializing {
 		didSet {
-			Swift.print("state of play is now \(stateOfPlay)")
+			Swift.print(stateOfPlay)
 
 			guard stateOfPlay != oldValue
 				else { return }
@@ -135,7 +136,7 @@ class BoardViewController: NSViewController {
 		guard let game = game
 			else { return }
 
-		print("\(move.start)-\(move.end)")
+		print("\(move.start)-\(move.end) (\(move.type))")
 		game.position.makeMove(move)
 		figureOutWhetherHumanOrComputerOrNobodyMovesNext()
 
