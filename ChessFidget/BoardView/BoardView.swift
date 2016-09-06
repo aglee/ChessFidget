@@ -22,13 +22,8 @@ class BoardView: NSView {
 
 	// MARK: - Properties - game play
 
-	var game: Game? {
-		didSet {
-			if let game = game {
-				validMoves = MoveGenerator(position: game.position).validMoves
-			}
-		}
-	}
+	var game: Game?
+
 	private var stateOfPlay: StateOfPlay = .awaitingHumanMove { //.initializing {  //TODO: fix
 		didSet {
 			Swift.print("state of play is now \(stateOfPlay)")
@@ -49,7 +44,6 @@ class BoardView: NSView {
 			needsDisplay = true
 		}
 	}
-	private var validMoves = MoveLookup()
 
 	// MARK: Properties - appearance
 
@@ -144,57 +138,72 @@ class BoardView: NSView {
 			}
 		} else {
 			if clickedSquare != selectedSquare! {
-				if tryProposedHumanMove(from: selectedSquare!, to: clickedSquare) {
-					// TODO: We're currently hardwired to alternate turns between the human and the computer.
-					if validMoves.allMoves().count == 0 {
-						stateOfPlay = .gameIsOver
-					} else {
-						stateOfPlay = .awaitingComputerMove
-					}
-				}
+				tryProposedHumanMove(from: selectedSquare!, to: clickedSquare)
+				selectedSquare = nil
 			}
-			selectedSquare = nil
 		}
 	}
 
-	private func tryProposedHumanMove(from startSquare: Square, to endSquare: Square) -> Bool {
+	private func tryProposedHumanMove(from startSquare: Square, to endSquare: Square) {
 		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
 
-		guard let move = validMoves.move(from: startSquare, to: endSquare)
-			else { return false }
+		guard let game = game
+			else { return }
 
-		// TODO: Before making the move, if the move type is .pawnPromotion, ask the user to select a piece type to promote to, and modify move.type accordingly.  Currently pawns are always promoted to queens.
-		makeMove(move)
+		let validator = MoveValidator(position: game.position, startSquare: startSquare, endSquare: endSquare)
 
-		return true
+		switch validator.validateMove() {
+		case .invalid(let reason):
+			Swift.print("Invalid move \(startSquare)-\(endSquare): \(reason)")
+		case .valid(let moveType):
+			// TODO: Before making the move, if the move type is .pawnPromotion, ask the user to select a piece type to promote to, and modify move.type accordingly.  Currently pawns are always promoted to queens.
+			makeMove(Move(from: startSquare, to: endSquare, type: moveType))
+
+			// TODO: We're currently hardwired to alternate turns between the human and the computer.
+			if currentlyValidMoves().count == 0 {
+				stateOfPlay = .gameIsOver
+			} else {
+				stateOfPlay = .awaitingComputerMove
+			}
+		}
 	}
 
 	private func makeMoveOnBehalfOfComputer() {
 		assert(stateOfPlay == .awaitingComputerMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingComputerMove)")
 
-		let moveArray = validMoves.allMoves()
-		let moveIndex = Int(arc4random_uniform(UInt32(moveArray.count)))
-		let move = moveArray[moveIndex]
-		makeMove(move)
+		let validMoves = currentlyValidMoves()
+		if validMoves.count == 0 {
+			stateOfPlay = .gameIsOver
+			return
+		}
 
-		// TODO: We're currently hardwired to alternate turns between the human and the computer.
-		if validMoves.allMoves().count == 0 {
+		let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
+		makeMove(validMoves[moveIndex])
+
+		let newValidMoves = currentlyValidMoves()
+		if newValidMoves.count == 0 {
 			stateOfPlay = .gameIsOver
 		} else {
+			// TODO: We're currently hardwired to alternate turns between the human and the computer.
 			stateOfPlay = .awaitingHumanMove
 		}
 	}
 
-	// The given move MUST be valid.
+	func currentlyValidMoves() -> [Move] {
+		guard let game = game
+			else { return [] }
+		return game.position.validMoves
+	}
+
+	// Assumes the given move is valid for the current position.
 	private func makeMove(_ move: Move) {
 		guard let game = game
 			else { return }
 
 		game.position.makeMove(move)
 
-		// Recalculate the set of valid moves given the new state of the board.
-		validMoves = MoveGenerator(position: game.position).validMoves
-		Swift.print(validMoves.allMoves().map({ "\($0.start)-\($0.end)" }).sorted())
+		// Print for debugging.
+		Swift.print(currentlyValidMoves().map({ "\($0.start)-\($0.end)" }).sorted())
 	}
 
 	// MARK: - Private methods  -- drawing

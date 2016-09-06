@@ -100,11 +100,11 @@ struct Board {
 	}
 
 	// Returns false if startSquare is empty.
-	func moveWouldLeaveKingInCheck(_ move: Move) -> Bool {
-		guard let piece = self[move.start]
+	func moveWouldLeaveKingInCheck(from startSquare: Square, to endSquare: Square, type moveType: MoveType) -> Bool {
+		guard let piece = self[startSquare]
 			else { return false }
 		var tempBoard = self
-		tempBoard.makeMove(move)
+		tempBoard.makeMove(from: startSquare, to: endSquare, type: moveType)
 		return tempBoard.isInCheck(piece.color)
 	}
 	

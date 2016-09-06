@@ -26,6 +26,11 @@ struct Position {
 			return castlingFlags.canCastle(whoseTurn, .queenSide)
 		}
 	}
+	var validMoves: [Move] {
+		get {
+			return MoveGenerator(position: self).allValidMoves
+		}
+	}
 
 	mutating func makeMove(_ move: Move) {
 		makeMove(from: move.start, to: move.end, type: move.type)

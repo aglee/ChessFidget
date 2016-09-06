@@ -9,7 +9,7 @@
 struct MoveGenerator {
 	let position: Position
 
-	var validMoves = MoveLookup()
+	var allValidMoves: [Move] = []
 
 	init(position: Position) {
 		self.position = position
@@ -18,11 +18,12 @@ struct MoveGenerator {
 
 	// MARK: - Private methods
 
+	// Finds all valid moves and add them to the allValidMoves array.
 	private mutating func addValidMoves() {
 		// Scan the board for pieces owned by the current player.
 		for x in 0...7 {
 			for y in 0...7 {
-				addValidMovesFromSquare(x, y)
+				addValidMovesWithStartSquare(Square(x: x, y: y))
 			}
 		}
 
@@ -32,8 +33,7 @@ struct MoveGenerator {
 		addQueenSideCastlingIfValid()
 	}
 
-	private mutating func addValidMovesFromSquare(_ x: Int, _ y: Int) {
-		let startSquare = Square(x: x, y: y)
+	private mutating func addValidMovesWithStartSquare(_ startSquare: Square) {
 		guard let piece = position.board[startSquare]
 			else { return }
 		guard piece.color == position.whoseTurn
@@ -107,31 +107,31 @@ struct MoveGenerator {
 	
 	private mutating func addPawnPromotionMoves(from startSquare: Square, to endSquare: Square) {
 		if !position.board.blindMoveWouldLeaveKingInCheck(from: startSquare, to: endSquare) {
-			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(type: .promoteToQueen))
-			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(type: .promoteToRook))
-			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(type: .promoteToBishop))
-			addMoveConfirmedValid(startSquare, endSquare, .pawnPromotion(type: .promoteToKnight))
+			addConfirmedValidMove(startSquare, endSquare, .pawnPromotion(type: .promoteToQueen))
+			addConfirmedValidMove(startSquare, endSquare, .pawnPromotion(type: .promoteToRook))
+			addConfirmedValidMove(startSquare, endSquare, .pawnPromotion(type: .promoteToBishop))
+			addConfirmedValidMove(startSquare, endSquare, .pawnPromotion(type: .promoteToKnight))
 		}
 	}
 
 	private mutating func addMovesAlongVector(from startSquare: Square, vector: Vector, canRepeat: Bool) {
 		assert(vector.dx != 0 || vector.dy != 0, "Piece movement can't have a zero-length vector.")
-		var end = startSquare
+		var endSquare = startSquare
 		while true {
-			end = end + vector
-			if !Board.isWithinBounds(end) {
+			endSquare = endSquare + vector
+			if !Board.isWithinBounds(endSquare) {
 				break
 			}
 
-			if let piece = position.board[end] {
+			if let piece = position.board[endSquare] {
 				if piece.color == position.whoseTurn.opponent {
 					// Capturing a piece.
-					addMoveIfNoCheck(startSquare, end, .plain)
+					addMoveIfNoCheck(startSquare, endSquare, .plain)
 				}
 				break
 			} else {
 				// Moving to an empty square.
-				addMoveIfNoCheck(startSquare, end, .plain)
+				addMoveIfNoCheck(startSquare, endSquare, .plain)
 			}
 
 			if !canRepeat {
@@ -165,7 +165,7 @@ struct MoveGenerator {
 		}
 
 		// If we got this far, the move is valid.
-		addMoveConfirmedValid(kingHomeSquare, kingHomeSquare + (2, 0), .castleKingSide)
+		addConfirmedValidMove(kingHomeSquare, kingHomeSquare + (2, 0), .castleKingSide)
 	}
 
 	private mutating func addQueenSideCastlingIfValid() {
@@ -193,18 +193,17 @@ struct MoveGenerator {
 		}
 
 		// If we got this far, the move is valid.
-		addMoveConfirmedValid(kingHomeSquare, kingHomeSquare + (-2, 0), .castleQueenSide)
+		addConfirmedValidMove(kingHomeSquare, kingHomeSquare + (-2, 0), .castleQueenSide)
 	}
 
 	private mutating func addMoveIfNoCheck(_ startSquare: Square, _ endSquare: Square, _ moveType: MoveType) {
-		let move = Move(from: startSquare, to: endSquare, type: moveType)
-		if !position.board.moveWouldLeaveKingInCheck(move) {
-			addMoveConfirmedValid(startSquare, endSquare, moveType)
+		if !position.board.moveWouldLeaveKingInCheck(from: startSquare, to: endSquare, type: moveType) {
+			addConfirmedValidMove(startSquare, endSquare, moveType)
 		}
 	}
 
-	private mutating func addMoveConfirmedValid(_ startSquare: Square, _ endSquare: Square, _ moveType: MoveType) {
-		validMoves.add(move: Move(from: startSquare, to: endSquare, type: moveType))
+	private mutating func addConfirmedValidMove(_ startSquare: Square, _ endSquare: Square, _ moveType: MoveType) {
+		allValidMoves.append(Move(from: startSquare, to: endSquare, type: moveType))
 	}
 
 	private func validSquareOrNil(_ sq: Square) -> Square? {

@@ -40,8 +40,7 @@ struct MoveValidator {
 			return validity
 		case .valid(let moveType):
 			// Would the move leave the king in check?
-			let move = Move(from: startSquare, to: endSquare, type: moveType)
-			if position.board.moveWouldLeaveKingInCheck(move) {
+			if position.board.moveWouldLeaveKingInCheck(from: startSquare, to: endSquare, type: moveType) {
 				return .invalid(reason: .cannotLeaveKingInCheck)
 			} else {
 				return validity
@@ -51,6 +50,7 @@ struct MoveValidator {
 
 	// MARK: - Private methods
 
+	// Checks the validity of the move EXCEPT for whether it would leave the king in check.
 	private func mostlyValidateMove() -> MoveValidity {
 		// The starting square must contain a piece owned by the current player.
 		guard let piece = position.board[startSquare] else {
