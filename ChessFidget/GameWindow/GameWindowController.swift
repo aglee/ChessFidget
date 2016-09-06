@@ -36,6 +36,7 @@ class GameWindowController: NSWindowController {
 
 	// MARK: - NSWindowController methods
 	
+	// This gets called when we do the init(window: nil).
 	override var windowNibName : String! {
 		return "GameWindowController"
 	}

@@ -15,7 +15,20 @@ class PromotionSheetController: NSWindowController {
 	@IBOutlet var bishopImageView: NSImageView!
 	@IBOutlet var knightImageView: NSImageView!
 
-	func usePieceIcons(color: PieceColor) {
+	var selectedPromotionType: PromotionType = .promoteToQueen
+
+	init() {
+		super.init(window: nil)
+
+		// Force the nib to be loaded, which will set all our IBOutlets.
+		self.loadWindow()
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	func setPieceColorForIcons(_ color: PieceColor) {
 		let iconSet = PieceIconSet.defaultSet()
 
 		queenImageView.image = iconSet.icon(color, .Queen)
@@ -27,15 +40,23 @@ class PromotionSheetController: NSWindowController {
 	// MARK: - Action methods
 
 	@IBAction func selectPromotionType(_ sender: NSButton) {
-		let promotionType = PromotionType(rawValue: sender.tag)
-		print(promotionType)
+		if let type = PromotionType(rawValue: sender.tag) {
+			selectedPromotionType = type
+		}
+		self.window!.sheetParent?.endSheet(self.window!, returnCode: NSModalResponseCancel)
+		self.window!.close()
 	}
 
 	// MARK: - NSWindowController methods
 
-    override func windowDidLoad() {
-        super.windowDidLoad()
+	// This gets called when we do the init(window: nil).
+	override var windowNibName : String! {
+		return "PromotionSheetController"
+	}
 
-    }
-    
+	override func windowDidLoad() {
+		super.windowDidLoad()
+
+	}
+
 }

@@ -52,6 +52,8 @@ class BoardViewController: NSViewController {
 		}
 	}
 
+//	var sheetController: PromotionSheetController? = nil
+
 	// MARK: - NSViewController methods
 
 	override func viewDidLoad() {
@@ -106,8 +108,19 @@ class BoardViewController: NSViewController {
 		case .invalid(let reason):
 			Swift.print("Invalid move \(startSquare)-\(endSquare): \(reason)")
 		case .valid(let moveType):
-			// TODO: Before making the move, if the move type is .pawnPromotion, ask the user to select a piece type to promote to, and modify move.type accordingly.  Currently pawns are always promoted to queens.
-			makeMove(Move(from: startSquare, to: endSquare, type: moveType))
+			if case .pawnPromotion = moveType {
+				// Ask the user what piece type to promote the pawn to.
+				let sheetController = PromotionSheetController()
+				sheetController.setPieceColorForIcons(game.position.whoseTurn)
+				boardView.window?.beginSheet(sheetController.window!, completionHandler: {
+					(_: NSModalResponse) in
+					// The reference to sheetController within the closure prevents it from being dealloc'ed by ARC.
+					let moveType: MoveType = .pawnPromotion(type: sheetController.selectedPromotionType)
+					self.makeMove(Move(from: startSquare, to: endSquare, type: moveType))
+				})
+			} else {
+				makeMove(Move(from: startSquare, to: endSquare, type: moveType))
+			}
 		}
 	}
 
