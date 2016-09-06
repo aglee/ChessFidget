@@ -59,7 +59,7 @@ struct MoveGenerator {
 		if oneSquareForward.y == position.whoseTurn.opponent.homeRow {
 			addPawnPromotionMoves(from: startSquare, to: oneSquareForward)
 		} else {
-			addMoveIfNoCheck(startSquare, oneSquareForward, .plain)
+			addMoveIfNoCheck(startSquare, oneSquareForward, .plainMove)
 		}
 
 		// Can the pawn move two squares forward?
@@ -81,7 +81,7 @@ struct MoveGenerator {
 			if endSquare.y == position.whoseTurn.opponent.homeRow {
 				addPawnPromotionMoves(from: startSquare, to: endSquare)
 			} else {
-				addMoveIfNoCheck(startSquare, endSquare, .plain)
+				addMoveIfNoCheck(startSquare, endSquare, .plainMove)
 			}
 		}
 	}
@@ -126,12 +126,12 @@ struct MoveGenerator {
 			if let piece = position.board[endSquare] {
 				if piece.color == position.whoseTurn.opponent {
 					// Capturing a piece.
-					addMoveIfNoCheck(startSquare, endSquare, .plain)
+					addMoveIfNoCheck(startSquare, endSquare, .plainMove)
 				}
 				break
 			} else {
 				// Moving to an empty square.
-				addMoveIfNoCheck(startSquare, endSquare, .plain)
+				addMoveIfNoCheck(startSquare, endSquare, .plainMove)
 			}
 
 			if !canRepeat {

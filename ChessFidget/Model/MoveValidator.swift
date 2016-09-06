@@ -92,7 +92,7 @@ struct MoveValidator {
 		}
 
 		// If we got this far, the move seems like a valid plain move -- but note again, we have not checked whether it would put the player in check.
-		return .valid(type: .plain)
+		return .valid(type: .plainMove)
 	}
 
 	private func validatePawnMove() -> MoveValidity {
@@ -110,7 +110,7 @@ struct MoveValidator {
 				if endSquare.y == position.whoseTurn.opponent.homeRow {
 					return .valid(type: .pawnPromotion(type: .promoteToQueen))
 				} else {
-					return .valid(type: .plain)
+					return .valid(type: .plainMove)
 				}
 			}
 
@@ -131,7 +131,7 @@ struct MoveValidator {
 			if let capturedPiece = position.board[endSquare] {
 				if capturedPiece.color != position.whoseTurn {
 					// Plain diagonal capture.
-					return .valid(type: .plain)
+					return .valid(type: .plainMove)
 				}
 			} else if position.board[endSquare] == nil
 				&& position.enPassantableSquare?.x == endSquare.x

@@ -26,7 +26,7 @@ enum PromotionType: Int {
 
 enum MoveType {
 	// The most common case: move the piece from the start square to the end square, which might possibly contain an enemy piece being captured.
-	case plain
+	case plainMove
 
 	// Special pawn moves.
 	case pawnTwoSquares
