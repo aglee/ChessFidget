@@ -19,9 +19,13 @@ class BoardViewController: NSViewController {
 		case gameIsOver
 	}
 
-	var game: Game?
+	var game: Game? {
+		didSet {
+			figureOutWhetherHumanOrComputerOrNobodyMovesNext()
+		}
+	}
 
-	private var stateOfPlay: StateOfPlay = .awaitingHumanMove { //.initializing {  //TODO: fix
+	private var stateOfPlay: StateOfPlay = .initializing {
 		didSet {
 			Swift.print("state of play is now \(stateOfPlay)")
 
@@ -103,13 +107,6 @@ class BoardViewController: NSViewController {
 		case .valid(let moveType):
 			// TODO: Before making the move, if the move type is .pawnPromotion, ask the user to select a piece type to promote to, and modify move.type accordingly.  Currently pawns are always promoted to queens.
 			makeMove(Move(from: startSquare, to: endSquare, type: moveType))
-
-			// TODO: We're currently hardwired to alternate turns between the human and the computer.
-			if currentlyValidMoves().count == 0 {
-				stateOfPlay = .gameIsOver
-			} else {
-				stateOfPlay = .awaitingComputerMove
-			}
 		}
 	}
 
@@ -122,16 +119,9 @@ class BoardViewController: NSViewController {
 			return
 		}
 
+		// For now, just pick a random valid move.
 		let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
 		makeMove(validMoves[moveIndex])
-
-		let newValidMoves = currentlyValidMoves()
-		if newValidMoves.count == 0 {
-			stateOfPlay = .gameIsOver
-		} else {
-			// TODO: We're currently hardwired to alternate turns between the human and the computer.
-			stateOfPlay = .awaitingHumanMove
-		}
 	}
 
 	func currentlyValidMoves() -> [Move] {
@@ -140,15 +130,30 @@ class BoardViewController: NSViewController {
 		return game.position.validMoves
 	}
 
-	// Assumes the given move is valid for the current position.
+	// Apply the move to the game, position, and board.  Assumes the given move is valid for the current position.
 	private func makeMove(_ move: Move) {
 		guard let game = game
 			else { return }
 
+		print("\(move.start)-\(move.end)")
 		game.position.makeMove(move)
+		figureOutWhetherHumanOrComputerOrNobodyMovesNext()
 
 		// Print for debugging.
-		Swift.print(currentlyValidMoves().map({ "\($0.start)-\($0.end)" }).sorted())
+		//Swift.print(currentlyValidMoves().map({ "\($0.start)-\($0.end)" }).sorted())
 	}
-	
+
+	private func figureOutWhetherHumanOrComputerOrNobodyMovesNext() {
+		guard let game = game
+			else { return }
+		
+		if currentlyValidMoves().count == 0 {
+			stateOfPlay = .gameIsOver
+		} else if game.humanPlayerPieceColor == game.position.whoseTurn {
+			stateOfPlay = .awaitingHumanMove
+		} else {
+			stateOfPlay = .awaitingComputerMove
+		}
+	}
+
 }
