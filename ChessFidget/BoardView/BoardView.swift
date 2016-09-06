@@ -24,7 +24,8 @@ class BoardView: NSView {
 			needsDisplay = true
 		}
 	}
-	var overlayText: String? = nil {
+	var lastComputerMove: Move?
+	var overlayText: String? {
 		didSet {
 			needsDisplay = true
 		}
@@ -35,9 +36,12 @@ class BoardView: NSView {
 	var backgroundColor = NSColor.white
 	var whiteSquareColor = NSColor.yellow
 	var blackSquareColor = NSColor.brown
+	var selectedSquareHighlightColor = NSColor.blue
+	var lastComputerMoveHighlightColor = NSColor.red
+	var borderWidthForHighlightingSquares: CGFloat = 6.0
 	var overlayTextBackgroundColor = NSColor(calibratedWhite: 0.75, alpha: 1.0)
 
-	var overlayTextColor = NSColor.red
+	var overlayTextColor = NSColor.black
 	var overlayTextFont = NSFont(name: "Helvetica", size: 40.0)
 
 	var pieceIcons = PieceIconSet.defaultSet()
@@ -97,6 +101,7 @@ class BoardView: NSView {
 		drawGrid()
 		drawPieces()
 		drawHighlightOnSelectedSquare()
+		drawHighlightOnLastComputerMove()
 		drawOverlayText()
 	}
 
@@ -140,8 +145,16 @@ class BoardView: NSView {
 
 	private func drawHighlightOnSelectedSquare() {
 		if let square = selectedSquare {
-			NSColor.blue.set()
-			NSFrameRectWithWidth(rectForSquare(square), 6)
+			selectedSquareHighlightColor.set()
+			NSFrameRectWithWidth(rectForSquare(square), borderWidthForHighlightingSquares)
+		}
+	}
+
+	private func drawHighlightOnLastComputerMove() {
+		if let move = lastComputerMove {
+			lastComputerMoveHighlightColor.set()
+//			NSFrameRectWithWidth(rectForSquare(move.start), borderWidthForHighlightingSquares)
+			NSFrameRectWithWidth(rectForSquare(move.end), borderWidthForHighlightingSquares)
 		}
 	}
 

@@ -149,7 +149,12 @@ class BoardViewController: NSViewController {
 		guard let game = game
 			else { return }
 
-		print("\(move.start)-\(move.end) (\(move.type))")
+		print("\(move.start)-\(move.end) (\(move.type)) played by \(game.position.whoseTurn) (\(game.position.whoseTurn == game.humanPlayerPieceColor ? "Human" : "Computer"))")
+		if game.position.whoseTurn == game.humanPlayerPieceColor {
+			boardView.lastComputerMove = nil
+		} else {
+			boardView.lastComputerMove = move
+		}
 		game.position.makeMove(move)
 		figureOutWhetherHumanOrComputerOrNobodyMovesNext()
 
