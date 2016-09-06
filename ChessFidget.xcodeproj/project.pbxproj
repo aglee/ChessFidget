@@ -22,6 +22,10 @@
 		735824C71D78FFC70019D7B1 /* MoveGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C41D78FFC70019D7B1 /* MoveGenerator.swift */; };
 		736C90F31D7F0B5700A9020F /* NSFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C90F21D7F0B5700A9020F /* NSFont+Extensions.swift */; };
 		736C90F41D7F0B5700A9020F /* NSFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C90F21D7F0B5700A9020F /* NSFont+Extensions.swift */; };
+		736C90FB1D7F22DD00A9020F /* PromotionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C90F91D7F22DD00A9020F /* PromotionSheetController.swift */; };
+		736C90FC1D7F22DD00A9020F /* PromotionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C90F91D7F22DD00A9020F /* PromotionSheetController.swift */; };
+		736C90FD1D7F22DD00A9020F /* PromotionSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */; };
+		736C90FE1D7F22DD00A9020F /* PromotionSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */; };
 		737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
 		737EE93B1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
 		737EE93C1D75CC1F00B5144B /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EE9391D75CC1F00B5144B /* Piece.swift */; };
@@ -117,6 +121,8 @@
 		735824C01D78CA000019D7B1 /* Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
 		735824C41D78FFC70019D7B1 /* MoveGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveGenerator.swift; sourceTree = "<group>"; };
 		736C90F21D7F0B5700A9020F /* NSFont+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFont+Extensions.swift"; sourceTree = "<group>"; };
+		736C90F91D7F22DD00A9020F /* PromotionSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromotionSheetController.swift; sourceTree = "<group>"; };
+		736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PromotionSheetController.xib; sourceTree = "<group>"; };
 		737EE9391D75CC1F00B5144B /* Piece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		73963DEF1D6E608D00C9D78B /* GameWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWindowController.swift; sourceTree = "<group>"; };
 		73963DF01D6E608D00C9D78B /* GameWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameWindowController.xib; sourceTree = "<group>"; };
@@ -198,6 +204,7 @@
 				7352F7CC1D6E158F00EF9B5F /* Model */,
 				73963DEE1D6E607600C9D78B /* GameWindow */,
 				73963DF51D6E630C00C9D78B /* BoardView */,
+				736C90F81D7F22AB00A9020F /* PromotionWindow */,
 				7352F7A51D6E08D000EF9B5F /* Assets.xcassets */,
 				7352F7A71D6E08D000EF9B5F /* MainMenu.xib */,
 				7352F7AA1D6E08D000EF9B5F /* Info.plist */,
@@ -237,6 +244,15 @@
 				73963E641D6FC57000C9D78B /* Game.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		736C90F81D7F22AB00A9020F /* PromotionWindow */ = {
+			isa = PBXGroup;
+			children = (
+				736C90F91D7F22DD00A9020F /* PromotionSheetController.swift */,
+				736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */,
+			);
+			path = PromotionWindow;
 			sourceTree = "<group>";
 		};
 		73963DEE1D6E607600C9D78B /* GameWindow */ = {
@@ -414,6 +430,7 @@
 				73963E391D6E833800C9D78B /* bk.png in Resources */,
 				73963E491D6E833800C9D78B /* wp.png in Resources */,
 				73963DFD1D6E630C00C9D78B /* BoardViewController.xib in Resources */,
+				736C90FD1D7F22DD00A9020F /* PromotionSheetController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +446,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73963E4C1D6E833800C9D78B /* wq.png in Resources */,
+				736C90FE1D7F22DD00A9020F /* PromotionSheetController.xib in Resources */,
 				73963E481D6E833800C9D78B /* wn.png in Resources */,
 				73963E3C1D6E833800C9D78B /* bn.png in Resources */,
 				73963E441D6E833800C9D78B /* wb.png in Resources */,
@@ -454,6 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73963E691D6FC58E00C9D78B /* Square.swift in Sources */,
+				736C90FB1D7F22DD00A9020F /* PromotionSheetController.swift in Sources */,
 				73E31C1A1D74B8FF0013A33D /* Board.swift in Sources */,
 				73830B301D79994700259FD2 /* MoveGenerator.swift in Sources */,
 				73963DF91D6E630C00C9D78B /* BoardView.swift in Sources */,
@@ -495,6 +514,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73963E6B1D6FC58E00C9D78B /* Square.swift in Sources */,
+				736C90FC1D7F22DD00A9020F /* PromotionSheetController.swift in Sources */,
 				73E31C1C1D74B8FF0013A33D /* Board.swift in Sources */,
 				735824C71D78FFC70019D7B1 /* MoveGenerator.swift in Sources */,
 				73963DFA1D6E630C00C9D78B /* BoardView.swift in Sources */,
