@@ -149,8 +149,11 @@ class BoardView: NSView {
 		let paraStyle = NSMutableParagraphStyle()
 		paraStyle.alignment = .center
 		let font = overlayTextFont ?? NSFont.systemFont(ofSize: 30)
-		let scaledFont = font.sizedToFit(string: overlayText, into: overlayRect.size)
-		let textAttributes: [String : Any] = [NSFontAttributeName : scaledFont,
+		guard let scaledFont = font.sizedToFit(string: overlayText, into: overlayRect.size) else {
+			Swift.print("ERROR: Could not scale font for drawing overlay text.")
+			return
+		}
+		let textAttributes: [String: Any] = [NSFontAttributeName : scaledFont,
 		                                      NSForegroundColorAttributeName: overlayTextColor,
 		                                      NSParagraphStyleAttributeName: paraStyle]
 		overlayText.draw(in: overlayRect, withAttributes: textAttributes)
