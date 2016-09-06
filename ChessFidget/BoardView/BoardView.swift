@@ -135,10 +135,6 @@ class BoardView: NSView {
 	}
 
 	private func drawOverlayText() {
-		guard let overlayTextFont = overlayTextFont else {
-			Swift.print("wtf")
-			return
-		}
 		guard let overlayText = overlayText
 			else { return }
 		if overlayText.characters.count == 0 {
@@ -152,8 +148,12 @@ class BoardView: NSView {
 
 		let paraStyle = NSMutableParagraphStyle()
 		paraStyle.alignment = .center
-		let font = overlayTextFont.sizedToFit(string: overlayText, into: overlayRect.size)
-		overlayText.draw(in: overlayRect, withAttributes: [NSFontAttributeName : font, NSForegroundColorAttributeName: overlayTextColor, NSParagraphStyleAttributeName: paraStyle])
+		let font = overlayTextFont ?? NSFont.systemFont(ofSize: 30)
+		let scaledFont = font.sizedToFit(string: overlayText, into: overlayRect.size)
+		let textAttributes: [String : Any] = [NSFontAttributeName : scaledFont,
+		                                      NSForegroundColorAttributeName: overlayTextColor,
+		                                      NSParagraphStyleAttributeName: paraStyle]
+		overlayText.draw(in: overlayRect, withAttributes: textAttributes)
 	}
 
 }
