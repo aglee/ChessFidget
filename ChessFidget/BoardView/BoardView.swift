@@ -42,11 +42,11 @@ class BoardView: NSView {
 	var overlayTextBackgroundColor = NSColor(calibratedRed: 1.0, green: 0.0, blue: 0.0, alpha: 0.25) //NSColor(calibratedWhite: 0.75, alpha: 0.25)
 
 	var overlayTextColor = NSColor.black
-	var overlayTextFont: NSFont {
-		get {
-			let font = NSFont(name: "Helvetica", size: 40.0) ?? NSFont.systemFont(ofSize: 30)
-			return NSFontManager.shared().convert(font, toHaveTrait: NSFontTraitMask.boldFontMask)
-		}
+	var overlayTextFont: NSFont = BoardView.defaultOverlayTextFont()
+
+	private static func defaultOverlayTextFont() -> NSFont {
+		let font = NSFont(name: "Helvetica", size: 40.0) ?? NSFont.systemFont(ofSize: 30)
+		return NSFontManager.shared().convert(font, toHaveTrait: NSFontTraitMask.boldFontMask)
 	}
 
 	var pieceIcons = PieceIconSet.defaultSet()
