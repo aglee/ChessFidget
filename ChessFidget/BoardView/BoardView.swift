@@ -38,11 +38,16 @@ class BoardView: NSView {
 	var blackSquareColor = NSColor.brown
 	var selectedSquareHighlightColor = NSColor.blue
 	var lastComputerMoveHighlightColor = NSColor.red
-	var borderWidthForHighlightingSquares: CGFloat = 6.0
-	var overlayTextBackgroundColor = NSColor(calibratedWhite: 0.75, alpha: 1.0)
+	var borderWidthForHighlightingSquares: CGFloat = 4.0
+	var overlayTextBackgroundColor = NSColor(calibratedRed: 1.0, green: 0.0, blue: 0.0, alpha: 0.25) //NSColor(calibratedWhite: 0.75, alpha: 0.25)
 
 	var overlayTextColor = NSColor.black
-	var overlayTextFont = NSFont(name: "Helvetica", size: 40.0)
+	var overlayTextFont: NSFont {
+		get {
+			let font = NSFont(name: "Helvetica", size: 40.0) ?? NSFont.systemFont(ofSize: 30)
+			return NSFontManager.shared().convert(font, toHaveTrait: NSFontTraitMask.boldFontMask)
+		}
+	}
 
 	var pieceIcons = PieceIconSet.defaultSet()
 
@@ -172,8 +177,7 @@ class BoardView: NSView {
 
 		let paraStyle = NSMutableParagraphStyle()
 		paraStyle.alignment = .center
-		let font = overlayTextFont ?? NSFont.systemFont(ofSize: 30)
-		guard let scaledFont = font.sizedToFit(string: overlayText, into: overlayRect.size) else {
+		guard let scaledFont = overlayTextFont.sizedToFit(string: overlayText, into: overlayRect.size) else {
 			Swift.print("ERROR: Could not scale font for drawing overlay text.")
 			return
 		}
