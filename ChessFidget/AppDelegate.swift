@@ -11,25 +11,14 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-	var gameWindowControllers: [GameWindowController] = []
+	var gameWC: GameWindowController!
 
 	// MARK: - NSApplicationDelegate methods
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		newGameWindow()
+		gameWC = GameWindowController(game: Game(humanPlayerPieceColor: .White))
+		gameWC.window?.center()
+		gameWC.showWindow(nil)
 	}
-
-	// MARK: - Private methods
-
-	private func newGameWindow() {
-		// TODO: Remove window controller when window closes.  Or maybe convert this to a document-based app so that will be handled automatically.
-		let wc = GameWindowController(game: Game(humanPlayerPieceColor: .White))
-		gameWindowControllers.append(wc)
-		if gameWindowControllers.count == 1 {
-			wc.window?.center()
-		}
-		wc.showWindow(nil)
-	}
-
+	
 }
-
