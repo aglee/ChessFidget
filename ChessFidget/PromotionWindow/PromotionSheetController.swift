@@ -31,10 +31,10 @@ class PromotionSheetController: NSWindowController {
 	func setPieceColorForIcons(_ color: PieceColor) {
 		let iconSet = PieceIconSet.defaultSet()
 
-		queenImageView.image = iconSet.icon(color, .Queen)
-		rookImageView.image = iconSet.icon(color, .Rook)
-		bishopImageView.image = iconSet.icon(color, .Bishop)
-		knightImageView.image = iconSet.icon(color, .Queen)
+		queenImageView.image = iconSet.icon(color, .queen)
+		rookImageView.image = iconSet.icon(color, .rook)
+		bishopImageView.image = iconSet.icon(color, .bishop)
+		knightImageView.image = iconSet.icon(color, .queen)
 	}
 
 	// MARK: - Action methods

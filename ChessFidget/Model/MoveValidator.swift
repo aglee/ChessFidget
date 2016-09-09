@@ -64,12 +64,12 @@ struct MoveValidator {
 		}
 
 		// Special case: handle pawn moves completely separately.
-		if piece.type == .Pawn {
+		if piece.type == .pawn {
 			return validatePawnMove()
 		}
 
 		// Special case: the user is attempting to castle.
-		if piece.type == .King
+		if piece.type == .king
 			&& startPoint.x == 4
 			&& startPoint.y == position.whoseTurn.homeRow
 			&& [2, 6].contains(endPoint.x)
@@ -155,9 +155,9 @@ struct MoveValidator {
 
 		let y = position.whoseTurn.homeRow
 		let kingHome = GridPointXY(4, position.whoseTurn.homeRow)
-		guard position.board[kingHome] == Piece(position.whoseTurn, .King)
+		guard position.board[kingHome] == Piece(position.whoseTurn, .king)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
-		guard position.board[7, y] == Piece(position.whoseTurn, .Rook)
+		guard position.board[7, y] == Piece(position.whoseTurn, .rook)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 
 		// The squares between the king and the rook must be empty.
@@ -184,9 +184,9 @@ struct MoveValidator {
 
 		let y = position.whoseTurn.homeRow
 		let kingHome = GridPointXY(4, y)
-		guard position.board[kingHome] == Piece(position.whoseTurn, .King)
+		guard position.board[kingHome] == Piece(position.whoseTurn, .king)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
-		guard position.board[0, y] == Piece(position.whoseTurn, .Rook)
+		guard position.board[0, y] == Piece(position.whoseTurn, .rook)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 
 		// The squares between the king and the rook must be empty.

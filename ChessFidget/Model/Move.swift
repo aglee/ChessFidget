@@ -14,10 +14,10 @@ enum PromotionType: Int {
 
 	var pieceType: PieceType {
 		switch self {
-		case .promoteToQueen: return .Queen
-		case .promoteToRook: return .Rook
-		case .promoteToBishop: return .Bishop
-		case .promoteToKnight: return .Knight
+		case .promoteToQueen: return .queen
+		case .promoteToRook: return .rook
+		case .promoteToBishop: return .bishop
+		case .promoteToKnight: return .knight
 		}
 	}
 }

@@ -11,11 +11,11 @@ struct Board {
 
 	init(newGame: Bool = true) {
 		for x in 0...7 {
-			self[x, 1] = Piece(.White, .Pawn)
-			self[x, 6] = Piece(.Black, .Pawn)
+			self[x, 1] = Piece(.White, .pawn)
+			self[x, 6] = Piece(.Black, .pawn)
 		}
 
-		let pieceTypes: [PieceType] = [.Rook, .Knight, .Bishop, .Queen, .King, .Bishop, .Knight, .Rook]
+		let pieceTypes: [PieceType] = [.rook, .knight, .bishop, .queen, .king, .bishop, .knight, .rook]
 		for (x, pieceType) in pieceTypes.enumerated() {
 			self[x, 0] = Piece(.White, pieceType)
 			self[x, 7] = Piece(.Black, pieceType)
@@ -67,7 +67,7 @@ struct Board {
 					continue
 				}
 
-				if piece.type == .Pawn {
+				if piece.type == .pawn {
 					// Special handling for pawns.
 					if [-1, 1].contains(x - kingGridPoint.x)
 						&& kingGridPoint.y == y + piece.color.forwardDirection {
@@ -179,7 +179,7 @@ struct Board {
 	}
 
 	private func gridPointForSquareContainingKing(_ color: PieceColor) -> GridPointXY? {
-		let king = Piece(color, .King)
+		let king = Piece(color, .king)
 		for x in 0...7 {
 			for y in 0...7 {
 				if let piece = self[x, y] {

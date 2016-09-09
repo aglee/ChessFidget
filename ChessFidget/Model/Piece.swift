@@ -29,26 +29,26 @@ enum PieceColor {
 typealias PieceMovement = (vectors: [VectorXY], canRepeat: Bool)
 
 enum PieceType {
-	case Pawn
-	case Knight
-	case Bishop
-	case Rook
-	case Queen
-	case King
+	case pawn
+	case knight
+	case bishop
+	case rook
+	case queen
+	case king
 
 	var movement: PieceMovement {
 		return PieceType.pieceMovements[self]!
 	}
 
 	private static let pieceMovements: [PieceType: PieceMovement] = [
-		.Pawn: (vectors: [], canRepeat: false),
-		.Knight: (vectors: [(1, 2), (1, -2), (-1, 2), (-1, -2),
+		.pawn: (vectors: [], canRepeat: false),
+		.knight: (vectors: [(1, 2), (1, -2), (-1, 2), (-1, -2),
 		                    (2, 1), (2, -1), (-2, 1), (-2, -1)], canRepeat: false),
-		.Bishop: (vectors: [(1, 1), (1, -1), (-1, 1), (-1, -1)], canRepeat: true),
-		.Rook: (vectors: [(0, 1), (0, -1), (1, 0), (-1, 0)], canRepeat: true),
-		.Queen: (vectors: [(1, 1), (1, -1), (-1, 1), (-1, -1),
+		.bishop: (vectors: [(1, 1), (1, -1), (-1, 1), (-1, -1)], canRepeat: true),
+		.rook: (vectors: [(0, 1), (0, -1), (1, 0), (-1, 0)], canRepeat: true),
+		.queen: (vectors: [(1, 1), (1, -1), (-1, 1), (-1, -1),
 		                   (0, 1), (0, -1), (1, 0), (-1, 0)], canRepeat: true),
-		.King: (vectors: [(1, 1), (1, -1), (-1, 1), (-1, -1),
+		.king: (vectors: [(1, 1), (1, -1), (-1, 1), (-1, -1),
 		                  (0, 1), (0, -1), (1, 0), (-1, 0)], canRepeat: false),
 	]
 }

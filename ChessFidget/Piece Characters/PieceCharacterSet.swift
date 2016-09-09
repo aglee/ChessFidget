@@ -14,21 +14,21 @@ struct PieceCharacterSet {
 		switch pieceColor {
 		case .White:
 			switch pieceType {
-			case .Pawn: return "♙"
-			case .Knight: return "♘"
-			case .Bishop: return "♗"
-			case .Rook: return "♖"
-			case .King: return "♔"
-			case .Queen: return "♕"
+			case .pawn: return "♙"
+			case .knight: return "♘"
+			case .bishop: return "♗"
+			case .rook: return "♖"
+			case .king: return "♔"
+			case .queen: return "♕"
 			}
 		case .Black:
 			switch pieceType {
-			case .Pawn: return "♟"
-			case .Knight: return "♞"
-			case .Bishop: return "♝"
-			case .Rook: return "♜"
-			case .King: return "♚"
-			case .Queen: return "♛"
+			case .pawn: return "♟"
+			case .knight: return "♞"
+			case .bishop: return "♝"
+			case .rook: return "♜"
+			case .king: return "♚"
+			case .queen: return "♛"
 			}
 		}
 	}

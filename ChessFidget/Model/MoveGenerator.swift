@@ -39,7 +39,7 @@ struct MoveGenerator {
 		guard piece.color == position.whoseTurn
 			else { return }
 
-		if piece.type == .Pawn {
+		if piece.type == .pawn {
 			addPawnForwardMoves(from: startPoint)
 			addRegularPawnCaptures(from: startPoint)
 		} else {
@@ -96,7 +96,7 @@ struct MoveGenerator {
 				else { continue }
 			guard let piece = position.board[startPoint]
 				else { continue }
-			guard piece == Piece(position.whoseTurn, .Pawn)
+			guard piece == Piece(position.whoseTurn, .pawn)
 				else { continue }
 			let endPoint = enPassantableGridPoint + (0, forward)
 			if position.board[endPoint] == nil {
@@ -145,9 +145,9 @@ struct MoveGenerator {
 		guard position.canCastleKingSide
 			else { return }
 		let kingHome = GridPointXY(4, position.whoseTurn.homeRow)
-		guard position.board[kingHome] == Piece(position.whoseTurn, .King)
+		guard position.board[kingHome] == Piece(position.whoseTurn, .king)
 			else { return }
-		guard position.board[7, position.whoseTurn.homeRow] == Piece(position.whoseTurn, .Rook)
+		guard position.board[7, position.whoseTurn.homeRow] == Piece(position.whoseTurn, .rook)
 			else { return }
 
 		// The squares between the king and the rook must be empty.
@@ -173,9 +173,9 @@ struct MoveGenerator {
 		guard position.canCastleQueenSide
 			else { return }
 		let kingHome = GridPointXY(4, position.whoseTurn.homeRow)
-		guard position.board[kingHome] == Piece(position.whoseTurn, .King)
+		guard position.board[kingHome] == Piece(position.whoseTurn, .king)
 			else { return }
-		guard position.board[0, position.whoseTurn.homeRow] == Piece(position.whoseTurn, .Rook)
+		guard position.board[0, position.whoseTurn.homeRow] == Piece(position.whoseTurn, .rook)
 			else { return }
 
 		// The squares between the king and the rook must be empty.

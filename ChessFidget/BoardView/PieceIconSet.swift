@@ -31,21 +31,21 @@ struct PieceIconSet {
 		switch color {
 		case .White:
 			switch type {
-			case .Pawn: return "wp"
-			case .Knight: return "wn"
-			case .Bishop: return "wb"
-			case .Rook: return "wr"
-			case .King: return "wk"
-			case .Queen: return "wq"
+			case .pawn: return "wp"
+			case .knight: return "wn"
+			case .bishop: return "wb"
+			case .rook: return "wr"
+			case .king: return "wk"
+			case .queen: return "wq"
 			}
 		case .Black:
 			switch type {
-			case .Pawn: return "bp"
-			case .Knight: return "bn"
-			case .Bishop: return "bb"
-			case .Rook: return "br"
-			case .King: return "bk"
-			case .Queen: return "bq"
+			case .pawn: return "bp"
+			case .knight: return "bn"
+			case .bishop: return "bb"
+			case .rook: return "br"
+			case .king: return "bk"
+			case .queen: return "bq"
 			}
 		}
 	}
