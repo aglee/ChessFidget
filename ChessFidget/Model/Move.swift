@@ -37,13 +37,29 @@ enum MoveType {
 }
 
 struct Move {
-	let start: Square
-	let end: Square
+	let start: GridPointXY
+	let end: GridPointXY
 	let type: MoveType
 
-	init(from start: Square, to end: Square, type: MoveType) {
+	init(from start: GridPointXY, to end: GridPointXY, type: MoveType) {
 		self.start = start
 		self.end = end
 		self.type = type
 	}
 }
+
+extension GridPointXY {
+	private static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]
+	private static let rankCharacters: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8"]
+
+	// Converts the point to algebraic chess notation, where (0,0) is "a1" and (7,7) is h8.
+	var squareName: String {
+		if x == x % GridPointXY.fileCharacters.count
+			&& y == y % GridPointXY.rankCharacters.count {
+			return "\(GridPointXY.fileCharacters[x])\(GridPointXY.rankCharacters[y])"
+		} else {
+			return "GridPointXY(\(x),\(y))"
+		}
+	}
+}
+

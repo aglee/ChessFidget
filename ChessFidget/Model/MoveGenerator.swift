@@ -23,7 +23,7 @@ struct MoveGenerator {
 		// Scan the board for pieces owned by the current player.
 		for x in 0...7 {
 			for y in 0...7 {
-				addValidMovesWithStartSquare(Square(x: x, y: y))
+				addValidMovesWithstartPoint(GridPointXY(x, y))
 			}
 		}
 
@@ -33,105 +33,105 @@ struct MoveGenerator {
 		addQueenSideCastlingIfValid()
 	}
 
-	private mutating func addValidMovesWithStartSquare(_ startSquare: Square) {
-		guard let piece = position.board[startSquare]
+	private mutating func addValidMovesWithstartPoint(_ startPoint: GridPointXY) {
+		guard let piece = position.board[startPoint]
 			else { return }
 		guard piece.color == position.whoseTurn
 			else { return }
 
 		if piece.type == .Pawn {
-			addPawnForwardMoves(from: startSquare)
-			addRegularPawnCaptures(from: startSquare)
+			addPawnForwardMoves(from: startPoint)
+			addRegularPawnCaptures(from: startPoint)
 		} else {
 			for vector in piece.type.movement.vectors {
-				addMovesAlongVector(from: startSquare, vector: vector, canRepeat: piece.type.movement.canRepeat)
+				addMovesAlongVector(from: startPoint, vector: vector, canRepeat: piece.type.movement.canRepeat)
 			}
 		}
 	}
 
-	private mutating func addPawnForwardMoves(from startSquare: Square) {
+	private mutating func addPawnForwardMoves(from startPoint: GridPointXY) {
 		let forward = position.whoseTurn.forwardDirection
 
 		// Can the pawn move one square forward?
-		let oneSquareForward = startSquare + (0, forward)
+		let oneSquareForward = startPoint + (0, forward)
 		guard Board.isWithinBounds(oneSquareForward) && position.board[oneSquareForward] == nil
 			else { return }
 		if oneSquareForward.y == position.whoseTurn.opponent.homeRow {
-			addPawnPromotionMoves(from: startSquare, to: oneSquareForward)
+			addPawnPromotionMoves(from: startPoint, to: oneSquareForward)
 		} else {
-			addMoveIfNoCheck(startSquare, oneSquareForward, .plainMove)
+			addMoveIfNoCheck(startPoint, oneSquareForward, .plainMove)
 		}
 
 		// Can the pawn move two squares forward?
-		if startSquare.y == position.whoseTurn.pawnRow {
+		if startPoint.y == position.whoseTurn.pawnRow {
 			let twoSquaresForward = oneSquareForward + (0, forward)
 			if Board.isWithinBounds(twoSquaresForward) && position.board[twoSquaresForward] == nil {
-				addMoveIfNoCheck(startSquare, twoSquaresForward, .pawnTwoSquares)
+				addMoveIfNoCheck(startPoint, twoSquaresForward, .pawnTwoSquares)
 			}
 		}
 	}
 
-	private mutating func addRegularPawnCaptures(from startSquare: Square) {
+	private mutating func addRegularPawnCaptures(from startPoint: GridPointXY) {
 		let forward = position.whoseTurn.forwardDirection
 		for dx in [-1, 1] {
-			guard let endSquare = validSquareOrNil(startSquare + (dx, forward))
+			guard let endPoint = validGridPointOrNil(startPoint + (dx, forward))
 				else { continue }
-			guard position.board[endSquare]?.color == position.whoseTurn.opponent
+			guard position.board[endPoint]?.color == position.whoseTurn.opponent
 				else { continue }
-			if endSquare.y == position.whoseTurn.opponent.homeRow {
-				addPawnPromotionMoves(from: startSquare, to: endSquare)
+			if endPoint.y == position.whoseTurn.opponent.homeRow {
+				addPawnPromotionMoves(from: startPoint, to: endPoint)
 			} else {
-				addMoveIfNoCheck(startSquare, endSquare, .plainMove)
+				addMoveIfNoCheck(startPoint, endPoint, .plainMove)
 			}
 		}
 	}
 
 	private mutating func addEnPassantCaptures() {
-		guard let enPassantableSquare = position.enPassantableSquare
+		guard let enPassantableGridPoint = position.enPassantableGridPoint
 			else { return }
 
 		let forward = position.whoseTurn.forwardDirection
 		for dx in [-1, 1] {
-			guard let startSquare = validSquareOrNil(enPassantableSquare + (dx, 0))
+			guard let startPoint = validGridPointOrNil(enPassantableGridPoint + (dx, 0))
 				else { continue }
-			guard let piece = position.board[startSquare]
+			guard let piece = position.board[startPoint]
 				else { continue }
 			guard piece == Piece(position.whoseTurn, .Pawn)
 				else { continue }
-			let endSquare = enPassantableSquare + (0, forward)
-			if position.board[endSquare] == nil {
-				addMoveIfNoCheck(startSquare, endSquare, .captureEnPassant)
+			let endPoint = enPassantableGridPoint + (0, forward)
+			if position.board[endPoint] == nil {
+				addMoveIfNoCheck(startPoint, endPoint, .captureEnPassant)
 			}
 		}
 	}
 	
-	private mutating func addPawnPromotionMoves(from startSquare: Square, to endSquare: Square) {
-		if !position.board.blindMoveWouldLeaveKingInCheck(from: startSquare, to: endSquare) {
-			addConfirmedValidMove(startSquare, endSquare, .pawnPromotion(type: .promoteToQueen))
-			addConfirmedValidMove(startSquare, endSquare, .pawnPromotion(type: .promoteToRook))
-			addConfirmedValidMove(startSquare, endSquare, .pawnPromotion(type: .promoteToBishop))
-			addConfirmedValidMove(startSquare, endSquare, .pawnPromotion(type: .promoteToKnight))
+	private mutating func addPawnPromotionMoves(from startPoint: GridPointXY, to endPoint: GridPointXY) {
+		if !position.board.blindMoveWouldLeaveKingInCheck(from: startPoint, to: endPoint) {
+			addConfirmedValidMove(startPoint, endPoint, .pawnPromotion(type: .promoteToQueen))
+			addConfirmedValidMove(startPoint, endPoint, .pawnPromotion(type: .promoteToRook))
+			addConfirmedValidMove(startPoint, endPoint, .pawnPromotion(type: .promoteToBishop))
+			addConfirmedValidMove(startPoint, endPoint, .pawnPromotion(type: .promoteToKnight))
 		}
 	}
 
-	private mutating func addMovesAlongVector(from startSquare: Square, vector: Vector, canRepeat: Bool) {
+	private mutating func addMovesAlongVector(from startPoint: GridPointXY, vector: VectorXY, canRepeat: Bool) {
 		assert(vector.dx != 0 || vector.dy != 0, "Piece movement can't have a zero-length vector.")
-		var endSquare = startSquare
+		var endPoint = startPoint
 		while true {
-			endSquare = endSquare + vector
-			if !Board.isWithinBounds(endSquare) {
+			endPoint = endPoint + vector
+			if !Board.isWithinBounds(endPoint) {
 				break
 			}
 
-			if let piece = position.board[endSquare] {
+			if let piece = position.board[endPoint] {
 				if piece.color == position.whoseTurn.opponent {
 					// Capturing a piece.
-					addMoveIfNoCheck(startSquare, endSquare, .plainMove)
+					addMoveIfNoCheck(startPoint, endPoint, .plainMove)
 				}
 				break
 			} else {
 				// Moving to an empty square.
-				addMoveIfNoCheck(startSquare, endSquare, .plainMove)
+				addMoveIfNoCheck(startPoint, endPoint, .plainMove)
 			}
 
 			if !canRepeat {
@@ -144,70 +144,70 @@ struct MoveGenerator {
 		// The king and rook must not have moved yet.
 		guard position.canCastleKingSide
 			else { return }
-		let kingHomeSquare = Square(x: 4, y: position.whoseTurn.homeRow)
-		guard position.board[kingHomeSquare] == Piece(position.whoseTurn, .King)
+		let kingHome = GridPointXY(4, position.whoseTurn.homeRow)
+		guard position.board[kingHome] == Piece(position.whoseTurn, .King)
 			else { return }
 		guard position.board[7, position.whoseTurn.homeRow] == Piece(position.whoseTurn, .Rook)
 			else { return }
 
 		// The squares between the king and the rook must be empty.
 		for vector in [(1, 0), (2, 0)] {
-			if position.board[kingHomeSquare + vector] != nil {
+			if position.board[kingHome + vector] != nil {
 				return
 			}
 		}
 
 		// The two squares the king would cross must not put it in check.
 		for vector in [(1, 0), (2, 0)] {
-			if position.board.blindMoveWouldLeaveKingInCheck(from: kingHomeSquare, to: kingHomeSquare + vector) {
+			if position.board.blindMoveWouldLeaveKingInCheck(from: kingHome, to: kingHome + vector) {
 				return
 			}
 		}
 
 		// If we got this far, the move is valid.
-		addConfirmedValidMove(kingHomeSquare, kingHomeSquare + (2, 0), .castleKingSide)
+		addConfirmedValidMove(kingHome, kingHome + (2, 0), .castleKingSide)
 	}
 
 	private mutating func addQueenSideCastlingIfValid() {
 		// The king and rook must not have moved yet.
 		guard position.canCastleQueenSide
 			else { return }
-		let kingHomeSquare = Square(x: 4, y: position.whoseTurn.homeRow)
-		guard position.board[kingHomeSquare] == Piece(position.whoseTurn, .King)
+		let kingHome = GridPointXY(4, position.whoseTurn.homeRow)
+		guard position.board[kingHome] == Piece(position.whoseTurn, .King)
 			else { return }
 		guard position.board[0, position.whoseTurn.homeRow] == Piece(position.whoseTurn, .Rook)
 			else { return }
 
 		// The squares between the king and the rook must be empty.
 		for vector in [(-1, 0), (-2, 0), (-3, 0)] {
-			if position.board[kingHomeSquare + vector] != nil {
+			if position.board[kingHome + vector] != nil {
 				return
 			}
 		}
 
 		// The two squares the king would cross must not put it in check.
 		for vector in [(-1, 0), (-2, 0)] {
-			if position.board.blindMoveWouldLeaveKingInCheck(from: kingHomeSquare, to: kingHomeSquare + vector) {
+			if position.board.blindMoveWouldLeaveKingInCheck(from: kingHome, to: kingHome + vector) {
 				return
 			}
 		}
 
 		// If we got this far, the move is valid.
-		addConfirmedValidMove(kingHomeSquare, kingHomeSquare + (-2, 0), .castleQueenSide)
+		addConfirmedValidMove(kingHome, kingHome + (-2, 0), .castleQueenSide)
 	}
 
-	private mutating func addMoveIfNoCheck(_ startSquare: Square, _ endSquare: Square, _ moveType: MoveType) {
-		if !position.board.moveWouldLeaveKingInCheck(from: startSquare, to: endSquare, type: moveType) {
-			addConfirmedValidMove(startSquare, endSquare, moveType)
+	private mutating func addMoveIfNoCheck(_ startPoint: GridPointXY, _ endPoint: GridPointXY, _ moveType: MoveType) {
+		if !position.board.moveWouldLeaveKingInCheck(from: startPoint, to: endPoint, type: moveType) {
+			addConfirmedValidMove(startPoint, endPoint, moveType)
 		}
 	}
 
-	private mutating func addConfirmedValidMove(_ startSquare: Square, _ endSquare: Square, _ moveType: MoveType) {
-		allValidMoves.append(Move(from: startSquare, to: endSquare, type: moveType))
+	private mutating func addConfirmedValidMove(_ startPoint: GridPointXY, _ endPoint: GridPointXY, _ moveType: MoveType) {
+		allValidMoves.append(Move(from: startPoint, to: endPoint, type: moveType))
 	}
 
-	private func validSquareOrNil(_ sq: Square) -> Square? {
-		return Board.isWithinBounds(sq) ? sq : nil
+	private func validGridPointOrNil(_ gridPoint: GridPointXY) -> GridPointXY? {
+		return Board.isWithinBounds(gridPoint) ? gridPoint : nil
 	}
 }
 

@@ -14,7 +14,7 @@ The default initializer uses the settings that are in effect at the beginning of
 struct Position {
 	var board = Board()
 	var whoseTurn = PieceColor.White
-	var enPassantableSquare: Square? = nil
+	var enPassantableGridPoint: GridPointXY? = nil
 	var castlingFlags = CastlingFlags()
 
 	var canCastleKingSide: Bool {
@@ -34,24 +34,24 @@ struct Position {
 	}
 
 	// Assumes the move is valid for the current player and current board and is correctly described by the moveType.
-	mutating func makeMove(from startSquare: Square, to endSquare: Square, type moveType: MoveType) {
+	mutating func makeMove(from startPoint: GridPointXY, to endPoint: GridPointXY, type moveType: MoveType) {
 		// Update the board.
-		board.makeMove(from: startSquare, to: endSquare, type: moveType)
+		board.makeMove(from: startPoint, to: endPoint, type: moveType)
 
 		// Update en passant info.
 		if case .pawnTwoSquares = moveType {
-			enPassantableSquare = endSquare
+			enPassantableGridPoint = endPoint
 		} else {
-			enPassantableSquare = nil
+			enPassantableGridPoint = nil
 		}
 
 		// Update castling flags.
-		if startSquare.y == whoseTurn.homeRow {
-			if startSquare.x == 0 {
+		if startPoint.y == whoseTurn.homeRow {
+			if startPoint.x == 0 {
 				castlingFlags.disableCastling(whoseTurn, .queenSide)
-			} else if startSquare.x == 4 {
+			} else if startPoint.x == 4 {
 				castlingFlags.disableCastling(whoseTurn)
-			} else if startSquare.x == 7 {
+			} else if startPoint.x == 7 {
 				castlingFlags.disableCastling(whoseTurn, .kingSide)
 			}
 		}

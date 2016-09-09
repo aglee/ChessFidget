@@ -8,8 +8,8 @@
 
 /** Reasons a proposed move from a given start square to a given end square might be invalid. */
 enum MoveError: String {
-	case startSquareMustContainPiece
-	case pieceOnStartSquareBelongsToWrongPlayer
+	case startPointMustContainPiece
+	case pieceOnstartPointBelongsToWrongPlayer
 
 	case cannotCastleOutOfCheck
 	case cannotCastleBecauseKingOrRookHasMoved
@@ -29,8 +29,8 @@ enum MoveValidity {
 
 struct MoveValidator {
 	let position: Position
-	let startSquare: Square
-	let endSquare: Square
+	let startPoint: GridPointXY
+	let endPoint: GridPointXY
 
 	func validateMove() -> MoveValidity {
 		let validity = mostlyValidateMove()
@@ -40,7 +40,7 @@ struct MoveValidator {
 			return validity
 		case .valid(let moveType):
 			// Would the move leave the king in check?
-			if position.board.moveWouldLeaveKingInCheck(from: startSquare, to: endSquare, type: moveType) {
+			if position.board.moveWouldLeaveKingInCheck(from: startPoint, to: endPoint, type: moveType) {
 				return .invalid(reason: .cannotLeaveKingInCheck)
 			} else {
 				return validity
@@ -53,13 +53,13 @@ struct MoveValidator {
 	// Checks the validity of the move EXCEPT for whether it would leave the king in check.
 	private func mostlyValidateMove() -> MoveValidity {
 		// The starting square must contain a piece owned by the current player.
-		guard let piece = position.board[startSquare] else {
-			return .invalid(reason: .startSquareMustContainPiece)
+		guard let piece = position.board[startPoint] else {
+			return .invalid(reason: .startPointMustContainPiece)
 		}
 		if piece.color != position.whoseTurn {
-			return .invalid(reason: .pieceOnStartSquareBelongsToWrongPlayer)
+			return .invalid(reason: .pieceOnstartPointBelongsToWrongPlayer)
 		}
-		if position.board[endSquare]?.color == position.whoseTurn {
+		if position.board[endPoint]?.color == position.whoseTurn {
 			return .invalid(reason: .moveIsBlockedByOccupiedSquare)
 		}
 
@@ -70,18 +70,18 @@ struct MoveValidator {
 
 		// Special case: the user is attempting to castle.
 		if piece.type == .King
-			&& startSquare.x == 4
-			&& startSquare.y == position.whoseTurn.homeRow
-			&& [2, 6].contains(endSquare.x)
-			&& endSquare.y == position.whoseTurn.homeRow {
+			&& startPoint.x == 4
+			&& startPoint.y == position.whoseTurn.homeRow
+			&& [2, 6].contains(endPoint.x)
+			&& endPoint.y == position.whoseTurn.homeRow {
 
 			if position.board.isInCheck(piece.color) {
 				return .invalid(reason: .cannotCastleOutOfCheck)
 			}
 
-			if endSquare.x == 6 {
+			if endPoint.x == 6 {
 				return validateKingSideCastle()
-			} else if endSquare.x == 2 {
+			} else if endPoint.x == 2 {
 				return validateQueenSideCastle()
 			}
 		}
@@ -96,18 +96,18 @@ struct MoveValidator {
 	}
 
 	private func validatePawnMove() -> MoveValidity {
-		if startSquare.x == endSquare.x {
+		if startPoint.x == endPoint.x {
 
 			// Case 1: the pawn is moving within a file.
 
 			// The destination square must be empty.
-			if position.board[endSquare] != nil {
+			if position.board[endPoint] != nil {
 				return .invalid(reason: .moveIsBlockedByOccupiedSquare)
 			}
 
 			// One-square advance.
-			if endSquare.y == startSquare.y + position.whoseTurn.forwardDirection {
-				if endSquare.y == position.whoseTurn.opponent.homeRow {
+			if endPoint.y == startPoint.y + position.whoseTurn.forwardDirection {
+				if endPoint.y == position.whoseTurn.opponent.homeRow {
 					return .valid(type: .pawnPromotion(type: .promoteToQueen))
 				} else {
 					return .valid(type: .plainMove)
@@ -115,30 +115,30 @@ struct MoveValidator {
 			}
 
 			// Two-square advance from the pawn's home square, not blocked by any pieces.
-			if startSquare.y == position.whoseTurn.pawnRow
-				&& endSquare.y == startSquare.y + (2 * position.whoseTurn.forwardDirection) {
-				if position.board[startSquare.x, startSquare.y + position.whoseTurn.forwardDirection] != nil {
+			if startPoint.y == position.whoseTurn.pawnRow
+				&& endPoint.y == startPoint.y + (2 * position.whoseTurn.forwardDirection) {
+				if position.board[startPoint.x, startPoint.y + position.whoseTurn.forwardDirection] != nil {
 					return .invalid(reason: .moveIsBlockedByOccupiedSquare)
 				} else {
 					return .valid(type: .pawnTwoSquares)
 				}
 			}
-		} else if [-1, 1].contains(startSquare.x - endSquare.x)
-			&& startSquare.y + position.whoseTurn.forwardDirection == endSquare.y {
+		} else if [-1, 1].contains(startPoint.x - endPoint.x)
+			&& startPoint.y + position.whoseTurn.forwardDirection == endPoint.y {
 
 			// Case 2: the pawn is moving diagonally forward one square.  It must be a capture -- either an en passant capture, a capture that leads to pawn promotion, or a plain old capture.
 
-			if let capturedPiece = position.board[endSquare] {
+			if let capturedPiece = position.board[endPoint] {
 				if capturedPiece.color != position.whoseTurn {
-					if endSquare.y == position.whoseTurn.opponent.homeRow {
+					if endPoint.y == position.whoseTurn.opponent.homeRow {
 						return .valid(type: .pawnPromotion(type: .promoteToQueen))
 					} else {
 						return .valid(type: .plainMove)
 					}
 				}
-			} else if position.board[endSquare] == nil
-				&& position.enPassantableSquare?.x == endSquare.x
-				&& position.enPassantableSquare?.y == startSquare.y {
+			} else if position.board[endPoint] == nil
+				&& position.enPassantableGridPoint?.x == endPoint.x
+				&& position.enPassantableGridPoint?.y == startPoint.y {
 				// Capture en passant.
 				return .valid(type: .captureEnPassant)
 			}
@@ -154,8 +154,8 @@ struct MoveValidator {
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 
 		let y = position.whoseTurn.homeRow
-		let kingHomeSquare = Square(x: 4, y: position.whoseTurn.homeRow)
-		guard position.board[kingHomeSquare] == Piece(position.whoseTurn, .King)
+		let kingHome = GridPointXY(4, position.whoseTurn.homeRow)
+		guard position.board[kingHome] == Piece(position.whoseTurn, .King)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 		guard position.board[7, y] == Piece(position.whoseTurn, .Rook)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
@@ -166,10 +166,10 @@ struct MoveValidator {
 		}
 
 		// The squares the king would cross must not put it in check.
-		if position.board.blindMoveWouldLeaveKingInCheck(from: startSquare, to: Square(x: startSquare.x + 1, y: y)) {
+		if position.board.blindMoveWouldLeaveKingInCheck(from: startPoint, to: GridPointXY(startPoint.x + 1, y)) {
 			return .invalid(reason: .castlingCannotMoveKingAcrossAttackedSquare)
 		}
-		if position.board.blindMoveWouldLeaveKingInCheck(from: startSquare, to: Square(x: startSquare.x + 2, y: y)) {
+		if position.board.blindMoveWouldLeaveKingInCheck(from: startPoint, to: GridPointXY(startPoint.x + 2, y)) {
 			return .invalid(reason: .castlingCannotMoveKingAcrossAttackedSquare)
 		}
 
@@ -183,8 +183,8 @@ struct MoveValidator {
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 
 		let y = position.whoseTurn.homeRow
-		let kingHomeSquare = Square(x: 4, y: y)
-		guard position.board[kingHomeSquare] == Piece(position.whoseTurn, .King)
+		let kingHome = GridPointXY(4, y)
+		guard position.board[kingHome] == Piece(position.whoseTurn, .King)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
 		guard position.board[0, y] == Piece(position.whoseTurn, .Rook)
 			else { return .invalid(reason: .cannotCastleBecauseKingOrRookHasMoved) }
@@ -195,10 +195,10 @@ struct MoveValidator {
 		}
 
 		// The squares the king would cross must not put it in check.
-		if position.board.blindMoveWouldLeaveKingInCheck(from: startSquare, to: Square(x: startSquare.x - 1, y: y)) {
+		if position.board.blindMoveWouldLeaveKingInCheck(from: startPoint, to: GridPointXY(startPoint.x - 1, y)) {
 			return .invalid(reason: .castlingCannotMoveKingAcrossAttackedSquare)
 		}
-		if position.board.blindMoveWouldLeaveKingInCheck(from: startSquare, to: Square(x: startSquare.x - 2, y: y)) {
+		if position.board.blindMoveWouldLeaveKingInCheck(from: startPoint, to: GridPointXY(startPoint.x - 2, y)) {
 			return .invalid(reason: .castlingCannotMoveKingAcrossAttackedSquare)
 		}
 
@@ -206,10 +206,10 @@ struct MoveValidator {
 		return .valid(type: .castleQueenSide)
 	}
 
-	// See if there exists an unobstructed line from the starting square to the ending square along one of the moving piece's vectors.
+	// See if there exists an unobstructed line from the start square to the end square along one of the moving piece's vectors.
 	private func checkVectors(movement: PieceMovement) -> Bool {
 		for vector in movement.vectors {
-			if position.board.pathIsClear(from: startSquare, to: endSquare, vector: vector, canRepeat: movement.canRepeat) {
+			if position.board.pathIsClear(from: startPoint, to: endPoint, vector: vector, canRepeat: movement.canRepeat) {
 				return true
 			}
 		}

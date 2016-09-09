@@ -26,7 +26,7 @@ enum PieceColor {
 	}
 }
 
-typealias PieceMovement = (vectors: [Vector], canRepeat: Bool)
+typealias PieceMovement = (vectors: [VectorXY], canRepeat: Bool)
 
 enum PieceType {
 	case Pawn

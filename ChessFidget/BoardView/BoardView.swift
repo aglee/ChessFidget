@@ -19,7 +19,7 @@ class BoardView: NSView {
 			needsLayout = true  // Because the BoardView may need to re-reckon things if isFlipped changes depending on which color the human player is in the new value of game.
 		}
 	}
-	var selectedSquare: Square? {
+	var selectedGridPoint: GridPointXY? {
 		didSet {
 			needsDisplay = true
 		}
@@ -65,30 +65,31 @@ class BoardView: NSView {
 
 	// MARK: - Geometry
 
-	private func rectForSquare(_ x: Int, _ y: Int) -> NSRect {
+	private func rectForSquareAtGridPoint(_ x: Int, _ y: Int) -> NSRect {
 		return NSRect(x: boardRect.origin.x + CGFloat(x) * squareWidth,
 		              y: boardRect.origin.y + CGFloat(y) * squareHeight,
 		              width: squareWidth,
 		              height: squareHeight);
 	}
 
-	private func rectForSquare(_ square: Square) -> NSRect {
-		return rectForSquare(square.x, square.y)
+	private func rectForSquareAtGridPoint(_ gridPoint: GridPointXY) -> NSRect {
+		return rectForSquareAtGridPoint(gridPoint.x, gridPoint.y)
 	}
 
-	func squareContaining(localPoint: NSPoint) -> Square? {
+	// viewPoint is in the receiver's coordinate system.
+	func gridPointForSquareContaining(viewPoint: NSPoint) -> GridPointXY? {
 		if squareWidth == 0.0 || squareHeight == 0.0 {
 			return nil
 		}
 
-		let point = NSPointToCGPoint(localPoint)
+		let point = NSPointToCGPoint(viewPoint)
 
 		if !boardRect.contains(point) {
 			return nil
 		}
 
-		return Square(x: Int(floor((point.x - boardRect.origin.x) / squareWidth)),
-		              y: Int(floor((point.y - boardRect.origin.y) / squareHeight)))
+		return GridPointXY(Int(floor((point.x - boardRect.origin.x) / squareWidth)),
+		               Int(floor((point.y - boardRect.origin.y) / squareHeight)))
 	}
 
 	// MARK: - NSView methods
@@ -125,7 +126,7 @@ class BoardView: NSView {
 		for x in 0...7 {
 			for y in 0...7 {
 				if (x+y) % 2 == 0 {
-					NSRectFill(rectForSquare(x, y))
+					NSRectFill(rectForSquareAtGridPoint(x, y))
 				}
 			}
 		}
@@ -136,24 +137,23 @@ class BoardView: NSView {
 			for y in 0...7 {
 				if let piece = game?.position.board[x, y] {
 					let icon = pieceIcons.icon(piece)
-					icon.draw(in: rectForSquare(x, y).insetBy(fraction: 0.1))
+					icon.draw(in: rectForSquareAtGridPoint(x, y).insetBy(fraction: 0.1))
 				}
 			}
 		}
 	}
 
 	private func drawHighlightOnSelectedSquare() {
-		if let square = selectedSquare {
+		if let gridPoint = selectedGridPoint {
 			selectedSquareHighlightColor.set()
-			NSFrameRectWithWidth(rectForSquare(square), borderWidthForHighlightingSquares)
+			NSFrameRectWithWidth(rectForSquareAtGridPoint(gridPoint), borderWidthForHighlightingSquares)
 		}
 	}
 
 	private func drawHighlightOnLastComputerMove() {
 		if let move = lastComputerMove {
 			lastComputerMoveHighlightColor.set()
-//			NSFrameRectWithWidth(rectForSquare(move.start), borderWidthForHighlightingSquares)
-			NSFrameRectWithWidth(rectForSquare(move.end), borderWidthForHighlightingSquares)
+			NSFrameRectWithWidth(rectForSquareAtGridPoint(move.end), borderWidthForHighlightingSquares)
 		}
 	}
 

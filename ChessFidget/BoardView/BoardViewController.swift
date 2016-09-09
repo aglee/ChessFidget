@@ -62,13 +62,13 @@ class BoardViewController: NSViewController {
 	// MARK: - NSResponder methods
 
 	override func mouseDown(with event: NSEvent) {
-		let localPoint = boardView.convert(event.locationInWindow, from: nil)
-		guard let clickedSquare = boardView.squareContaining(localPoint: localPoint)
+		let viewPoint = boardView.convert(event.locationInWindow, from: nil)
+		guard let clickedGridPoint = boardView.gridPointForSquareContaining(viewPoint: viewPoint)
 			else { return }
 
 		switch stateOfPlay {
 		case .awaitingHumanMove:
-			handleClickWhileAwaitingHumanMove(clickedSquare)
+			handleClickWhileAwaitingHumanMove(clickedGridPoint)
 		default:
 			break
 		}
@@ -76,35 +76,35 @@ class BoardViewController: NSViewController {
 	
 	// MARK: - Private methods
 
-	private func handleClickWhileAwaitingHumanMove(_ clickedSquare: Square) {
+	private func handleClickWhileAwaitingHumanMove(_ clickedGridPoint: GridPointXY) {
 		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
 
 		guard let game = game
 			else { return }
 
-		if boardView.selectedSquare == nil {
-			if game.position.board[clickedSquare]?.color == game.position.whoseTurn {
-				boardView.selectedSquare = clickedSquare
+		if boardView.selectedGridPoint == nil {
+			if game.position.board[clickedGridPoint]?.color == game.position.whoseTurn {
+				boardView.selectedGridPoint = clickedGridPoint
 			}
 		} else {
-			if clickedSquare != boardView.selectedSquare! {
-				tryProposedHumanMove(from: boardView.selectedSquare!, to: clickedSquare)
-				boardView.selectedSquare = nil
+			if clickedGridPoint != boardView.selectedGridPoint! {
+				tryProposedHumanMove(from: boardView.selectedGridPoint!, to: clickedGridPoint)
+				boardView.selectedGridPoint = nil
 			}
 		}
 	}
 
-	private func tryProposedHumanMove(from startSquare: Square, to endSquare: Square) {
+	private func tryProposedHumanMove(from startPoint: GridPointXY, to endPoint: GridPointXY) {
 		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
 
 		guard let game = game
 			else { return }
 
-		let validator = MoveValidator(position: game.position, startSquare: startSquare, endSquare: endSquare)
+		let validator = MoveValidator(position: game.position, startPoint: startPoint, endPoint: endPoint)
 
 		switch validator.validateMove() {
 		case .invalid(let reason):
-			Swift.print("Invalid move \(startSquare)-\(endSquare): \(reason)")
+			Swift.print("Invalid move \(startPoint.squareName)-\(endPoint.squareName): \(reason)")
 		case .valid(let moveType):
 			if case .pawnPromotion = moveType {
 				// Ask the user what piece type to promote the pawn to.
@@ -114,10 +114,10 @@ class BoardViewController: NSViewController {
 					(_: NSModalResponse) in
 					// The reference to sheetController within the closure prevents it from being dealloc'ed by ARC.
 					let moveType: MoveType = .pawnPromotion(type: sheetController.selectedPromotionType)
-					self.makeMove(Move(from: startSquare, to: endSquare, type: moveType))
+					self.makeMove(Move(from: startPoint, to: endPoint, type: moveType))
 				})
 			} else {
-				makeMove(Move(from: startSquare, to: endSquare, type: moveType))
+				makeMove(Move(from: startPoint, to: endPoint, type: moveType))
 			}
 		}
 	}
@@ -147,7 +147,7 @@ class BoardViewController: NSViewController {
 		guard let game = game
 			else { return }
 
-		print("\(move.start)-\(move.end) (\(move.type)) played by \(game.position.whoseTurn) (\(game.position.whoseTurn == game.humanPlayerPieceColor ? "Human" : "Computer"))")
+		print("\(move.start.squareName)-\(move.end.squareName) (\(move.type)) played by \(game.position.whoseTurn) (\(game.position.whoseTurn == game.humanPlayerPieceColor ? "Human" : "Computer"))")
 		if game.position.whoseTurn == game.humanPlayerPieceColor {
 			boardView.lastComputerMove = nil
 		} else {
