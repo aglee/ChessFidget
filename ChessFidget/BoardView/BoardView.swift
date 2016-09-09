@@ -54,19 +54,13 @@ class BoardView: NSView {
 	// MARK: Properties - geometry
 
 	private var boardRect: NSRect {
-		get {
-			return bounds.insetBy(dx: 12.0, dy: 12.0)
-		}
+		return bounds.insetBy(dx: 12.0, dy: 12.0)
 	}
 	private var squareWidth: CGFloat {
-		get {
-			return boardRect.size.width / 8.0
-		}
+		return boardRect.size.width / 8.0
 	}
 	private var squareHeight: CGFloat {
-		get {
-			return boardRect.size.height / 8.0
-		}
+		return boardRect.size.height / 8.0
 	}
 
 	// MARK: - Geometry

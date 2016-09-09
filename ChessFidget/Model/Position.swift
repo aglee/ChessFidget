@@ -16,20 +16,17 @@ struct Position {
 	var whoseTurn = PieceColor.White
 	var enPassantableSquare: Square? = nil
 	var castlingFlags = CastlingFlags()
+
 	var canCastleKingSide: Bool {
-		get {
-			return castlingFlags.canCastle(whoseTurn, .kingSide)
-		}
+		return castlingFlags.canCastle(whoseTurn, .kingSide)
 	}
+
 	var canCastleQueenSide: Bool {
-		get {
-			return castlingFlags.canCastle(whoseTurn, .queenSide)
-		}
+		return castlingFlags.canCastle(whoseTurn, .queenSide)
 	}
+
 	var validMoves: [Move] {
-		get {
-			return MoveGenerator(position: self).allValidMoves
-		}
+		return MoveGenerator(position: self).allValidMoves
 	}
 
 	mutating func makeMove(_ move: Move) {

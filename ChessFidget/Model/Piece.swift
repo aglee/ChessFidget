@@ -10,27 +10,19 @@ enum PieceColor {
 	case Black, White
 
 	var opponent: PieceColor {
-		get {
-			return self == .White ? .Black : .White
-		}
+		return self == .White ? .Black : .White
 	}
 
 	var forwardDirection: Int {
-		get {
-			return self == .White ? 1 : -1
-		}
+		return self == .White ? 1 : -1
 	}
 
 	var homeRow: Int {
-		get {
-			return self == .White ? 0 : 7
-		}
+		return self == .White ? 0 : 7
 	}
 
 	var pawnRow: Int {
-		get {
-			return homeRow + forwardDirection
-		}
+		return homeRow + forwardDirection
 	}
 }
 
@@ -45,9 +37,7 @@ enum PieceType {
 	case King
 
 	var movement: PieceMovement {
-		get {
-			return PieceType.pieceMovements[self]!
-		}
+		return PieceType.pieceMovements[self]!
 	}
 
 	private static let pieceMovements: [PieceType: PieceMovement] = [

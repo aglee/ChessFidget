@@ -47,9 +47,7 @@ class BoardViewController: NSViewController {
 	}
 
 	var boardView: BoardView {
-		get {
-			return view as! BoardView
-		}
+		return view as! BoardView
 	}
 
 //	var sheetController: PromotionSheetController? = nil

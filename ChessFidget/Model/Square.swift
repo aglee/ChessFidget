@@ -27,22 +27,18 @@ struct Square: Equatable, Hashable, CustomStringConvertible {
 	// MARK: - CustomStringConvertible protocol
 
 	var description: String {
-		get {
-			if x == x % Square.fileCharacters.count
-				&& y == y % Square.rankCharacters.count {
-				return "\(Square.fileCharacters[x])\(Square.rankCharacters[y])"
-			} else {
-				return "Square(\(x),\(y))"
-			}
+		if x == x % Square.fileCharacters.count
+			&& y == y % Square.rankCharacters.count {
+			return "\(Square.fileCharacters[x])\(Square.rankCharacters[y])"
+		} else {
+			return "Square(\(x),\(y))"
 		}
 	}
 
 	// MARK: - Hashable protocol
 
 	var hashValue: Int {
-		get {
-			return x ^ y
-		}
+		return x ^ y
 	}
 
 	// MARK: - Equatable protocol
