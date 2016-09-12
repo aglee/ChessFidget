@@ -38,6 +38,9 @@
 		735BE0421D874AC600989C6E /* QuietLog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE0411D874AC600989C6E /* QuietLog.mm */; };
 		735BE0431D874AC600989C6E /* QuietLog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE0411D874AC600989C6E /* QuietLog.mm */; };
 		735BE0441D874AC600989C6E /* QuietLog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE0411D874AC600989C6E /* QuietLog.mm */; };
+		735BE04E1D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
+		735BE04F1D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
+		735BE0501D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
 		735E4B921D826CA400426794 /* _about.md in Sources */ = {isa = PBXBuildFile; fileRef = 735E4B841D826CA400426794 /* _about.md */; };
 		735E4B931D826CA400426794 /* _about.md in Sources */ = {isa = PBXBuildFile; fileRef = 735E4B841D826CA400426794 /* _about.md */; };
 		735E4B941D826CA400426794 /* bb.png in Resources */ = {isa = PBXBuildFile; fileRef = 735E4B851D826CA400426794 /* bb.png */; };
@@ -148,6 +151,7 @@
 		735BE0331D872B4600989C6E /* MBCEngineCommands.l */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lex; path = MBCEngineCommands.l; sourceTree = "<group>"; };
 		735BE0401D874AC600989C6E /* QuietLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuietLog.h; sourceTree = "<group>"; };
 		735BE0411D874AC600989C6E /* QuietLog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QuietLog.mm; sourceTree = "<group>"; };
+		735BE04D1D87627300989C6E /* GameObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObserver.swift; sourceTree = "<group>"; };
 		735E4B841D826CA400426794 /* _about.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = _about.md; sourceTree = "<group>"; };
 		735E4B851D826CA400426794 /* bb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bb.png; sourceTree = "<group>"; };
 		735E4B861D826CA400426794 /* bk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bk.png; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 				735824C41D78FFC70019D7B1 /* MoveGenerator.swift */,
 				73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */,
 				73963E641D6FC57000C9D78B /* Game.swift */,
+				735BE04D1D87627300989C6E /* GameObserver.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -554,6 +559,7 @@
 				73963E591D6FC51600C9D78B /* Position.swift in Sources */,
 				73963DFB1D6E630C00C9D78B /* BoardViewController.swift in Sources */,
 				735E4BAC1D826CA400426794 /* PieceIconSet.swift in Sources */,
+				735BE04E1D87627300989C6E /* GameObserver.swift in Sources */,
 				735824BD1D78BDCE0019D7B1 /* CastlingFlags.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -571,6 +577,7 @@
 				735824C61D78FFC70019D7B1 /* MoveGenerator.swift in Sources */,
 				73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
 				735BE0381D872B4600989C6E /* MBCBoard.mm in Sources */,
+				735BE04F1D87627300989C6E /* GameObserver.swift in Sources */,
 				737EE93B1D75CC1F00B5144B /* Piece.swift in Sources */,
 				73963E561D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				73963E661D6FC57000C9D78B /* Game.swift in Sources */,
@@ -608,6 +615,7 @@
 				73963E5B1D6FC51600C9D78B /* Position.swift in Sources */,
 				73963DFC1D6E630C00C9D78B /* BoardViewController.swift in Sources */,
 				735E4BAD1D826CA400426794 /* PieceIconSet.swift in Sources */,
+				735BE0501D87627300989C6E /* GameObserver.swift in Sources */,
 				735824BF1D78BDD40019D7B1 /* CastlingFlags.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

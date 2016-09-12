@@ -8,55 +8,21 @@
 
 import Cocoa
 
-class BoardViewController: NSViewController {
-
-	// Used to decide what to display and how to react to user inputs.
-	private enum StateOfPlay {
-		case initializing
-		case awaitingHumanMove
-		case awaitingComputerMove
-		case awaitingPromotionSelection
-		case gameIsOver
-	}
+class BoardViewController: NSViewController, GameObserver {
 
 	var game: Game? {
-		didSet {
-			boardView.game = game
-			figureOutWhetherHumanOrComputerOrNobodyMovesNext()
+		willSet {
+			game?.gameObserver = nil
 		}
-	}
-
-	private var stateOfPlay: StateOfPlay = .initializing {
 		didSet {
-			Swift.print(stateOfPlay)
-
-			guard stateOfPlay != oldValue
-				else { return }
-
-			boardView.overlayText = nil
-
-			switch stateOfPlay {
-			case .awaitingComputerMove:
-				makeMoveOnBehalfOfComputer()
-			case .gameIsOver:
-				boardView.overlayText = "Game Over"
-			default:
-				break
-			}
+			game?.gameObserver = self
+			boardView.game = game
+			game?.startPlay()
 		}
 	}
 
 	var boardView: BoardView {
 		return view as! BoardView
-	}
-
-//	var sheetController: PromotionSheetController? = nil
-
-	// MARK: - NSViewController methods
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
 	}
 
 	// MARK: - NSResponder methods
@@ -66,18 +32,33 @@ class BoardViewController: NSViewController {
 		guard let clickedGridPoint = boardView.gridPointForSquareContaining(viewPoint: viewPoint)
 			else { return }
 
-		switch stateOfPlay {
-		case .awaitingHumanMove:
+		if game?.stateOfPlay == .awaitingHumanMove {
 			handleClickWhileAwaitingHumanMove(clickedGridPoint)
-		default:
-			break
 		}
 	}
-	
+
+	// MARK: - GameObserver methods
+
+	func gameDidChangeStateOfPlay(_ game: Game, oldValue: Game.StateOfPlay) {
+		if game.stateOfPlay == .gameIsOver {
+			boardView.overlayText = "Game Over"
+		} else {
+			boardView.overlayText = nil
+		}
+	}
+
+	func gameDidMakeMove(_ game: Game, move: Move) {
+		if position.whoseTurn == humanPlayerPieceColor {
+			boardView.lastComputerMove = move
+		} else {
+			boardView.lastComputerMove = nil
+		}
+	}
+
 	// MARK: - Private methods
 
 	private func handleClickWhileAwaitingHumanMove(_ clickedGridPoint: GridPointXY) {
-		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
+		assert(game?.stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(Game.StateOfPlay.awaitingHumanMove)")
 
 		guard let game = game
 			else { return }
@@ -95,7 +76,7 @@ class BoardViewController: NSViewController {
 	}
 
 	private func tryProposedHumanMove(from startPoint: GridPointXY, to endPoint: GridPointXY) {
-		assert(stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingHumanMove)")
+		assert(game?.stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(Game.StateOfPlay.awaitingHumanMove)")
 
 		guard let game = game
 			else { return }
@@ -114,62 +95,11 @@ class BoardViewController: NSViewController {
 					(_: NSModalResponse) in
 					// The reference to sheetController within the closure prevents it from being dealloc'ed by ARC.
 					let moveType: MoveType = .pawnPromotion(type: sheetController.selectedPromotionType)
-					self.makeMove(Move(from: startPoint, to: endPoint, type: moveType))
+					game.makeMove(Move(from: startPoint, to: endPoint, type: moveType))
 				})
 			} else {
-				makeMove(Move(from: startPoint, to: endPoint, type: moveType))
+				game.makeMove(Move(from: startPoint, to: endPoint, type: moveType))
 			}
-		}
-	}
-
-	private func makeMoveOnBehalfOfComputer() {
-		assert(stateOfPlay == .awaitingComputerMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingComputerMove)")
-
-		let validMoves = currentlyValidMoves()
-		if validMoves.count == 0 {
-			stateOfPlay = .gameIsOver
-			return
-		}
-
-		// For now, just pick a random valid move.
-		let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
-		makeMove(validMoves[moveIndex])
-	}
-
-	func currentlyValidMoves() -> [Move] {
-		guard let game = game
-			else { return [] }
-		return game.position.validMoves
-	}
-
-	// Apply the move to the game, position, and board.  Assumes the given move is valid for the current position.
-	private func makeMove(_ move: Move) {
-		guard let game = game
-			else { return }
-
-		print("\(move.start.squareName)-\(move.end.squareName) (\(move.type)) played by \(game.position.whoseTurn) (\(game.position.whoseTurn == game.humanPlayerPieceColor ? "Human" : "Computer"))")
-		if game.position.whoseTurn == game.humanPlayerPieceColor {
-			boardView.lastComputerMove = nil
-		} else {
-			boardView.lastComputerMove = move
-		}
-		game.position.makeMove(move)
-		figureOutWhetherHumanOrComputerOrNobodyMovesNext()
-
-		// Print for debugging.
-		//Swift.print(currentlyValidMoves().map({ "\($0.start)-\($0.end)" }).sorted())
-	}
-
-	private func figureOutWhetherHumanOrComputerOrNobodyMovesNext() {
-		guard let game = game
-			else { return }
-		
-		if currentlyValidMoves().count == 0 {
-			stateOfPlay = .gameIsOver
-		} else if game.humanPlayerPieceColor == game.position.whoseTurn {
-			stateOfPlay = .awaitingHumanMove
-		} else {
-			stateOfPlay = .awaitingComputerMove
 		}
 	}
 
