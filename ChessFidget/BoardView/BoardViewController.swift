@@ -48,7 +48,7 @@ class BoardViewController: NSViewController, GameObserver {
 	}
 
 	func gameDidMakeMove(_ game: Game, move: Move) {
-		if position.whoseTurn == humanPlayerPieceColor {
+		if game.position.whoseTurn == game.humanPlayerPieceColor {
 			boardView.lastComputerMove = move
 		} else {
 			boardView.lastComputerMove = nil
