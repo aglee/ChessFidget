@@ -1,14 +1,15 @@
 //
 //  ChessEngineWrapper.mm
-//  SjengFiddling
 //
 //  Created by Andy Lee on 9/12/16.
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
 #import "ChessEngineWrapper.h"
+#import "MBCBoard.h"
 #import "MBCEngine.h"
 #import "QuietLog.h"
+#import "ChessFidget-Swift.h"
 
 @interface ChessEngineWrapper ()
 @property MBCEngine *engine;
@@ -16,6 +17,16 @@
 
 // Assumes computer vs. human.
 @implementation ChessEngineWrapper
+
++ (instancetype)chessEngineWithComputerPlayingBlack
+{
+	return [[self alloc] initWithComputerPlayingSide:kBlackSide];
+}
+
++ (instancetype)chessEngineWithComputerPlayingWhite
+{
+	return [[self alloc] initWithComputerPlayingSide:kWhiteSide];
+}
 
 - (id)initWithComputerPlayingSide:(MBCSide)side
 {

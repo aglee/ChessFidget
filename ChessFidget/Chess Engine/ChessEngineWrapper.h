@@ -1,15 +1,21 @@
 //
 //  ChessEngineWrapper.h
-//  SjengFiddling
 //
 //  Created by Andy Lee on 9/12/16.
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "MBCBoard.h"
+
+@class Game;
 
 @interface ChessEngineWrapper : NSObject
-- (id)initWithComputerPlayingSide:(MBCSide)side;
+
+@property (weak) Game *game;
+
++ (instancetype)chessEngineWithComputerPlayingBlack;
++ (instancetype)chessEngineWithComputerPlayingWhite;
+
 - (void)sendMove:(NSString *)moveString;
+
 @end

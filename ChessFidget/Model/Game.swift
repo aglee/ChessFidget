@@ -11,7 +11,7 @@ import Foundation
 /**
 Game play alternates between the human player and the computer.
 */
-class Game {
+@objc class Game: NSObject {
 
 	enum StateOfPlay {
 		case awaitingStart
@@ -29,10 +29,19 @@ class Game {
 	}
 	var gameObserver: GameObserver?
 
+	var engine: ChessEngineWrapper
+
 	// MARK: - Init/deinit
 
 	init(humanPlayerPieceColor: PieceColor) {
 		self.humanPlayerPieceColor = humanPlayerPieceColor
+
+		switch humanPlayerPieceColor {
+		case .White:
+			engine = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
+		case .Black:
+			engine = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
+		}
 	}
 
 	// MARK: - Game play
