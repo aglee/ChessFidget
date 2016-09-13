@@ -8,23 +8,23 @@
 
 import Foundation
 
+enum GameState {
+	case awaitingStart
+	case awaitingHumanMove
+	case awaitingComputerMove
+	case gameIsOver
+}
+
 /**
 Game play alternates between the human player and the computer.
 */
 @objc class Game: NSObject {
 
-	enum StateOfPlay {
-		case awaitingStart
-		case awaitingHumanMove
-		case awaitingComputerMove
-		case gameIsOver
-	}
-
 	var position: Position = Position()
 	var humanPlayerPieceColor: PieceColor
-	var stateOfPlay = StateOfPlay.awaitingStart {
+	var gameState = GameState.awaitingStart {
 		didSet {
-			gameObserver?.gameDidChangeStateOfPlay(self, oldValue: oldValue)
+			gameObserver?.gameDidChangeState(self, oldValue: oldValue)
 		}
 	}
 	var gameObserver: GameObserver?
@@ -47,7 +47,7 @@ Game play alternates between the human player and the computer.
 	// MARK: - Game play
 
 	func startPlay() {
-		guard stateOfPlay == .awaitingStart else {
+		guard gameState == .awaitingStart else {
 			return
 		}
 		awaitTheNextMove()
@@ -69,21 +69,21 @@ Game play alternates between the human player and the computer.
 
 	private func awaitTheNextMove() {
 		if position.validMoves.count == 0 {
-			stateOfPlay = .gameIsOver
+			gameState = .gameIsOver
 		} else if humanPlayerPieceColor == position.whoseTurn {
-			stateOfPlay = .awaitingHumanMove
+			gameState = .awaitingHumanMove
 		} else {
-			stateOfPlay = .awaitingComputerMove
+			gameState = .awaitingComputerMove
 			tellTheComputerToMove()
 		}
 	}
 
 	private func tellTheComputerToMove() {
-		assert(stateOfPlay == .awaitingComputerMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingComputerMove)'")
+		assert(gameState == .awaitingComputerMove, "This method should only be called when the game state is '\(GameState.awaitingComputerMove)'")
 
 		let validMoves = position.validMoves
 		if validMoves.count == 0 {
-			stateOfPlay = .gameIsOver
+			gameState = .gameIsOver
 			return
 		}
 

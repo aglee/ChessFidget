@@ -8,7 +8,7 @@
 
 // Quick and dirty property observation.
 protocol GameObserver {
-	func gameDidChangeStateOfPlay(_ game: Game, oldValue: Game.StateOfPlay)
+	func gameDidChangeState(_ game: Game, oldValue: GameState)
 	func gameDidMakeMove(_ game: Game, move: Move)
 }
 

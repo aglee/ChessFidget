@@ -32,15 +32,15 @@ class BoardViewController: NSViewController, GameObserver {
 		guard let clickedGridPoint = boardView.gridPointForSquareContaining(viewPoint: viewPoint)
 			else { return }
 
-		if game?.stateOfPlay == .awaitingHumanMove {
+		if game?.gameState == .awaitingHumanMove {
 			handleClickWhileAwaitingHumanMove(clickedGridPoint)
 		}
 	}
 
 	// MARK: - GameObserver methods
 
-	func gameDidChangeStateOfPlay(_ game: Game, oldValue: Game.StateOfPlay) {
-		if game.stateOfPlay == .gameIsOver {
+	func gameDidChangeState(_ game: Game, oldValue: GameState) {
+		if game.gameState == .gameIsOver {
 			boardView.overlayText = "Game Over"
 		} else {
 			boardView.overlayText = nil
@@ -58,7 +58,7 @@ class BoardViewController: NSViewController, GameObserver {
 	// MARK: - Private methods
 
 	private func handleClickWhileAwaitingHumanMove(_ clickedGridPoint: GridPointXY) {
-		assert(game?.stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(Game.StateOfPlay.awaitingHumanMove)")
+		assert(game?.gameState == .awaitingHumanMove, "This method should only be called when the game state is '\(GameState.awaitingHumanMove)")
 
 		guard let game = game
 			else { return }
@@ -76,7 +76,7 @@ class BoardViewController: NSViewController, GameObserver {
 	}
 
 	private func tryProposedHumanMove(from startPoint: GridPointXY, to endPoint: GridPointXY) {
-		assert(game?.stateOfPlay == .awaitingHumanMove, "This method should only be called when the state of play is '\(Game.StateOfPlay.awaitingHumanMove)")
+		assert(game?.gameState == .awaitingHumanMove, "This method should only be called when the game state is '\(GameState.awaitingHumanMove)")
 
 		guard let game = game
 			else { return }
