@@ -29,6 +29,8 @@ class Game {
 	}
 	var gameObserver: GameObserver?
 
+	// MARK: - Init/deinit
+
 	init(humanPlayerPieceColor: PieceColor) {
 		self.humanPlayerPieceColor = humanPlayerPieceColor
 	}
@@ -56,7 +58,18 @@ class Game {
 	
 	// MARK: - Private methods
 
-	private func makeMoveOnBehalfOfComputer() {
+	private func awaitTheNextMove() {
+		if position.validMoves.count == 0 {
+			stateOfPlay = .gameIsOver
+		} else if humanPlayerPieceColor == position.whoseTurn {
+			stateOfPlay = .awaitingHumanMove
+		} else {
+			stateOfPlay = .awaitingComputerMove
+			tellTheComputerToMove()
+		}
+	}
+
+	private func tellTheComputerToMove() {
 		assert(stateOfPlay == .awaitingComputerMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingComputerMove)")
 
 		let validMoves = position.validMoves
@@ -70,16 +83,5 @@ class Game {
 		makeMove(validMoves[moveIndex])
 	}
 
-	private func awaitTheNextMove() {
-		if position.validMoves.count == 0 {
-			stateOfPlay = .gameIsOver
-		} else if humanPlayerPieceColor == position.whoseTurn {
-			stateOfPlay = .awaitingHumanMove
-		} else {
-			stateOfPlay = .awaitingComputerMove
-			makeMoveOnBehalfOfComputer()
-		}
-	}
-	
 }
 
