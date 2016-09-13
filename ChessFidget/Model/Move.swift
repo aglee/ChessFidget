@@ -46,6 +46,10 @@ struct Move {
 		self.end = end
 		self.type = type
 	}
+
+	var debugString: String {
+		return "\(start.squareName)-\(end.squareName)"
+	}
 }
 
 extension GridPointXY {

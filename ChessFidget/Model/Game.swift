@@ -55,7 +55,7 @@ Game play alternates between the human player and the computer.
 
 	// Apply the move to the game, position, and board.  Assumes the given move is valid for the current position.
 	func makeMove(_ move: Move) {
-		print("\(move.start.squareName)-\(move.end.squareName) (\(move.type)) played by \(position.whoseTurn) (\(position.whoseTurn == humanPlayerPieceColor ? "Human" : "Computer"))")
+		print("\(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(position.whoseTurn == humanPlayerPieceColor ? "Human" : "Computer"))")
 
 		position.makeMove(move)
 		awaitTheNextMove()

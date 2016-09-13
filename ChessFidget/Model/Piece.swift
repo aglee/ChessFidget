@@ -24,6 +24,13 @@
 	var pawnRow: Int {
 		return homeRow + forwardDirection
 	}
+
+	var debugString: String {
+		switch self {
+		case .Black: return "Black"
+		case .White: return "White"
+		}
+	}
 }
 
 typealias PieceMovement = (vectors: [VectorXY], canRepeat: Bool)
