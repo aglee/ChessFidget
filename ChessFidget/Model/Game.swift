@@ -58,9 +58,9 @@ Game play alternates between the human player and the computer.
 		print("\(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(position.whoseTurn == humanPlayerPieceColor ? "Human" : "Computer"))")
 
 		position.makeMove(move)
-		awaitTheNextMove()
-
 		gameObserver?.gameDidMakeMove(self, move: move)
+
+		awaitTheNextMove()
 
 		//print(position.validMoves().map({ "\($0.start)-\($0.end)" }).sorted())
 	}
