@@ -40,7 +40,7 @@ Game play alternates between the human player and the computer.
 		case .White:
 			engine = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
 		case .Black:
-			engine = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
+			engine = ChessEngineWrapper.chessEngineWithComputerPlayingWhite()
 		}
 	}
 
