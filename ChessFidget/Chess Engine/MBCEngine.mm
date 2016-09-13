@@ -349,8 +349,8 @@ using std::max;
 		while (unsigned cmd = MBCLexerScan(scanner)) {
 			[fMove setMsgid:cmd];
 			[fMove sendBeforeDate:[NSDate distantFuture]];
-			//			[pool release];
-			//			pool  = [[NSAutoreleasePool alloc] init];
+//			[pool release];
+//			pool  = [[NSAutoreleasePool alloc] init];
 		}
 		MBCLexerDestroy(scanner);
 	}

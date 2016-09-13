@@ -45,7 +45,7 @@ Game play alternates between the human player and the computer.
 	}
 
 	// MARK: - Game play
-	
+
 	func startPlay() {
 		guard stateOfPlay == .awaitingStart else {
 			return
@@ -64,7 +64,7 @@ Game play alternates between the human player and the computer.
 
 		//print(position.validMoves().map({ "\($0.start)-\($0.end)" }).sorted())
 	}
-	
+
 	// MARK: - Private methods
 
 	private func awaitTheNextMove() {
@@ -79,7 +79,7 @@ Game play alternates between the human player and the computer.
 	}
 
 	private func tellTheComputerToMove() {
-		assert(stateOfPlay == .awaitingComputerMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingComputerMove)")
+		assert(stateOfPlay == .awaitingComputerMove, "This method should only be called when the state of play is '\(StateOfPlay.awaitingComputerMove)'")
 
 		let validMoves = position.validMoves
 		if validMoves.count == 0 {
