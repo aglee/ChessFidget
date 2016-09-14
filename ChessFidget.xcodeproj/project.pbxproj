@@ -69,6 +69,9 @@
 		735E4BAB1D826CA400426794 /* wr.png in Resources */ = {isa = PBXBuildFile; fileRef = 735E4B901D826CA400426794 /* wr.png */; };
 		735E4BAC1D826CA400426794 /* PieceIconSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735E4B911D826CA400426794 /* PieceIconSet.swift */; };
 		735E4BAD1D826CA400426794 /* PieceIconSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735E4B911D826CA400426794 /* PieceIconSet.swift */; };
+		736BE5141D888B94001B680E /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736BE5131D888B94001B680E /* GameState.swift */; };
+		736BE5151D88D2DB001B680E /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736BE5131D888B94001B680E /* GameState.swift */; };
+		736BE5161D88D2DC001B680E /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736BE5131D888B94001B680E /* GameState.swift */; };
 		736C90F31D7F0B5700A9020F /* NSFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C90F21D7F0B5700A9020F /* NSFont+Extensions.swift */; };
 		736C90F41D7F0B5700A9020F /* NSFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C90F21D7F0B5700A9020F /* NSFont+Extensions.swift */; };
 		736C90FB1D7F22DD00A9020F /* PromotionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C90F91D7F22DD00A9020F /* PromotionSheetController.swift */; };
@@ -167,6 +170,7 @@
 		735E4B8F1D826CA400426794 /* wq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wq.png; sourceTree = "<group>"; };
 		735E4B901D826CA400426794 /* wr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wr.png; sourceTree = "<group>"; };
 		735E4B911D826CA400426794 /* PieceIconSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieceIconSet.swift; sourceTree = "<group>"; };
+		736BE5131D888B94001B680E /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		736C90F21D7F0B5700A9020F /* NSFont+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFont+Extensions.swift"; sourceTree = "<group>"; };
 		736C90F91D7F22DD00A9020F /* PromotionSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromotionSheetController.swift; sourceTree = "<group>"; };
 		736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PromotionSheetController.xib; sourceTree = "<group>"; };
@@ -277,6 +281,7 @@
 				73963E581D6FC51600C9D78B /* Position.swift */,
 				735824C41D78FFC70019D7B1 /* MoveGenerator.swift */,
 				73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */,
+				736BE5131D888B94001B680E /* GameState.swift */,
 				73963E641D6FC57000C9D78B /* Game.swift */,
 				735BE04D1D87627300989C6E /* GameObserver.swift */,
 			);
@@ -553,6 +558,7 @@
 				737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */,
 				735BE0421D874AC600989C6E /* QuietLog.mm in Sources */,
 				735BE0371D872B4600989C6E /* MBCBoard.mm in Sources */,
+				736BE5141D888B94001B680E /* GameState.swift in Sources */,
 				735BE03D1D872B4600989C6E /* MBCEngineCommands.l in Sources */,
 				736C91011D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
 				73963DF11D6E608D00C9D78B /* GameWindowController.swift in Sources */,
@@ -585,6 +591,7 @@
 				73963E661D6FC57000C9D78B /* Game.swift in Sources */,
 				73963E5A1D6FC51600C9D78B /* Position.swift in Sources */,
 				735BE0431D874AC600989C6E /* QuietLog.mm in Sources */,
+				736BE5151D88D2DB001B680E /* GameState.swift in Sources */,
 				735BE0351D872B4600989C6E /* ChessEngineWrapper.mm in Sources */,
 				7352F7B41D6E08D100EF9B5F /* ChessFidgetTests.swift in Sources */,
 			);
@@ -609,6 +616,7 @@
 				737EE93C1D75CC1F00B5144B /* Piece.swift in Sources */,
 				735BE0441D874AC600989C6E /* QuietLog.mm in Sources */,
 				735BE0391D872B4600989C6E /* MBCBoard.mm in Sources */,
+				736BE5161D88D2DC001B680E /* GameState.swift in Sources */,
 				735BE03F1D872B4600989C6E /* MBCEngineCommands.l in Sources */,
 				736C91021D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
 				73963DF21D6E608D00C9D78B /* GameWindowController.swift in Sources */,

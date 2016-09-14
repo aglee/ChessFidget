@@ -8,13 +8,6 @@
 
 import Foundation
 
-enum GameState {
-	case awaitingStart
-	case awaitingHumanMove
-	case awaitingComputerMove
-	case gameIsOver
-}
-
 /**
 Game play alternates between the human player and the computer.
 */
