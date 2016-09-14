@@ -120,6 +120,8 @@ typedef unsigned MBCCompactMove;
 - (NSString *)destination;
 - (NSString *)check;
 
+- (NSString *)engineMoveWithoutNewline;
+
 @end
 
 NSString * LocalizedString(NSDictionary * localization, NSString * key, NSString * fallback);

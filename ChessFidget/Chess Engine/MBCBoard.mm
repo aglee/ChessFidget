@@ -214,7 +214,7 @@ const MBCSide gEngineSide[] = {
 	}
 }
 
-- (NSString *)engineMove
+- (NSString *)engineMoveWithoutNewline
 {
 	const char *piece = " KQBNRP  kqbnrp ";
 
@@ -223,23 +223,28 @@ const MBCSide gEngineSide[] = {
 	switch (fCommand) {
 		case kCmdMove:
 			if (fPromotion) {
-				return [NSString stringWithFormat:@"%c%c%c%c%c\n",
+				return [NSString stringWithFormat:@"%c%c%c%c%c",
 						SQUARETOCOORD(fFromSquare),
 						SQUARETOCOORD(fToSquare),
 						piece[fPromotion&15]];
 			} else {
-				return [NSString stringWithFormat:@"%c%c%c%c\n",
+				return [NSString stringWithFormat:@"%c%c%c%c",
 						SQUARETOCOORD(fFromSquare),
 						SQUARETOCOORD(fToSquare)];
 			}
 		case kCmdDrop:
-			return [NSString stringWithFormat:@"%c@%c%c\n",
+			return [NSString stringWithFormat:@"%c@%c%c",
 					piece[fPiece&15],
 					SQUARETOCOORD(fToSquare)];
 			break;
 		default:
 			return nil;
 	}
+}
+
+- (NSString *)engineMove
+{
+	return [self.engineMoveWithoutNewline stringByAppendingString:@"\n"];
 }
 
 #pragma mark - Misc
