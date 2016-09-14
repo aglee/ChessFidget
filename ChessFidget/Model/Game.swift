@@ -121,10 +121,21 @@ Game play alternates between the human player and the computer.
 		case .invalid(_):
 			return nil
 		case .valid(let moveType):
-			if case .pawnPromotion(let promotionType) = moveType {
-				print(promotionType)  // TODO: Replace promotionType with the one specified in the engine move.
+			if case .pawnPromotion(_) = moveType {
+				assert(str.length == 5, "ERROR: Engine string '\(str)' represents a pawn promotion, but does not specify the piece to promote to.")
+				let promoType: PromotionType
+				switch str.substring(from: 4).lowercased() {
+				case "b": promoType = .promoteToBishop
+				case "n": promoType = .promoteToKnight
+				case "r": promoType = .promoteToRook
+				case "q": promoType = .promoteToQueen
+				default:
+					fatalError("Unexpected promotion type in move string '\(str)' received from the engine.")
+				}
+				return Move(from: startPoint, to: endPoint, type: .pawnPromotion(type: promoType))
+			} else {
+				return Move(from: startPoint, to: endPoint, type: moveType)
 			}
-			return Move(from: startPoint, to: endPoint, type: moveType)
 		}
 	}
 
