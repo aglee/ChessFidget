@@ -52,7 +52,17 @@ Game play alternates between the human player and the computer.
 
 	func makeHumanMove(_ move: Move) {
 		makeMove(move)
-		engineWrapper.sendEngineHumanMove("\(move.start.squareName)\(move.end.squareName)")
+
+		var moveStringForEngine = "\(move.start.squareName)\(move.end.squareName)"
+		if case .pawnPromotion(let promoType) = move.type {
+			switch promoType {
+			case .promoteToBishop: moveStringForEngine = moveStringForEngine + "b"
+			case .promoteToKnight: moveStringForEngine = moveStringForEngine + "n"
+			case .promoteToRook: moveStringForEngine = moveStringForEngine + "r"
+			case .promoteToQueen: moveStringForEngine = moveStringForEngine + "q"
+			}
+		}
+		engineWrapper.sendEngineHumanMove(moveStringForEngine)
 	}
 	
 	func humanMoveWasApproved(_ moveString: String) {
