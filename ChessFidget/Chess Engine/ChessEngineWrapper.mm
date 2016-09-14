@@ -6,7 +6,7 @@
 //
 
 #import "ChessEngineWrapper.h"
-#import "MBCBoard.h"
+#import "MBCMove.h"
 #import "MBCEngine.h"
 #import "QuietLog.h"
 #import "ChessFidget-Swift.h"

@@ -1,10 +1,10 @@
 /*
-	File:		MBCBoard.mm
+	File:		MBCMove.mm
 	Contains:	Implementation of fundamental board and move classes
 	Copyright:	© 2002-2011 by Apple Inc., all rights reserved.
  */
 
-#import "MBCBoard.h"
+#import "MBCMove.h"
 #import "MBCEngineCommands.h"
 
 #import <string.h>

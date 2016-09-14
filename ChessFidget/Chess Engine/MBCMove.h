@@ -1,5 +1,5 @@
 /*
-	File:		MBCBoard.h
+	File:		MBCMove.h
 	Contains:	Fundamental move and board classes.
 	Copyright:	� 2002-2012 by Apple Inc., all rights reserved.
 */

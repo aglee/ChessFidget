@@ -26,9 +26,9 @@
 		735BE0341D872B4600989C6E /* ChessEngineWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE02D1D872B4600989C6E /* ChessEngineWrapper.mm */; };
 		735BE0351D872B4600989C6E /* ChessEngineWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE02D1D872B4600989C6E /* ChessEngineWrapper.mm */; };
 		735BE0361D872B4600989C6E /* ChessEngineWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE02D1D872B4600989C6E /* ChessEngineWrapper.mm */; };
-		735BE0371D872B4600989C6E /* MBCBoard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE02F1D872B4600989C6E /* MBCBoard.mm */; };
-		735BE0381D872B4600989C6E /* MBCBoard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE02F1D872B4600989C6E /* MBCBoard.mm */; };
-		735BE0391D872B4600989C6E /* MBCBoard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE02F1D872B4600989C6E /* MBCBoard.mm */; };
+		735BE0371D872B4600989C6E /* MBCMove.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE02F1D872B4600989C6E /* MBCMove.mm */; };
+		735BE0381D872B4600989C6E /* MBCMove.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE02F1D872B4600989C6E /* MBCMove.mm */; };
+		735BE0391D872B4600989C6E /* MBCMove.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE02F1D872B4600989C6E /* MBCMove.mm */; };
 		735BE03A1D872B4600989C6E /* MBCEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE0311D872B4600989C6E /* MBCEngine.mm */; };
 		735BE03B1D872B4600989C6E /* MBCEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE0311D872B4600989C6E /* MBCEngine.mm */; };
 		735BE03C1D872B4600989C6E /* MBCEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 735BE0311D872B4600989C6E /* MBCEngine.mm */; };
@@ -146,8 +146,8 @@
 		735824C41D78FFC70019D7B1 /* MoveGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveGenerator.swift; sourceTree = "<group>"; };
 		735BE02C1D872B4600989C6E /* ChessEngineWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessEngineWrapper.h; sourceTree = "<group>"; };
 		735BE02D1D872B4600989C6E /* ChessEngineWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChessEngineWrapper.mm; sourceTree = "<group>"; };
-		735BE02E1D872B4600989C6E /* MBCBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBCBoard.h; sourceTree = "<group>"; };
-		735BE02F1D872B4600989C6E /* MBCBoard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MBCBoard.mm; sourceTree = "<group>"; };
+		735BE02E1D872B4600989C6E /* MBCMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBCMove.h; sourceTree = "<group>"; };
+		735BE02F1D872B4600989C6E /* MBCMove.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MBCMove.mm; sourceTree = "<group>"; };
 		735BE0301D872B4600989C6E /* MBCEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBCEngine.h; sourceTree = "<group>"; };
 		735BE0311D872B4600989C6E /* MBCEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MBCEngine.mm; sourceTree = "<group>"; };
 		735BE0321D872B4600989C6E /* MBCEngineCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBCEngineCommands.h; sourceTree = "<group>"; };
@@ -295,8 +295,8 @@
 				735BE0411D874AC600989C6E /* QuietLog.mm */,
 				735BE02C1D872B4600989C6E /* ChessEngineWrapper.h */,
 				735BE02D1D872B4600989C6E /* ChessEngineWrapper.mm */,
-				735BE02E1D872B4600989C6E /* MBCBoard.h */,
-				735BE02F1D872B4600989C6E /* MBCBoard.mm */,
+				735BE02E1D872B4600989C6E /* MBCMove.h */,
+				735BE02F1D872B4600989C6E /* MBCMove.mm */,
 				735BE0301D872B4600989C6E /* MBCEngine.h */,
 				735BE0311D872B4600989C6E /* MBCEngine.mm */,
 				735BE0321D872B4600989C6E /* MBCEngineCommands.h */,
@@ -557,7 +557,7 @@
 				735BE0341D872B4600989C6E /* ChessEngineWrapper.mm in Sources */,
 				737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */,
 				735BE0421D874AC600989C6E /* QuietLog.mm in Sources */,
-				735BE0371D872B4600989C6E /* MBCBoard.mm in Sources */,
+				735BE0371D872B4600989C6E /* MBCMove.mm in Sources */,
 				736BE5141D888B94001B680E /* GameState.swift in Sources */,
 				735BE03D1D872B4600989C6E /* MBCEngineCommands.l in Sources */,
 				736C91011D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
@@ -584,7 +584,7 @@
 				735BE03E1D872B4600989C6E /* MBCEngineCommands.l in Sources */,
 				735824C61D78FFC70019D7B1 /* MoveGenerator.swift in Sources */,
 				73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
-				735BE0381D872B4600989C6E /* MBCBoard.mm in Sources */,
+				735BE0381D872B4600989C6E /* MBCMove.mm in Sources */,
 				735BE04F1D87627300989C6E /* GameObserver.swift in Sources */,
 				737EE93B1D75CC1F00B5144B /* Piece.swift in Sources */,
 				73963E561D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
@@ -615,7 +615,7 @@
 				735BE0361D872B4600989C6E /* ChessEngineWrapper.mm in Sources */,
 				737EE93C1D75CC1F00B5144B /* Piece.swift in Sources */,
 				735BE0441D874AC600989C6E /* QuietLog.mm in Sources */,
-				735BE0391D872B4600989C6E /* MBCBoard.mm in Sources */,
+				735BE0391D872B4600989C6E /* MBCMove.mm in Sources */,
 				736BE5161D88D2DC001B680E /* GameState.swift in Sources */,
 				735BE03F1D872B4600989C6E /* MBCEngineCommands.l in Sources */,
 				736C91021D7F246900A9020F /* PieceCharacterSet.swift in Sources */,

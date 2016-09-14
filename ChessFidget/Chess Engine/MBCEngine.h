@@ -5,7 +5,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "MBCBoard.h"
+#import "MBCMove.h"
 
 //
 // Moves are sent to all interested parties. Trusted clients,

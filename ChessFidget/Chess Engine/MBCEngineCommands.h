@@ -5,7 +5,7 @@
 */
 
 #ifdef __cplusplus
-#import "MBCBoard.h"
+#import "MBCMove.h"
 extern "C" {
 #else
 typedef unsigned MBCCompactMove;
