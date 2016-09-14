@@ -59,6 +59,26 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:(id)move];
 }
 
+- (int)maxSearchDepth
+{
+	return self.backendEngine.maxSearchDepth;
+}
+
+- (void)setMaxSearchDepth:(int)maxSearchDepth
+{
+	self.backendEngine.maxSearchDepth = maxSearchDepth;
+}
+
+- (int)maxSecondsPerMove
+{
+	return self.backendEngine.maxSecondsPerMove;
+}
+
+- (void)setMaxSecondsPerMove:(int)maxSecondsPerMove
+{
+	self.backendEngine.maxSecondsPerMove = maxSecondsPerMove;
+}
+
 #pragma mark - Private methods
 
 - (MBCSide)_computerSide

@@ -6,6 +6,7 @@
 
 #import "MBCEngine.h"
 #import "MBCEngineCommands.h"
+#import "QuietLog.h"
 
 #include <unistd.h>
 #include <algorithm>
@@ -43,6 +44,8 @@ using std::max;
 @implementation MBCEngine
 
 @synthesize fSide = fSide;
+@synthesize maxSearchDepth = _maxSearchDepth;
+@synthesize maxSecondsPerMove = _maxSecondsPerMove;
 
 #pragma mark - Init/awake/dealloc
 
@@ -52,6 +55,10 @@ using std::max;
 	if (self == nil) {
 		return nil;
 	}
+
+	// Initial strength setting is very weak.
+	_maxSearchDepth = 5;
+	_maxSecondsPerMove = 1;
 
 	fEngineEnabled = false;
 	fSetPosition	 = false;
@@ -70,9 +77,12 @@ using std::max;
 	fFromEnginePipe = [[NSPipe alloc] init];
 	[fEngineTask setStandardInput:fToEnginePipe];
 	[fEngineTask setStandardOutput:fFromEnginePipe];
-	[fEngineTask setLaunchPath:[self pathToSjengExecutable]];
+
+	//TODO: Include a copy of the sjeng binary in the app, along with a zip of the source to comply with the GPL.
+	[fEngineTask setLaunchPath:@"/Applications/Chess.app/Contents/Resources/sjeng.ChessEngine"];
 	[fEngineTask setArguments: @[@"sjeng (Chess Engine)"]];
 	[self performSelector:@selector(launchEngine:) withObject:nil afterDelay:0.001];
+
 	fToEngine = [fToEnginePipe fileHandleForWriting];
 	fFromEngine = [fFromEnginePipe fileHandleForReading];
 	[NSThread detachNewThreadSelector:@selector(runEngine:) toTarget:self withObject:nil];
@@ -88,12 +98,6 @@ using std::max;
 }
 
 #pragma mark - Getters and setters
-
-- (NSString *)pathToSjengExecutable
-{
-	//[agl]	return [[NSBundle mainBundle] pathForResource:@"sjeng" ofType:@"ChessEngine"];
-	return @"/Applications/Chess.app/Contents/Resources/sjeng.ChessEngine";
-}
 
 - (BOOL)isLogging
 {
@@ -128,21 +132,26 @@ using std::max;
 	}
 }
 
-- (void)setSearchTime:(int)time
+- (int)maxSearchDepth
 {
-	if (time < 0) {
-		[self writeToEngine:[NSString stringWithFormat:@"sd %d\n", 4+time]];
-	} else {
-		[self writeToEngine:[NSString stringWithFormat:@"sd 40\nst %d\n",
-							 [MBCEngine secondsForTime:time]]];
-	}
+	return _maxSearchDepth;
 }
 
-#pragma mark - Time conversion
-
-+ (int)secondsForTime:(int)time
+- (void)setMaxSearchDepth:(int)maxSearchDepth
 {
-	return (int)lround(ldexpf(1.0f, time));
+	_maxSearchDepth = maxSearchDepth;
+	[self writeMaxSearchDepth:maxSearchDepth];
+}
+
+- (int)maxSecondsPerMove
+{
+	return _maxSecondsPerMove;
+}
+
+- (void)setMaxSecondsPerMove:(int)maxSecondsPerMove
+{
+	_maxSecondsPerMove = maxSecondsPerMove;
+	[self writeMaxSecondsPerMove:maxSecondsPerMove];
 }
 
 #pragma mark - Starting games
@@ -297,6 +306,11 @@ using std::max;
 
 #pragma mark - Private methods - misc
 
+//+ (int)secondsForTime:(int)time
+//{
+//	return (int)lround(ldexpf(1.0f, time));
+//}
+
 - (void)enableEngineMoves:(BOOL)enable
 {
 	if (enable != fEngineEnabled) {
@@ -407,11 +421,13 @@ using std::max;
 	[fEngineLogFile writeData:[text dataUsingEncoding:NSASCIIStringEncoding]];
 }
 
-#pragma mark - Private methods - talking to the sjeng process
+#pragma mark - Private methods - talking to the chess engine process
 
 - (void)tellEngineToStartNewGame
 {
 	[self writeToEngine:@"?new\n"];
+	[self writeMaxSearchDepth:self.maxSearchDepth];
+	[self writeMaxSecondsPerMove:self.maxSecondsPerMove];
 }
 
 - (void)writeToEngine:(NSString *)string
@@ -419,6 +435,16 @@ using std::max;
 	NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
 	[self logToEngine:string];
 	[fToEngine writeData:data];
+}
+
+- (void)writeMaxSearchDepth:(int)maxSearchDepth
+{
+	[self writeToEngine:[NSString stringWithFormat:@"sd %d\n", maxSearchDepth]];
+}
+
+- (void)writeMaxSecondsPerMove:(int)maxSecondsPerMove
+{
+	[self writeToEngine:[NSString stringWithFormat:@"st %d\n", maxSecondsPerMove]];
 }
 
 #pragma mark - Private methods - notification handlers

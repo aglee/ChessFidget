@@ -12,6 +12,8 @@
 @interface ChessEngineWrapper : NSObject
 
 @property (weak) Game *game;
+@property int maxSearchDepth;
+@property int maxSecondsPerMove;
 
 + (instancetype)chessEngineWithComputerPlayingBlack;
 + (instancetype)chessEngineWithComputerPlayingWhite;

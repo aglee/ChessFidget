@@ -30,10 +30,15 @@ extern NSString * const MBCGameEndNotification;
 extern NSString * const kMBCHumanPlayer;
 extern NSString * const kMBCEnginePlayer;
 
-//
-// MBCEngine is an instance of MBCPlayer, but it also serves other
-// purposes like move generation and checking.
-//
+/*
+ Runs a chess engine in a subprocess (NSTask) and communicates with it via text commands and responses, using the "Chess Engine Communication Protocol" specified at <https://www.gnu.org/software/xboard/engine-intf.html>.
+
+ Commands for setting the strength of the engine:
+
+ - "sd DEPTH" specifies the max search depth the engine should go to.
+ - "st TIME" specifies the max time the engine should spend per move.  The protocol says "TIME" can be either a number of seconds or a string like 05:30.
+ - There is a "level" command for regulating time, with more sophisticated parameters.  The "level" command is not supported here.
+ */
 @interface MBCEngine : NSObject <NSPortDelegate>
 {
 	NSTask *fEngineTask;	// The chess engine
@@ -63,15 +68,14 @@ extern NSString * const kMBCEnginePlayer;
 @property (nonatomic, weak) id engineOwner;
 @property MBCSide fSide;
 
+@property int maxSearchDepth;
+@property int maxSecondsPerMove;
+
 #pragma mark - Getters and setters
 
 - (BOOL)isLogging;
 - (void)setLogging:(BOOL)logging;
-- (void)setSearchTime:(int)time;
-
-#pragma mark - Time conversion
-
-+ (int)secondsForTime:(int)time;
+- (void)setMaxSearchDepth:(int)maxPly;
 
 #pragma mark - Starting games
 
