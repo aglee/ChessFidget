@@ -46,6 +46,7 @@ using std::max;
 @synthesize fSide = fSide;
 @synthesize maxSearchDepth = _maxSearchDepth;
 @synthesize maxSecondsPerMove = _maxSecondsPerMove;
+@synthesize shouldThinkWhileHumanIsThinking = _shouldThinkWhileHumanIsThinking;
 
 #pragma mark - Init/awake/dealloc
 
@@ -57,8 +58,9 @@ using std::max;
 	}
 
 	// Initial strength setting is very weak.
-	_maxSearchDepth = 5;
+	_maxSearchDepth = 3;
 	_maxSecondsPerMove = 1;
+	_shouldThinkWhileHumanIsThinking = NO;
 
 	fEngineEnabled = false;
 	fSetPosition	 = false;
@@ -152,6 +154,17 @@ using std::max;
 {
 	_maxSecondsPerMove = maxSecondsPerMove;
 	[self writeMaxSecondsPerMove:maxSecondsPerMove];
+}
+
+- (BOOL)shouldThinkWhileHumanIsThinking
+{
+	return _shouldThinkWhileHumanIsThinking;
+}
+
+- (void)setShouldThinkWhileHumanIsThinking:(BOOL)shouldThinkWhileHumanIsThinking
+{
+	_shouldThinkWhileHumanIsThinking = shouldThinkWhileHumanIsThinking;
+	[self writeEasyOrHard];
 }
 
 #pragma mark - Starting games
@@ -428,10 +441,13 @@ using std::max;
 	[self writeToEngine:@"?new\n"];
 	[self writeMaxSearchDepth:self.maxSearchDepth];
 	[self writeMaxSecondsPerMove:self.maxSecondsPerMove];
+	[self writeEasyOrHard];
 }
 
 - (void)writeToEngine:(NSString *)string
 {
+	MLog(@"%@", [string stringByReplacingOccurrencesOfString:@"\n" withString:@" "]);
+
 	NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
 	[self logToEngine:string];
 	[fToEngine writeData:data];
@@ -445,6 +461,11 @@ using std::max;
 - (void)writeMaxSecondsPerMove:(int)maxSecondsPerMove
 {
 	[self writeToEngine:[NSString stringWithFormat:@"st %d\n", maxSecondsPerMove]];
+}
+
+- (void)writeEasyOrHard
+{
+	[self writeToEngine:(self.shouldThinkWhileHumanIsThinking ? @"hard\n" : @"easy\n")];
 }
 
 #pragma mark - Private methods - notification handlers

@@ -70,6 +70,7 @@ extern NSString * const kMBCEnginePlayer;
 
 @property int maxSearchDepth;
 @property int maxSecondsPerMove;
+@property BOOL shouldThinkWhileHumanIsThinking;
 
 #pragma mark - Getters and setters
 

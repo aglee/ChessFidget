@@ -79,6 +79,16 @@
 	self.backendEngine.maxSecondsPerMove = maxSecondsPerMove;
 }
 
+- (BOOL)shouldThinkWhileHumanIsThinking
+{
+	return self.backendEngine.shouldThinkWhileHumanIsThinking;
+}
+
+- (void)setShouldThinkWhileHumanIsThinking:(BOOL)shouldThinkWhileHumanIsThinking
+{
+	self.backendEngine.shouldThinkWhileHumanIsThinking = shouldThinkWhileHumanIsThinking;
+}
+
 #pragma mark - Private methods
 
 - (MBCSide)_computerSide

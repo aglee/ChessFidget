@@ -14,6 +14,7 @@
 @property (weak) Game *game;
 @property int maxSearchDepth;
 @property int maxSecondsPerMove;
+@property BOOL shouldThinkWhileHumanIsThinking;
 
 + (instancetype)chessEngineWithComputerPlayingBlack;
 + (instancetype)chessEngineWithComputerPlayingWhite;
