@@ -52,7 +52,7 @@ Game play alternates between the human player and the computer.
 
 	func makeHumanMove(_ move: Move) {
 		makeMove(move)
-		engineWrapper.sendMove("\(move.start.squareName)\(move.end.squareName)")
+		engineWrapper.sendEngineHumanMove("\(move.start.squareName)\(move.end.squareName)")
 	}
 	
 	func humanMoveWasApproved(_ moveString: String) {

@@ -49,7 +49,7 @@
 	[self _stopObservingChessEngineNotifications];
 }
 
-- (void)sendMove:(NSString *)moveString
+- (void)sendEngineHumanMove:(NSString *)moveString
 {
 	MLog(@"sending move to chess engine: '%@'", moveString);
 	MBCMove *move = [MBCMove newFromEngineMove:moveString];

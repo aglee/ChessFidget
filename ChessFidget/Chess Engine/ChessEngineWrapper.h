@@ -16,6 +16,6 @@
 + (instancetype)chessEngineWithComputerPlayingBlack;
 + (instancetype)chessEngineWithComputerPlayingWhite;
 
-- (void)sendMove:(NSString *)moveString;
+- (void)sendEngineHumanMove:(NSString *)moveString;
 
 @end
