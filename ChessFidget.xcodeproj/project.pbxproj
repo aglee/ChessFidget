@@ -240,6 +240,7 @@
 				735BE0571D882D1F00989C6E /* ChessFidget-Bridging-Header.h */,
 				73963E531D6FC06700C9D78B /* Utilities */,
 				7352F7CC1D6E158F00EF9B5F /* Model */,
+				7377182D1D89E9FD0027AB35 /* Chess Engine Bridge */,
 				735BE02B1D872B4600989C6E /* Chess Engine */,
 				73963DEE1D6E607600C9D78B /* GameWindow */,
 				73963DF51D6E630C00C9D78B /* BoardView */,
@@ -291,10 +292,6 @@
 		735BE02B1D872B4600989C6E /* Chess Engine */ = {
 			isa = PBXGroup;
 			children = (
-				735BE0401D874AC600989C6E /* QuietLog.h */,
-				735BE0411D874AC600989C6E /* QuietLog.mm */,
-				735BE02C1D872B4600989C6E /* ChessEngineWrapper.h */,
-				735BE02D1D872B4600989C6E /* ChessEngineWrapper.mm */,
 				735BE02E1D872B4600989C6E /* MBCMove.h */,
 				735BE02F1D872B4600989C6E /* MBCMove.mm */,
 				735BE0301D872B4600989C6E /* MBCEngine.h */,
@@ -349,6 +346,17 @@
 				736C91001D7F246900A9020F /* PieceCharacterSet.swift */,
 			);
 			path = "Piece Characters";
+			sourceTree = "<group>";
+		};
+		7377182D1D89E9FD0027AB35 /* Chess Engine Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				735BE0401D874AC600989C6E /* QuietLog.h */,
+				735BE0411D874AC600989C6E /* QuietLog.mm */,
+				735BE02C1D872B4600989C6E /* ChessEngineWrapper.h */,
+				735BE02D1D872B4600989C6E /* ChessEngineWrapper.mm */,
+			);
+			path = "Chess Engine Bridge";
 			sourceTree = "<group>";
 		};
 		73963DEE1D6E607600C9D78B /* GameWindow */ = {
