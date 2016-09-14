@@ -23,16 +23,20 @@ NSString * const MBCGameEndNotification				= @"MBCGameEndNotification";
 NSString * const kMBCHumanPlayer					= @"human";
 NSString * const kMBCEnginePlayer					= @"program";
 
+// This comment is from the original Apple code:
 //
+// ---- snip ----
 // Paradoxically enough, moving as quickly as possible is
 // not necessarily desirable. Users tend to get frustrated
 // once they realize how little time their Mac really spends
 // to crush them at low levels. In the interest of promoting
 // harmonious Human - Machine relations, we enforce minimum
 // response times.
+// ---- snip ----
 //
-const NSTimeInterval kInteractiveDelay	= 2.0;
-const NSTimeInterval kAutomaticDelay	= 4.0;
+// I'm changing these values to zero, since for my purposes I don't want the artificial delay.
+const NSTimeInterval kInteractiveDelay = 0.0;  //2.0;
+const NSTimeInterval kAutomaticDelay = 0.0;  //4.0;
 
 using std::max;
 
