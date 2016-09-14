@@ -102,17 +102,17 @@ Game play alternates between the human player and the computer.
 		}
 
 		guard str.length == 4 || str.length == 5 else {
-			print("ERROR: Engine string '\(str) has unexpected length.")
+			print("ERROR: Engine string '\(str)' has unexpected length.")
 			return nil
 		}
 
 		guard let startPoint = GridPointXY(algebraic: str.substring(with: NSMakeRange(0, 2))) else {
-			print("ERROR: Engine string '\(str) has invalid start square.")
+			print("ERROR: Engine string '\(str)' has invalid start square.")
 			return nil
 		}
 
 		guard let endPoint = GridPointXY(algebraic: str.substring(with: NSMakeRange(2, 2))) else {
-			print("ERROR: Engine string '\(str) has invalid end square.")
+			print("ERROR: Engine string '\(str)' has invalid end square.")
 			return nil
 		}
 
