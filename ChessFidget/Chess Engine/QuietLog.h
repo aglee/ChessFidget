@@ -11,3 +11,5 @@ extern void QuietLog(NSString *format, ...);
 
 #define QLog QuietLog
 
+#define MLog(fmt, ...) QLog(@"%@ %@ -- " fmt, self.className, NSStringFromSelector(_cmd), ##__VA_ARGS__)
+
