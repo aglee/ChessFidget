@@ -12,7 +12,7 @@
 #import "ChessFidget-Swift.h"
 
 @interface ChessEngineWrapper ()
-@property MBCEngine *engine;
+@property MBCEngine *backendEngine;
 @end
 
 // Assumes computer vs. human.
@@ -35,11 +35,11 @@
 		return nil;
 	}
 
-	_engine = [[MBCEngine alloc] init];
-	_engine.engineOwner = self;
-	_engine.logging = YES;
+	_backendEngine = [[MBCEngine alloc] init];
+	_backendEngine.engineOwner = self;
+	_backendEngine.logging = YES;
 	[self _startObservingChessEngineNotifications];
-	[_engine startGameWithSideToPlay:side];
+	[_backendEngine startGameWithSideToPlay:side];
 
 	return self;
 }
@@ -51,7 +51,7 @@
 
 - (void)sendMove:(NSString *)moveString
 {
-	QLog(@"sending move '%@'", moveString);
+	MLog(@"sending move to chess engine: '%@'", moveString);
 	MBCMove *move = [MBCMove newFromEngineMove:moveString];
 	NSString *notificationName = (self._humanSide == kWhiteSide
 								  ? MBCUncheckedWhiteMoveNotification
@@ -63,7 +63,7 @@
 
 - (MBCSide)_computerSide
 {
-	return self.engine.fSide;
+	return self.backendEngine.fSide;
 }
 
 - (MBCSide)_humanSide
@@ -72,7 +72,7 @@
 		case kWhiteSide: return kBlackSide;
 		case kBlackSide: return kWhiteSide;
 		default:
-			QLog(@"ERROR: Unexpected value for _computerSide: %d", self._computerSide);
+			MLog(@"ERROR: Unexpected value for _computerSide: %d", self._computerSide);
 			return kWhiteSide;
 	}
 }
@@ -93,20 +93,24 @@
 
 	if ([notif.name isEqualToString:MBCWhiteMoveNotification]) {
 		if (self._humanSide == kWhiteSide) {
-			QLog(@"move by human (playing White) was approved: %@", move.engineMove);
+			MLog(@"move by human (playing White) was approved: %@", move.engineMoveWithoutNewline);
+			[self.game humanMoveWasApproved:move.engineMoveWithoutNewline];
 		} else {
-			QLog(@"move by computer (playing White) was received: %@", move.engineMove);
+			MLog(@"move by computer (playing White) was received: %@", move.engineMoveWithoutNewline);
+			[self.game computerMoveWasReceived:move.engineMoveWithoutNewline];
 		}
 		[[NSNotificationCenter defaultCenter] postNotificationName:MBCEndMoveNotification object:self userInfo:(id)move];
 	} else if ([notif.name isEqualToString:MBCBlackMoveNotification]) {
 		if (self._humanSide == kBlackSide) {
-			QLog(@"move by human (playing Black) was approved: %@", move.engineMove);
+			MLog(@"move by human (playing Black) was approved: %@", move.engineMoveWithoutNewline);
+			[self.game humanMoveWasApproved:move.engineMoveWithoutNewline];
 		} else {
-			QLog(@"move by computer (playing Black) was received: %@", move.engineMove);
+			MLog(@"move by computer (playing Black) was received: %@", move.engineMoveWithoutNewline);
+			[self.game computerMoveWasReceived:move.engineMoveWithoutNewline];
 		}
 		[[NSNotificationCenter defaultCenter] postNotificationName:MBCEndMoveNotification object:self userInfo:(id)move];
 	} else {
-		QLog(@"got misc notification: '%@' %@", notif.name, move.engineMove);
+		MLog(@"got misc notification: '%@' %@", notif.name, move.engineMoveWithoutNewline);
 	}
 }
 

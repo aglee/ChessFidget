@@ -15,14 +15,13 @@ Game play alternates between the human player and the computer.
 
 	var position: Position = Position()
 	var humanPlayerPieceColor: PieceColor
-	var gameState = GameState.awaitingStart {
+	var gameState: GameState = .awaitingStart {
 		didSet {
 			gameObserver?.gameDidChangeState(self, oldValue: oldValue)
 		}
 	}
 	var gameObserver: GameObserver?
-
-	var engine: ChessEngineWrapper
+	var engineWrapper: ChessEngineWrapper
 
 	// MARK: - Init/deinit
 
@@ -31,37 +30,112 @@ Game play alternates between the human player and the computer.
 
 		switch humanPlayerPieceColor {
 		case .White:
-			engine = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
+			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
 		case .Black:
-			engine = ChessEngineWrapper.chessEngineWithComputerPlayingWhite()
+			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingWhite()
 		}
+
+		super.init()
+
+		engineWrapper.game = self
 	}
 
 	// MARK: - Game play
 
 	func startPlay() {
-		guard gameState == .awaitingStart else {
+		guard case .awaitingStart = gameState else {
+			print("NOTE: \(#function) expects game state to be \(GameState.awaitingStart)")
 			return
 		}
 		awaitTheNextMove()
 	}
 
+	func makeHumanMove(_ move: Move) {
+		makeMove(move)
+		engineWrapper.sendMove("\(move.start.squareName)\(move.end.squareName)")
+	}
+	
+	func humanMoveWasApproved(_ moveString: String) {
+		print("+++ \(type(of: self)) \(#function): \(moveString)")
+	}
+
+	func computerMoveWasReceived(_ moveString: String) {
+		print("+++ \(type(of: self)) \(#function): \(moveString)")
+
+		guard let move = moveFromEngineString(moveString) else {
+			print("ERROR: Couldn't create a Move from the string '\(moveString).")
+			return
+		}
+
+		DispatchQueue.main.async {
+			print("+++ about to make computer's move \(move.debugString)")
+			self.makeMove(move)
+		}
+	}
+
+	// MARK: - Private methods
+
 	// Apply the move to the game, position, and board.  Assumes the given move is valid for the current position.
-	func makeMove(_ move: Move) {
-		print("\(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(position.whoseTurn == humanPlayerPieceColor ? "Human" : "Computer"))")
+	private func makeMove(_ move: Move) {
+		print("+++ \(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(position.whoseTurn == humanPlayerPieceColor ? "Human" : "Computer"))")
 
 		position.makeMove(move)
 		gameObserver?.gameDidMakeMove(self, move: move)
 
 		awaitTheNextMove()
+	}
+	
+	private func moveFromEngineString(_ engineString: String) -> Move? {
+		var str = engineString.lowercased() as NSString
+		if str.hasSuffix("\n") {
+			str = str.substring(to: str.length - 1) as NSString
+		}
 
-		//print(position.validMoves().map({ "\($0.start)-\($0.end)" }).sorted())
+		guard str.length == 4 || str.length == 5 else {
+			print("ERROR: Engine string '\(str) has unexpected length.")
+			return nil
+		}
+
+		guard let startPoint = GridPointXY(algebraic: str.substring(with: NSMakeRange(0, 2))) else {
+			print("ERROR: Engine string '\(str) has invalid start square.")
+			return nil
+		}
+
+		guard let endPoint = GridPointXY(algebraic: str.substring(with: NSMakeRange(2, 2))) else {
+			print("ERROR: Engine string '\(str) has invalid end square.")
+			return nil
+		}
+
+		let validity = MoveValidator(position: position, startPoint: startPoint, endPoint: endPoint).validateMove()
+		switch validity {
+		case .invalid(_):
+			return nil
+		case .valid(let moveType):
+			if case .pawnPromotion(let promotionType) = moveType {
+				print(promotionType)  // TODO: Replace promotionType with the one specified in the engine move.
+			}
+			return Move(from: startPoint, to: endPoint, type: moveType)
+		}
 	}
 
-	// MARK: - Private methods
+	private func seeIfGameIsAutomaticallyOver() -> ReasonGameIsOver? {
+		if position.validMoves.count > 0 {
+			return nil
+		}
+
+		if position.board.isInCheck(position.whoseTurn) {
+			switch position.whoseTurn {
+			case .Black: return .WhiteWinsByCheckmate
+			case .White: return .BlackWinsByCheckmate
+			}
+		}
+
+		return .DrawDueToStalemate
+	}
 
 	private func awaitTheNextMove() {
-		if position.validMoves.count == 0 {
+		if let reason = seeIfGameIsAutomaticallyOver() {
+			print("game is over -- \(reason)")
 			gameState = .gameIsOver
 		} else if humanPlayerPieceColor == position.whoseTurn {
 			gameState = .awaitingHumanMove
@@ -81,8 +155,12 @@ Game play alternates between the human player and the computer.
 		}
 
 		// For now, just pick a random valid move.
-		let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
-		makeMove(validMoves[moveIndex])
+//		let delay = 0.1
+//		let when = DispatchTime.now() + delay
+//		DispatchQueue.main.asyncAfter(deadline: when, execute: {
+//			let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
+//			self.makeMove(validMoves[moveIndex])
+//		})
 	}
 
 }

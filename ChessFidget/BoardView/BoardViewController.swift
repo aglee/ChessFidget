@@ -95,10 +95,10 @@ class BoardViewController: NSViewController, GameObserver {
 					(_: NSModalResponse) in
 					// The reference to sheetController within the closure prevents it from being dealloc'ed by ARC.
 					let moveType: MoveType = .pawnPromotion(type: sheetController.selectedPromotionType)
-					game.makeMove(Move(from: startPoint, to: endPoint, type: moveType))
+					game.makeHumanMove(Move(from: startPoint, to: endPoint, type: moveType))
 				})
 			} else {
-				game.makeMove(Move(from: startPoint, to: endPoint, type: moveType))
+				game.makeHumanMove(Move(from: startPoint, to: endPoint, type: moveType))
 			}
 		}
 	}
