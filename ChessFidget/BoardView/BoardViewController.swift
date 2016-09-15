@@ -25,6 +25,21 @@ class BoardViewController: NSViewController, GameObserver {
 		return view as! BoardView
 	}
 
+	// MARK: - NSViewController methods
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		let squareness = NSLayoutConstraint(item: boardView,
+		                                    attribute: .width,
+		                                    relatedBy: .equal,
+		                                    toItem: boardView,
+		                                    attribute: .height,
+		                                    multiplier: 1.0,
+		                                    constant: 0.0)
+		boardView.addConstraint(squareness);
+	}
+
 	// MARK: - NSResponder methods
 
 	override func mouseDown(with event: NSEvent) {

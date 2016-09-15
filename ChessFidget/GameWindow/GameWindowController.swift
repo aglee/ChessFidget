@@ -44,16 +44,6 @@ class GameWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
 		boardViewController.game = game
-
-		let boardView = boardViewController.boardView
-		let squareness = NSLayoutConstraint(item: boardView,
-		                                    attribute: .width,
-		                                    relatedBy: .equal,
-		                                    toItem: boardView,
-		                                    attribute: .height,
-		                                    multiplier: 1.0,
-		                                    constant: 0.0)
-		boardViewController.boardView.addConstraint(squareness);
     }
 
 	// MARK: - Private methods
