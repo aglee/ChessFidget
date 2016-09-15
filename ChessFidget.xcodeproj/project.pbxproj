@@ -104,6 +104,11 @@
 		73C1D7861D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
 		73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
 		73C1D7881D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
+		73DED4491D8A40720000054B /* _README.md in Sources */ = {isa = PBXBuildFile; fileRef = 73DED4461D8A40720000054B /* _README.md */; };
+		73DED44A1D8A40720000054B /* Chess-318.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4471D8A40720000054B /* Chess-318.tar.gz */; };
+		73DED44B1D8A40720000054B /* sjeng.ChessEngine in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4481D8A40720000054B /* sjeng.ChessEngine */; };
+		73DED44E1D8A410A0000054B /* sjeng.ChessEngine in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4481D8A40720000054B /* sjeng.ChessEngine */; };
+		73DED44F1D8A410B0000054B /* sjeng.ChessEngine in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4481D8A40720000054B /* sjeng.ChessEngine */; };
 		73E31C1A1D74B8FF0013A33D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E31C191D74B8FF0013A33D /* Board.swift */; };
 		73E31C1B1D74B8FF0013A33D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E31C191D74B8FF0013A33D /* Board.swift */; };
 		73E31C1C1D74B8FF0013A33D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E31C191D74B8FF0013A33D /* Board.swift */; };
@@ -183,6 +188,10 @@
 		73963E581D6FC51600C9D78B /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		73963E641D6FC57000C9D78B /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveValidator.swift; sourceTree = "<group>"; };
+		73DED4461D8A40720000054B /* _README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = _README.md; sourceTree = "<group>"; };
+		73DED4471D8A40720000054B /* Chess-318.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "Chess-318.tar.gz"; sourceTree = "<group>"; };
+		73DED4481D8A40720000054B /* sjeng.ChessEngine */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = sjeng.ChessEngine; sourceTree = "<group>"; };
+		73DED4501D8A49410000054B /* _README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = _README.md; sourceTree = "<group>"; };
 		73E31C191D74B8FF0013A33D /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -290,12 +299,15 @@
 		735BE02B1D872B4600989C6E /* Chess Engine */ = {
 			isa = PBXGroup;
 			children = (
+				73DED4461D8A40720000054B /* _README.md */,
 				735BE02E1D872B4600989C6E /* MBCMove.h */,
 				735BE02F1D872B4600989C6E /* MBCMove.mm */,
 				735BE0301D872B4600989C6E /* MBCEngine.h */,
 				735BE0311D872B4600989C6E /* MBCEngine.mm */,
 				735BE0321D872B4600989C6E /* MBCEngineCommands.h */,
 				735BE0331D872B4600989C6E /* MBCEngineCommands.l */,
+				73DED4471D8A40720000054B /* Chess-318.tar.gz */,
+				73DED4481D8A40720000054B /* sjeng.ChessEngine */,
 			);
 			path = "Chess Engine";
 			sourceTree = "<group>";
@@ -349,6 +361,7 @@
 		7377182D1D89E9FD0027AB35 /* Chess Engine Bridge */ = {
 			isa = PBXGroup;
 			children = (
+				73DED4501D8A49410000054B /* _README.md */,
 				735BE0401D874AC600989C6E /* QuietLog.h */,
 				735BE0411D874AC600989C6E /* QuietLog.mm */,
 				735BE02C1D872B4600989C6E /* ChessEngineWrapper.h */,
@@ -500,6 +513,7 @@
 				735E4B981D826CA400426794 /* bn.png in Resources */,
 				735E4BA41D826CA400426794 /* wn.png in Resources */,
 				735E4BA61D826CA400426794 /* wp.png in Resources */,
+				73DED44B1D8A40720000054B /* sjeng.ChessEngine in Resources */,
 				735E4B9A1D826CA400426794 /* bp.png in Resources */,
 				735E4B941D826CA400426794 /* bb.png in Resources */,
 				7352F7A91D6E08D000EF9B5F /* MainMenu.xib in Resources */,
@@ -510,6 +524,7 @@
 				735E4B9E1D826CA400426794 /* br.png in Resources */,
 				735E4BA01D826CA400426794 /* wb.png in Resources */,
 				735E4B961D826CA400426794 /* bk.png in Resources */,
+				73DED44A1D8A40720000054B /* Chess-318.tar.gz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +532,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73DED44E1D8A410A0000054B /* sjeng.ChessEngine in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +542,7 @@
 			files = (
 				735E4BAB1D826CA400426794 /* wr.png in Resources */,
 				735E4BA71D826CA400426794 /* wp.png in Resources */,
+				73DED44F1D8A410B0000054B /* sjeng.ChessEngine in Resources */,
 				735E4BA11D826CA400426794 /* wb.png in Resources */,
 				735E4B9F1D826CA400426794 /* br.png in Resources */,
 				735E4B971D826CA400426794 /* bk.png in Resources */,
@@ -555,6 +572,7 @@
 				73830B301D79994700259FD2 /* MoveGenerator.swift in Sources */,
 				73963DF91D6E630C00C9D78B /* BoardView.swift in Sources */,
 				73C1D7861D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
+				73DED4491D8A40720000054B /* _README.md in Sources */,
 				736C90F31D7F0B5700A9020F /* NSFont+Extensions.swift in Sources */,
 				73963E551D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				735824C11D78CA000019D7B1 /* Move.swift in Sources */,

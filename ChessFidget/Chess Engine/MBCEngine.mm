@@ -79,9 +79,8 @@ using std::max;
 	fFromEnginePipe = [[NSPipe alloc] init];
 	[fEngineTask setStandardInput:fToEnginePipe];
 	[fEngineTask setStandardOutput:fFromEnginePipe];
-
-	//TODO: Include a copy of the sjeng binary in the app, along with a zip of the source to comply with the GPL.
-	[fEngineTask setLaunchPath:@"/Applications/Chess.app/Contents/Resources/sjeng.ChessEngine"];
+	NSString *launchPath = [[NSBundle mainBundle] pathForResource:@"sjeng" ofType:@"ChessEngine"];
+	[fEngineTask setLaunchPath:launchPath];
 	[fEngineTask setArguments: @[@"sjeng (Chess Engine)"]];
 	[self performSelector:@selector(launchEngine:) withObject:nil afterDelay:0.001];
 
