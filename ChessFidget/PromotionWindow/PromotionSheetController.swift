@@ -54,9 +54,4 @@ class PromotionSheetController: NSWindowController {
 		return "PromotionSheetController"
 	}
 
-	override func windowDidLoad() {
-		super.windowDidLoad()
-
-	}
-
 }

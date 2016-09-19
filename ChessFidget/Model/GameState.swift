@@ -29,7 +29,7 @@ enum GameState {
 	// MEANING: Waiting for a response from the back-end chess engine.  We expect the move to have been successfully validated by the engine.  We transition when we receive that response.  We may need to explicitly tell the engine to produce the next move -- I'll have to check how the sjeng interface works.
 	// TRANSITIONS: awaitingComputerMove, gameIsOver.
 	// TODO: Handle the case where the move fails validation by the chess engine.  I'm thinking show something in the UI and change the game state to gameIsOver.  In theory this shouldn't happen, since the UI (again, in theory) only allows the user to make valid moves, but it's worth handling defensively.
-	case waitingForEngineResponseToHumanMove
+//(currently not used)	case waitingForEngineResponseToHumanMove
 
 	// MEANING: Waiting for the back-end to send a move to be played by the computer.  We transition when we receive that response.
 	// TRANSITIONS: awaitingHumanMove, gameIsOver.
