@@ -73,7 +73,7 @@ Game play alternates between the human player and the computer.
 		print("+++ \(type(of: self)) \(#function): \(moveString)")
 
 		guard let move = moveFromEngineString(moveString) else {
-			print("ERROR: Couldn't create a Move from the string '\(moveString).")
+			print("ERROR: Couldn't create a Move from the string '\(moveString)'.")
 			return
 		}
 
