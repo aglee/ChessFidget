@@ -30,8 +30,10 @@ struct MoveGenerator {
 
 		// Look for special-case moves.
 		addEnPassantCaptures()
-		addKingSideCastlingIfValid()
-		addQueenSideCastlingIfValid()
+		if !position.board.isInCheck(position.whoseTurn) {
+			addKingSideCastlingIfValid()
+			addQueenSideCastlingIfValid()
+		}
 	}
 
 	private mutating func addValidMovesWithstartPoint(_ startPoint: GridPointXY) {
