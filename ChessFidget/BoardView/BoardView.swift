@@ -15,6 +15,7 @@ class BoardView: NSView {
 
 	var game: Game? {
 		didSet {
+			lastComputerMove = nil
 			needsDisplay = true
 			needsLayout = true  // Because the BoardView may need to re-reckon things if isFlipped changes depending on which color the human player is in the new value of game.
 
