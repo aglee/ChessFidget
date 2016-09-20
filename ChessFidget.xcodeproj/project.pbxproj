@@ -179,6 +179,7 @@
 		736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PromotionSheetController.xib; sourceTree = "<group>"; };
 		736C91001D7F246900A9020F /* PieceCharacterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieceCharacterSet.swift; sourceTree = "<group>"; };
 		737EE9391D75CC1F00B5144B /* Piece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
+		739180AB1D90BDB000E5143A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		73963DEF1D6E608D00C9D78B /* GameWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameWindowController.swift; sourceTree = "<group>"; };
 		73963DF01D6E608D00C9D78B /* GameWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameWindowController.xib; sourceTree = "<group>"; };
 		73963DF61D6E630C00C9D78B /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
@@ -223,6 +224,7 @@
 		7352F7971D6E08D000EF9B5F = {
 			isa = PBXGroup;
 			children = (
+				739180AB1D90BDB000E5143A /* README.md */,
 				7352F7A21D6E08D000EF9B5F /* ChessFidget */,
 				7352F7B21D6E08D100EF9B5F /* ChessFidgetTests */,
 				7352F7BD1D6E08D100EF9B5F /* ChessFidgetUITests */,
