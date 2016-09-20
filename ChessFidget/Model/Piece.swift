@@ -6,7 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-@objc enum PieceColor: Int {
+enum PieceColor: Int {
 	case Black, White
 
 	var opponent: PieceColor {
