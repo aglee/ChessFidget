@@ -44,9 +44,9 @@ class BoardView: NSView {
 	var selectedSquareHighlightColor = NSColor.blue
 	var lastComputerMoveHighlightColor = NSColor.red
 	var borderWidthForHighlightingSquares: CGFloat = 4.0
-	var overlayTextBackgroundColor = NSColor(calibratedRed: 1.0, green: 0.0, blue: 0.0, alpha: 0.25) //NSColor(calibratedWhite: 0.75, alpha: 0.25)
+	var overlayTextBackgroundColor = NSColor(calibratedWhite: 0.75, alpha: 0.5)
 
-	var overlayTextColor = NSColor.black
+	var overlayTextColor = NSColor.blue
 	var overlayTextFont: NSFont = BoardView.defaultOverlayTextFont()
 
 	private static func defaultOverlayTextFont() -> NSFont {
@@ -169,21 +169,26 @@ class BoardView: NSView {
 			return
 		}
 
-		let overlayRect = bounds.insetBy(fraction: 0.1).insetBy(widthFraction: 0, heightFraction: 0.375)
-		let rr = NSBezierPath(roundedRect: overlayRect, xRadius: 8.0, yRadius: 8.0)
+		let overlayRect = bounds.insetBy(fraction: 0.05).insetBy(widthFraction: 0, heightFraction: 0.375)
+		let roundedRectPath = NSBezierPath(roundedRect: overlayRect, xRadius: 8.0, yRadius: 8.0)
 		overlayTextBackgroundColor.set()
-		rr.fill()
+		roundedRectPath.fill()
 
-		let paraStyle = NSMutableParagraphStyle()
-		paraStyle.alignment = .center
-		guard let scaledFont = overlayTextFont.sizedToFit(string: overlayText, into: overlayRect.size) else {
+		let stringBoundingRect = overlayRect.insetBy(dx: 8.0, dy: 0)
+		guard let scaledFont = overlayTextFont.sizedToFit(string: overlayText, into: stringBoundingRect.size) else {
 			Swift.print("ERROR: Could not scale font for drawing overlay text.")
 			return
 		}
-		let textAttributes: [String: Any] = [NSFontAttributeName : scaledFont,
-		                                      NSForegroundColorAttributeName: overlayTextColor,
-		                                      NSParagraphStyleAttributeName: paraStyle]
-		overlayText.draw(in: overlayRect, withAttributes: textAttributes)
+		let stringWidth = overlayText.size(withAttributes:[NSFontAttributeName: scaledFont]).width
+		let stringHeight = scaledFont.capHeight - scaledFont.descender
+		let stringRect = stringBoundingRect.insetBy(dx: (stringBoundingRect.size.width - stringWidth)/2,
+		                                            dy: (stringBoundingRect.size.height - stringHeight)/2)
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.alignment = .center
+		let textAttributes: [String: Any] = [NSFontAttributeName: scaledFont,
+		                                     NSForegroundColorAttributeName: overlayTextColor,
+		                                     NSParagraphStyleAttributeName: paragraphStyle]
+		overlayText.draw(at: stringRect.origin, withAttributes: textAttributes)
 	}
 
 }
