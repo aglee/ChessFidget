@@ -16,9 +16,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	// MARK: - NSApplicationDelegate methods
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
+		changeToAppSupportDirectory()
+
 		gameWC = GameWindowController(game: Game(humanPlayerPieceColor: .White, computerPlaysRandomly: true))
 		gameWC.window?.center()
 		gameWC.showWindow(nil)
+	}
+
+	// MARK: - Private methods
+
+	// We do this so the .lrn files created by sjeng go into the Application Support directory instead of cluttering the user's home directory or whatever directory we would otherwise be in by default.
+	private func changeToAppSupportDirectory() {
+		let fm = FileManager.default
+
+		// Locate the user's Application Support directory.
+		guard let appSupportURL = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+			print("ERROR: Could not locate Application Support directory")
+			return
+		}
+
+		// Create the app-specific subdirectory if it doesn't exist.
+		let appSpecificURL = appSupportURL.appendingPathComponent(Bundle.main.bundleIdentifier!)
+
+		do {
+			try fm.createDirectory(at: appSpecificURL, withIntermediateDirectories: true, attributes: nil)
+		} catch {
+			print("ERROR: Could not create directory \(appSpecificURL)")
+			return
+		}
+		
+		// Make that the working directory.
+		if !fm.changeCurrentDirectoryPath(appSpecificURL.path) {
+			print("ERROR: Could not change working directory to '\(appSpecificURL.path)'")
+		}
 	}
 	
 }
