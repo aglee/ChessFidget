@@ -73,7 +73,7 @@ class BoardViewController: NSViewController, GameObserver {
 	// MARK: - Private methods
 
 	private func handleClickWhileAwaitingHumanMove(_ clickedGridPoint: GridPointXY) {
-		assert(game?.gameState == .awaitingHumanMove, "This method should only be called when the game state is '\(GameState.awaitingHumanMove)")
+		game?.assertExpectedGameState(.awaitingHumanMove);
 
 		guard let game = game
 			else { return }
@@ -91,7 +91,7 @@ class BoardViewController: NSViewController, GameObserver {
 	}
 
 	private func tryProposedHumanMove(from startPoint: GridPointXY, to endPoint: GridPointXY) {
-		assert(game?.gameState == .awaitingHumanMove, "This method should only be called when the game state is '\(GameState.awaitingHumanMove)")
+		game?.assertExpectedGameState(.awaitingHumanMove);
 
 		guard let game = game
 			else { return }

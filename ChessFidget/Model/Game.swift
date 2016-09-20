@@ -91,6 +91,10 @@ Game play alternates between the human player and the computer.
 		}
 	}
 
+	func assertExpectedGameState(_ expectedGameState: GameState) {
+		assert("\(gameState)" == "\(expectedGameState)", "Expected game state to be '\(expectedGameState)'.")
+	}
+
 	// MARK: - Private methods
 
 	// Apply the move to the game, position, and board.  Assumes the given move is valid for the current position.
@@ -175,7 +179,7 @@ Game play alternates between the human player and the computer.
 	}
 
 	private func tellTheComputerToMove() {
-		assert(gameState == .awaitingComputerMove, "This method should only be called when the game state is '\(GameState.awaitingComputerMove)'")
+		assertExpectedGameState(.awaitingComputerMove);
 
 		let validMoves = position.validMoves
 		if validMoves.count == 0 {
