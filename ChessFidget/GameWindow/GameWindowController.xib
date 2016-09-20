@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="GameWindowController" customModule="ChessFidget" customModuleProvider="target">
             <connections>
                 <outlet property="boardViewController" destination="4Fo-bT-tsY" id="wJc-sU-1ew"/>
+                <outlet property="computerPlaysRandomlyCheckbox" destination="pdB-wi-aqF" id="2Uu-m5-4Ks"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -16,22 +17,58 @@
         <window title="ChessFidget" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="640" height="640"/>
+            <rect key="contentRect" x="196" y="240" width="640" height="679"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="640" height="640"/>
+                <rect key="frame" x="0.0" y="0.0" width="640" height="679"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q8f-rC-WpB" customClass="BoardView" customModule="ChessFidget" customModuleProvider="target">
-                        <rect key="frame" x="20" y="20" width="600" height="600"/>
+                        <rect key="frame" x="20" y="59" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E4e-aS-Mhw">
+                        <rect key="frame" x="466" y="13" width="160" height="32"/>
+                        <buttonCell key="cell" type="push" title="New Game as Black" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qSE-AG-clG">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="resetGameWithHumanPlayingBlack:" target="-1" id="gF7-YY-RS3"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pdB-wi-aqF">
+                        <rect key="frame" x="18" y="21" width="244" height="18"/>
+                        <buttonCell key="cell" type="check" title="Computer plays next game randomly" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="chs-Vy-PuB">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FO2-is-fHI">
+                        <rect key="frame" x="303" y="13" width="163" height="32"/>
+                        <buttonCell key="cell" type="push" title="New Game as White" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DMJ-JM-2i5">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="resetGameWithHumanPlayingWhite:" target="-1" id="Uvr-ZS-lPu"/>
+                        </connections>
+                    </button>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="FO2-is-fHI" firstAttribute="centerY" secondItem="pdB-wi-aqF" secondAttribute="centerY" id="VGN-nq-io2"/>
+                    <constraint firstAttribute="bottom" secondItem="E4e-aS-Mhw" secondAttribute="bottom" constant="20" symbolic="YES" id="bfA-7D-CQG"/>
+                    <constraint firstItem="FO2-is-fHI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pdB-wi-aqF" secondAttribute="trailing" constant="40" id="cOm-qM-Cji"/>
+                    <constraint firstAttribute="trailing" secondItem="E4e-aS-Mhw" secondAttribute="trailing" constant="20" symbolic="YES" id="rAH-Kp-PP6"/>
+                    <constraint firstItem="E4e-aS-Mhw" firstAttribute="centerY" secondItem="FO2-is-fHI" secondAttribute="centerY" id="rkt-33-Akb"/>
+                    <constraint firstItem="pdB-wi-aqF" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="swI-N1-0MR"/>
+                    <constraint firstItem="E4e-aS-Mhw" firstAttribute="leading" secondItem="FO2-is-fHI" secondAttribute="trailing" constant="12" id="wF6-qm-2n9"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="120" y="427"/>
+            <point key="canvasLocation" x="120" y="455.5"/>
         </window>
         <viewController id="4Fo-bT-tsY" customClass="BoardViewController" customModule="ChessFidget" customModuleProvider="target">
             <connections>

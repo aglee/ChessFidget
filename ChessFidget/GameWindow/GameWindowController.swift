@@ -11,7 +11,12 @@ import Cocoa
 class GameWindowController: NSWindowController {
 
 	@IBOutlet var boardViewController: BoardViewController!
-	var game: Game
+	@IBOutlet var computerPlaysRandomlyCheckbox: NSButton!
+	var game: Game {
+		didSet {
+			computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? NSOnState : NSOffState)
+		}
+	}
 
 	init(game: Game) {
 		self.game = game
@@ -44,12 +49,13 @@ class GameWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
 		boardViewController.game = game
+		computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? NSOnState : NSOffState)
     }
 
 	// MARK: - Private methods
     
 	private func resetGame(humanPlayerPieceColor: PieceColor) {
-		game = Game(humanPlayerPieceColor: humanPlayerPieceColor)
+		game = Game(humanPlayerPieceColor: humanPlayerPieceColor, computerPlaysRandomly: computerPlaysRandomlyCheckbox.state == NSOnState)
 		boardViewController.game = game
 	}
 

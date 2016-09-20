@@ -18,26 +18,32 @@ Game play alternates between the human player and the computer.
 	var gameState: GameState = .awaitingStart {
 		didSet {
 			gameObserver?.gameDidChangeState(self, oldValue: oldValue)
+			print("+++ game state transition: \(oldValue) => \(gameState)")
 		}
 	}
 	var gameObserver: GameObserver?
-	var engineWrapper: ChessEngineWrapper
+	var engineWrapper: ChessEngineWrapper?
+	var computerPlaysRandomly: Bool {
+		return engineWrapper == nil
+	}
 
 	// MARK: - Init/deinit
 
-	init(humanPlayerPieceColor: PieceColor) {
+	init(humanPlayerPieceColor: PieceColor, computerPlaysRandomly: Bool) {
 		self.humanPlayerPieceColor = humanPlayerPieceColor
 
-		switch humanPlayerPieceColor {
-		case .White:
-			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
-		case .Black:
-			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingWhite()
+		if !computerPlaysRandomly {
+			switch humanPlayerPieceColor {
+			case .White:
+				engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
+			case .Black:
+				engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingWhite()
+			}
 		}
 
 		super.init()
 
-		engineWrapper.game = self
+		engineWrapper?.game = self
 	}
 
 	// MARK: - Game play
@@ -53,16 +59,18 @@ Game play alternates between the human player and the computer.
 	func makeHumanMove(_ move: Move) {
 		makeMove(move)
 
-		var moveStringForEngine = "\(move.start.squareName)\(move.end.squareName)"
-		if case .pawnPromotion(let promoType) = move.type {
-			switch promoType {
-			case .promoteToBishop: moveStringForEngine = moveStringForEngine + "b"
-			case .promoteToKnight: moveStringForEngine = moveStringForEngine + "n"
-			case .promoteToRook: moveStringForEngine = moveStringForEngine + "r"
-			case .promoteToQueen: moveStringForEngine = moveStringForEngine + "q"
+		if let engineWrapper = engineWrapper {
+			var moveStringForEngine = "\(move.start.squareName)\(move.end.squareName)"
+			if case .pawnPromotion(let promoType) = move.type {
+				switch promoType {
+				case .promoteToBishop: moveStringForEngine = moveStringForEngine + "b"
+				case .promoteToKnight: moveStringForEngine = moveStringForEngine + "n"
+				case .promoteToRook: moveStringForEngine = moveStringForEngine + "r"
+				case .promoteToQueen: moveStringForEngine = moveStringForEngine + "q"
+				}
 			}
+			engineWrapper.sendEngineHumanMove(moveStringForEngine)
 		}
-		engineWrapper.sendEngineHumanMove(moveStringForEngine)
 	}
 	
 	func humanMoveWasApproved(_ moveString: String) {
@@ -156,7 +164,7 @@ Game play alternates between the human player and the computer.
 
 	private func awaitTheNextMove() {
 		if let reason = seeIfGameIsAutomaticallyOver() {
-			print("game is over -- \(reason)")
+			print("+++ game is over -- \(reason)")
 			gameState = .gameIsOver
 		} else if humanPlayerPieceColor == position.whoseTurn {
 			gameState = .awaitingHumanMove
@@ -175,13 +183,15 @@ Game play alternates between the human player and the computer.
 			return
 		}
 
-		// For now, just pick a random valid move.
-//		let delay = 0.1
-//		let when = DispatchTime.now() + delay
-//		DispatchQueue.main.asyncAfter(deadline: when, execute: {
-//			let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
-//			self.makeMove(validMoves[moveIndex])
-//		})
+		// If we aren't using AI, have the computer make a random valid move.
+		if engineWrapper == nil {
+			let delay = 0.1
+			let when = DispatchTime.now() + delay
+			DispatchQueue.main.asyncAfter(deadline: when, execute: {
+				let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
+				self.makeMove(validMoves[moveIndex])
+			})
+		}
 	}
 
 }

@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	// MARK: - NSApplicationDelegate methods
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		gameWC = GameWindowController(game: Game(humanPlayerPieceColor: .White))
+		gameWC = GameWindowController(game: Game(humanPlayerPieceColor: .White, computerPlaysRandomly: true))
 		gameWC.window?.center()
 		gameWC.showWindow(nil)
 	}
