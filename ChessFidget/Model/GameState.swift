@@ -6,10 +6,10 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-enum ReasonGameIsOver {
-	case BlackWinsByCheckmate
-	case WhiteWinsByCheckmate
-	case DrawDueToStalemate
+enum ReasonGameIsOver: String {
+	case BlackWinsByCheckmate = "Black wins by checkmate"
+	case WhiteWinsByCheckmate = "White wins by checkmate"
+	case DrawDueToStalemate = "Draw due to stalemate"
 	//TODO: Add case DrawDueToInsufficientMaterial
 	//TODO: Add case DrawDueTo50MoveRule
 }

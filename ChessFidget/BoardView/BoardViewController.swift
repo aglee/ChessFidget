@@ -61,7 +61,7 @@ class BoardViewController: NSViewController, GameObserver {
 
 	func gameDidChangeState(_ game: Game, oldValue: GameState) {
 		if case .gameIsOver(let reason) = game.gameState {
-			boardView.overlayText = "\(reason)"
+			boardView.overlayText = reason.rawValue
 		} else {
 			boardView.overlayText = nil
 		}
