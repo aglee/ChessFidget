@@ -8,9 +8,7 @@
 
 import Foundation
 
-/**
-Game play alternates between the human player and the computer.
-*/
+/// Represents a chess game in progress.  Game play alternates between a human player (the user) and the computer.
 @objc class Game: NSObject {
 
 	var position: Position = Position()

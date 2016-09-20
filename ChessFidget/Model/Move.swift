@@ -52,6 +52,7 @@ struct Move {
 	}
 }
 
+/// Methods for interpreting a GridPointXY as a square on a chessboard.
 extension GridPointXY {
 	private static let fileCharacters: [Character] = ["a", "b", "c", "d", "e", "f", "g", "h"]
 	private static let rankCharacters: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8"]
@@ -65,5 +66,6 @@ extension GridPointXY {
 			return "GridPointXY(\(x),\(y))"
 		}
 	}
+
 }
 

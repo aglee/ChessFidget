@@ -6,12 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-typealias VectorXY = (dx: Int, dy: Int)  // dx, dy
-
-func +(_ gridPoint: GridPointXY, _ vector: VectorXY) -> GridPointXY {
-	return GridPointXY(gridPoint.x + vector.dx, gridPoint.y + vector.dy)
-}
-
+/// I put "XY" in the names "GridPointXY" and "VectorXY" as a reminder that (1) the coordinates are in (x,y) order, and (2) the coordinates are 0-based.
 struct GridPointXY: Equatable, Hashable {
 	let x: Int
 	let y: Int
@@ -69,5 +64,11 @@ struct GridPointXY: Equatable, Hashable {
 		return (x: Int(fileChar.value - UnicodeScalar("a").value),
 		        y: Int(rankChar.value - UnicodeScalar("1").value))
 	}
+}
+
+typealias VectorXY = (dx: Int, dy: Int)  // dx, dy
+
+func +(_ gridPoint: GridPointXY, _ vector: VectorXY) -> GridPointXY {
+	return GridPointXY(gridPoint.x + vector.dx, gridPoint.y + vector.dy)
 }
 

@@ -6,6 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
+/// Calculates all valid moves from a given position.
 struct MoveGenerator {
 	let position: Position
 

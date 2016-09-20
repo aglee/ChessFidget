@@ -6,11 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-/**
-Represents the state of a game, including all information needed to determine whether any proposed move is legal.
-
-The default initializer uses the settings that are in effect at the beginning of a game.
-*/
+/// Represents the state of a chess game, including all information needed to determine whether any proposed move is legal.  The default initializer sets up the board with all pieces on their home squares and White to move.
 struct Position {
 	var board = Board()
 	var whoseTurn = PieceColor.White

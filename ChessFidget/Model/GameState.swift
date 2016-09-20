@@ -14,9 +14,7 @@ enum ReasonGameIsOver: String {
 	//TODO: Add case DrawDueTo50MoveRule
 }
 
-/**
-Currently only used for debugging game flow.  Doesn't enforce any sort of finite state machine, only checks whether the FSM is adhered to implicitly.
-*/
+/// Used for debugging game flow.  Doesn't enforce any sort of finite state machine, only checks whether the FSM is adhered to implicitly.
 enum GameState {
 	// MEANING: Waiting for the go-ahead via a call to startPlay() to start the game.  We exit this state by waiting for either the human or the computer to move.  It's possible to transition immediately to gameIsOver if the game was given an initial setup where the player whose turn it is is already in checkmate.
 	// TRANSITIONS: awaitingHumanMove, awaitingComputerMove, gameIsOver.

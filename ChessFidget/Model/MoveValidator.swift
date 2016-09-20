@@ -6,7 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-/** Reasons a proposed move from a given start square to a given end square might be invalid. */
+/// Reasons a proposed move from a given start square to a given end square might be invalid.
 enum MoveError: String {
 	case startPointMustContainPiece
 	case pieceOnstartPointBelongsToWrongPlayer
@@ -27,6 +27,7 @@ enum MoveValidity {
 	case invalid(reason: MoveError)
 }
 
+/// Checks the validity of a proposed move from a given start square to a given end square.
 struct MoveValidator {
 	let position: Position
 	let startPoint: GridPointXY
