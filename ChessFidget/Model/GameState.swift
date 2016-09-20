@@ -38,6 +38,6 @@ enum GameState {
 
 	// MEANING: The game is over.  No further moves will be processed.  When we enter this state we kill the backend engine.
 	// TRANSITIONS: None.
-	case gameIsOver
+	case gameIsOver(reason: ReasonGameIsOver)
 }
 

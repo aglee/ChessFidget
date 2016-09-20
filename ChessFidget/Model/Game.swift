@@ -169,7 +169,7 @@ Game play alternates between the human player and the computer.
 	private func awaitTheNextMove() {
 		if let reason = seeIfGameIsAutomaticallyOver() {
 			print("+++ game is over -- \(reason)")
-			gameState = .gameIsOver
+			gameState = .gameIsOver(reason: reason)
 		} else if humanPlayerPieceColor == position.whoseTurn {
 			gameState = .awaitingHumanMove
 		} else {
@@ -181,14 +181,15 @@ Game play alternates between the human player and the computer.
 	private func tellTheComputerToMove() {
 		assertExpectedGameState(.awaitingComputerMove);
 
-		let validMoves = position.validMoves
-		if validMoves.count == 0 {
-			gameState = .gameIsOver
+		if let reason = seeIfGameIsAutomaticallyOver() {
+			print("+++ game is over -- \(reason)")
+			gameState = .gameIsOver(reason: reason)
 			return
 		}
 
 		// If we aren't using AI, have the computer make a random valid move.
 		if engineWrapper == nil {
+			let validMoves = position.validMoves
 			let delay = 0.1
 			let when = DispatchTime.now() + delay
 			DispatchQueue.main.asyncAfter(deadline: when, execute: {

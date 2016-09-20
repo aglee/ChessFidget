@@ -47,16 +47,21 @@ class BoardViewController: NSViewController, GameObserver {
 		guard let clickedGridPoint = boardView.gridPointForSquareContaining(viewPoint: viewPoint)
 			else { return }
 
-		if game?.gameState == .awaitingHumanMove {
-			handleClickWhileAwaitingHumanMove(clickedGridPoint)
+		if let gameState = game?.gameState {
+			switch gameState {
+			case .awaitingHumanMove:
+				handleClickWhileAwaitingHumanMove(clickedGridPoint)
+			default:
+				break
+			}
 		}
 	}
 
 	// MARK: - GameObserver methods
 
 	func gameDidChangeState(_ game: Game, oldValue: GameState) {
-		if game.gameState == .gameIsOver {
-			boardView.overlayText = "Game Over"
+		if case .gameIsOver(let reason) = game.gameState {
+			boardView.overlayText = "\(reason)"
 		} else {
 			boardView.overlayText = nil
 		}
