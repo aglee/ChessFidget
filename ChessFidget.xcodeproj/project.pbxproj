@@ -191,7 +191,6 @@
 		73DED4461D8A40720000054B /* _README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = _README.md; sourceTree = "<group>"; };
 		73DED4471D8A40720000054B /* Chess-318.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "Chess-318.tar.gz"; sourceTree = "<group>"; };
 		73DED4481D8A40720000054B /* sjeng.ChessEngine */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = sjeng.ChessEngine; sourceTree = "<group>"; };
-		73DED4501D8A49410000054B /* _README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = _README.md; sourceTree = "<group>"; };
 		73E31C191D74B8FF0013A33D /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -362,7 +361,6 @@
 		7377182D1D89E9FD0027AB35 /* Chess Engine Bridge */ = {
 			isa = PBXGroup;
 			children = (
-				73DED4501D8A49410000054B /* _README.md */,
 				735BE0401D874AC600989C6E /* QuietLog.h */,
 				735BE0411D874AC600989C6E /* QuietLog.mm */,
 				735BE02C1D872B4600989C6E /* ChessEngineWrapper.h */,

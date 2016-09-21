@@ -74,7 +74,7 @@ using std::max;
 										receivePort:fEngineMoves
 										 components:@[]];
 	[self enableEngineMoves:YES];
-	fEngineTask 	= [[NSTask alloc] init];
+	fEngineTask = [[NSTask alloc] init];
 	fToEnginePipe = [[NSPipe alloc] init];
 	fFromEnginePipe = [[NSPipe alloc] init];
 	[fEngineTask setStandardInput:fToEnginePipe];

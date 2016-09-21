@@ -15,8 +15,9 @@
 @property MBCEngine *backendEngine;
 @end
 
-// Assumes computer vs. human.
 @implementation ChessEngineWrapper
+
+// MARK: - Factory methods
 
 + (instancetype)chessEngineWithComputerPlayingBlack
 {
@@ -49,15 +50,7 @@
 	[self _stopObservingChessEngineNotifications];
 }
 
-- (void)sendEngineHumanMove:(NSString *)moveString
-{
-	MLog(@"sending move to chess engine: '%@'", moveString);
-	MBCMove *move = [MBCMove newFromEngineMove:moveString];
-	NSString *notificationName = (self._humanSide == kWhiteSide
-								  ? MBCUncheckedWhiteMoveNotification
-								  : MBCUncheckedBlackMoveNotification);
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:(id)move];
-}
+// MARK: - Getters and setters
 
 - (int)maxSearchDepth
 {
@@ -89,7 +82,19 @@
 	self.backendEngine.shouldThinkWhileHumanIsThinking = shouldThinkWhileHumanIsThinking;
 }
 
-#pragma mark - Private methods
+// MARK: - Communicating with the chess engine
+
+- (void)sendEngineHumanMove:(NSString *)moveString
+{
+	MLog(@"sending move to chess engine: '%@'", moveString);
+	MBCMove *move = [MBCMove newFromEngineMove:moveString];
+	NSString *notificationName = (self._humanSide == kWhiteSide
+								  ? MBCUncheckedWhiteMoveNotification
+								  : MBCUncheckedBlackMoveNotification);
+	[[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:(id)move];
+}
+
+// MARK: - Private methods
 
 - (MBCSide)_computerSide
 {
