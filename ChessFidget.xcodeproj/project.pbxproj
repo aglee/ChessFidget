@@ -104,7 +104,6 @@
 		73C1D7861D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
 		73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
 		73C1D7881D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
-		73DED4491D8A40720000054B /* _README.md in Sources */ = {isa = PBXBuildFile; fileRef = 73DED4461D8A40720000054B /* _README.md */; };
 		73DED44A1D8A40720000054B /* Chess-318.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4471D8A40720000054B /* Chess-318.tar.gz */; };
 		73DED44B1D8A40720000054B /* sjeng.ChessEngine in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4481D8A40720000054B /* sjeng.ChessEngine */; };
 		73DED44E1D8A410A0000054B /* sjeng.ChessEngine in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4481D8A40720000054B /* sjeng.ChessEngine */; };
@@ -574,7 +573,6 @@
 				73830B301D79994700259FD2 /* MoveGenerator.swift in Sources */,
 				73963DF91D6E630C00C9D78B /* BoardView.swift in Sources */,
 				73C1D7861D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
-				73DED4491D8A40720000054B /* _README.md in Sources */,
 				736C90F31D7F0B5700A9020F /* NSFont+Extensions.swift in Sources */,
 				73963E551D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				735824C11D78CA000019D7B1 /* Move.swift in Sources */,
