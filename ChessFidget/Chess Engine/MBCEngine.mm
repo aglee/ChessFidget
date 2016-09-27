@@ -58,7 +58,7 @@ using std::max;
 	}
 
 	// Initial strength setting is very weak.
-	_maxSearchDepth = 3;
+	_maxSearchDepth = 4;
 	_maxSecondsPerMove = 1;
 	_shouldThinkWhileHumanIsThinking = NO;
 
