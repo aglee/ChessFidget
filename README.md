@@ -1,8 +1,8 @@
 # ChessFidget
 
-ChessFidget is a toy app for the Mac that lets you play chess against the computer.  It's written in Swift 3, so you'll need Xcode 8 or better to compile it.
+ChessFidget is a toy app for the Mac that lets you play chess against the computer.  It's written in Swift 3, so you'll need Xcode 8 or better to compile it.  I wrote this while at the [Recurse Center](https://www.recurse.com/) to help myself learn Swift.
 
-Here's a binary you can run if you don't want to compile it from scratch:
+Here's a double-clickable binary you can run if you don't want to compile it from scratch:
 
 - [ChessFidget 2016-09-27 14-01-27](https://github.com/aglee/ChessFidget/files/496365/ChessFidget.2016-09-27.14-01-27.zip)
 
