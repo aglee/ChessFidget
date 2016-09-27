@@ -29,6 +29,14 @@
 	return [[self alloc] initWithComputerPlayingSide:kWhiteSide];
 }
 
++ (instancetype)chessEngineWithComputerPlayingNeither
+{
+	return [[self alloc] initWithComputerPlayingSide:kNeitherSide];
+}
+
+// MARK: - Init/awake/dealloc
+
+// "Private" initializer.  Code outside of this class should use the factory methods.
 - (id)initWithComputerPlayingSide:(MBCSide)side
 {
 	self = [super init];
@@ -43,6 +51,12 @@
 	[_backendEngine startGameWithSideToPlay:side];
 
 	return self;
+}
+
+- (instancetype)init
+{
+	NSAssert(NO, @"Use a factory method to instantiate this class.");
+	return nil;
 }
 
 - (void)dealloc

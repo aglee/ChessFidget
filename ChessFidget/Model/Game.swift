@@ -20,28 +20,31 @@ import Foundation
 		}
 	}
 	var gameObserver: GameObserver?
-	var engineWrapper: ChessEngineWrapper?
-	var computerPlaysRandomly: Bool {
-		return engineWrapper == nil
-	}
+	var engineWrapper: ChessEngineWrapper
+	var computerPlaysRandomly: Bool
 
 	// MARK: - Init/deinit
 
 	init(humanPlayerPieceColor: PieceColor, computerPlaysRandomly: Bool) {
 		self.humanPlayerPieceColor = humanPlayerPieceColor
+		self.computerPlaysRandomly = computerPlaysRandomly
 
-		if !computerPlaysRandomly {
-			switch humanPlayerPieceColor {
-			case .White:
-				engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
-			case .Black:
-				engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingWhite()
-			}
+		if computerPlaysRandomly {
+			// We will send the moves made by both sides to the backend engine
+			// so that it can update its state.  The reason we need the engine
+			// at all is in case the user decides to use it after all.  If that
+			// happens, we will have the engine already up and running, and it
+			// will reflect the correct state of the game.
+			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingNeither()
+		} else if humanPlayerPieceColor == .White {
+			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
+		} else {
+			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingWhite()
 		}
 
 		super.init()
 
-		engineWrapper?.game = self
+		engineWrapper.game = self
 	}
 
 	// MARK: - Game play
@@ -51,23 +54,25 @@ import Foundation
 		awaitTheNextMove()
 	}
 
-	func makeHumanMove(_ move: Move) {
-		makeMove(move)
-
-		if let engineWrapper = engineWrapper {
-			var moveStringForEngine = "\(move.start.squareName)\(move.end.squareName)"
-			if case .pawnPromotion(let promoType) = move.type {
-				switch promoType {
-				case .promoteToBishop: moveStringForEngine = moveStringForEngine + "b"
-				case .promoteToKnight: moveStringForEngine = moveStringForEngine + "n"
-				case .promoteToRook: moveStringForEngine = moveStringForEngine + "r"
-				case .promoteToQueen: moveStringForEngine = moveStringForEngine + "q"
-				}
+	private func stringForEngine(_ move: Move) -> String {
+		let startAndEndSquares = "\(move.start.squareName)\(move.end.squareName)"
+		if case .pawnPromotion(let promoType) = move.type {
+			switch promoType {
+			case .promoteToBishop: return startAndEndSquares + "b"
+			case .promoteToKnight: return startAndEndSquares + "n"
+			case .promoteToRook: return startAndEndSquares + "r"
+			case .promoteToQueen: return startAndEndSquares + "q"
 			}
-			engineWrapper.sendEngineHumanMove(moveStringForEngine)
+		} else {
+			return startAndEndSquares
 		}
 	}
-	
+
+	func makeHumanMove(_ move: Move) {
+		makeMove(move)
+		engineWrapper.sendEngineHumanMove(stringForEngine(move))
+	}
+
 	func humanMoveWasApproved(_ moveString: String) {
 		print("+++ \(type(of: self)) \(#function): \(moveString)")
 	}
@@ -183,7 +188,7 @@ import Foundation
 		}
 
 		// If we aren't using AI, have the computer make a random valid move.
-		if engineWrapper == nil {
+		if computerPlaysRandomly {
 			let validMoves = position.validMoves
 			let delay = 0.1
 			let when = DispatchTime.now() + delay

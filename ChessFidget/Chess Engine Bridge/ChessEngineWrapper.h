@@ -30,6 +30,7 @@
 
 + (instancetype)chessEngineWithComputerPlayingBlack;
 + (instancetype)chessEngineWithComputerPlayingWhite;
++ (instancetype)chessEngineWithComputerPlayingNeither;
 
 // MARK: - Communicating with the chess engine
 

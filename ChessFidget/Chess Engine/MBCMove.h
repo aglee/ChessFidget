@@ -7,12 +7,6 @@
 #import <Cocoa/Cocoa.h>
 #import <stdio.h>
 
-enum MBCSideCode {
-    kPlayWhite,
-    kPlayBlack,
-    kPlayEither
-};
-
 enum MBCPieceCode {
 	EMPTY = 0, 
 	KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN,
@@ -23,18 +17,18 @@ enum MBCPieceCode {
 };
 typedef unsigned char MBCPiece;
 
-inline MBCPiece White(MBCPieceCode code) { return kWhitePiece | code; }
-inline MBCPiece Black(MBCPieceCode code) { return kBlackPiece | code; }
+//inline MBCPiece White(MBCPieceCode code) { return kWhitePiece | code; }
+//inline MBCPiece Black(MBCPieceCode code) { return kBlackPiece | code; }
 inline MBCPieceCode Piece(MBCPiece piece){ return (MBCPieceCode)(piece&7); }
-inline MBCPieceCode Color(MBCPiece piece){ return (MBCPieceCode)(piece&8); }
-inline MBCPieceCode What(MBCPiece piece) { return (MBCPieceCode)(piece&15);} 
-inline MBCPiece Matching(MBCPiece piece, MBCPieceCode code) 
+//inline MBCPieceCode Color(MBCPiece piece){ return (MBCPieceCode)(piece&8); }
+//inline MBCPieceCode What(MBCPiece piece) { return (MBCPieceCode)(piece&15);} 
+inline MBCPiece Matching(MBCPiece piece, MBCPieceCode code)
                                          { return (piece & 8) | code; }
 inline MBCPiece Opposite(MBCPiece piece) { return piece ^ 8; }
-inline MBCPieceCode Promoted(MBCPiece piece) 
+inline MBCPieceCode Promoted(MBCPiece piece)
                                          { return (MBCPieceCode)(piece & 16); }
-inline MBCPieceCode PieceMoved(MBCPiece piece) 
-                                         { return (MBCPieceCode)(piece & 32); }
+//inline MBCPieceCode PieceMoved(MBCPiece piece) 
+//                                         { return (MBCPieceCode)(piece & 32); }
 
 enum MBCMoveCode { 
 	kCmdNull, 

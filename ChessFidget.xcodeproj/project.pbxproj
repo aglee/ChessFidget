@@ -131,6 +131,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		732AF28F1D9218B900A19241 /* BKEMove.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BKEMove.swift; sourceTree = "<group>"; };
+		732AF2911D921D3400A19241 /* BKEPiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BKEPiece.swift; sourceTree = "<group>"; };
+		732AF2931D92DFC100A19241 /* BKEEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BKEEngine.swift; sourceTree = "<group>"; };
 		7352F7A01D6E08D000EF9B5F /* ChessFidget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessFidget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7352F7A31D6E08D000EF9B5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7352F7A51D6E08D000EF9B5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -300,6 +303,9 @@
 			isa = PBXGroup;
 			children = (
 				73DED4461D8A40720000054B /* _README.md */,
+				732AF2911D921D3400A19241 /* BKEPiece.swift */,
+				732AF28F1D9218B900A19241 /* BKEMove.swift */,
+				732AF2931D92DFC100A19241 /* BKEEngine.swift */,
 				735BE02E1D872B4600989C6E /* MBCMove.h */,
 				735BE02F1D872B4600989C6E /* MBCMove.mm */,
 				735BE0301D872B4600989C6E /* MBCEngine.h */,
