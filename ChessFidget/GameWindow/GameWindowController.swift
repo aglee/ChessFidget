@@ -14,7 +14,7 @@ class GameWindowController: NSWindowController {
 	@IBOutlet var computerPlaysRandomlyCheckbox: NSButton!
 	var game: Game {
 		didSet {
-			computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? NSOnState : NSOffState)
+			computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? NSControl.StateValue.onState : NSControl.StateValue.offState)
 		}
 	}
 
@@ -42,20 +42,20 @@ class GameWindowController: NSWindowController {
 	// MARK: - NSWindowController methods
 	
 	// This gets called when we do the init(window: nil).
-	override var windowNibName : String! {
-		return "GameWindowController"
+	override var windowNibName : NSNib.Name? {
+		return NSNib.Name(rawValue: "GameWindowController")
 	}
 
     override func windowDidLoad() {
         super.windowDidLoad()
 		boardViewController.game = game
-		computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? NSOnState : NSOffState)
+		computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? NSControl.StateValue.onState : NSControl.StateValue.offState)
     }
 
 	// MARK: - Private methods
     
 	private func resetGame(humanPlayerPieceColor: PieceColor) {
-		game = Game(humanPlayerPieceColor: humanPlayerPieceColor, computerPlaysRandomly: computerPlaysRandomlyCheckbox.state == NSOnState)
+		game = Game(humanPlayerPieceColor: humanPlayerPieceColor, computerPlaysRandomly: computerPlaysRandomlyCheckbox.state == NSControl.StateValue.onState)
 		boardViewController.game = game
 	}
 

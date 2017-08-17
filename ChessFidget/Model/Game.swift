@@ -73,11 +73,11 @@ import Foundation
 		engineWrapper.sendEngineHumanMove(stringForEngine(move))
 	}
 
-	func humanMoveWasApproved(_ moveString: String) {
+	@objc func humanMoveWasApproved(_ moveString: String) {
 		print("+++ \(type(of: self)) \(#function): \(moveString)")
 	}
 
-	func computerMoveWasReceived(_ moveString: String) {
+	@objc func computerMoveWasReceived(_ moveString: String) {
 		print("+++ \(type(of: self)) \(#function): \(moveString)")
 
 		guard let move = moveFromEngineString(moveString) else {

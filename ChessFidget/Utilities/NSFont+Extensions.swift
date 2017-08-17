@@ -15,7 +15,7 @@ extension NSFont {
 		guard let sampleFont = NSFont(descriptor: self.fontDescriptor, size: 12.0) else {
 			return nil
 		}
-		let sampleSize = string.size(withAttributes:[NSFontAttributeName: sampleFont])
+		let sampleSize = string.size(withAttributes:[NSAttributedStringKey.font: sampleFont])
 		let scale = scaleToAspectFit(source: sampleSize, into: area, padding: padding)
 
 		return NSFont(descriptor: self.fontDescriptor, size: scale * sampleFont.pointSize)

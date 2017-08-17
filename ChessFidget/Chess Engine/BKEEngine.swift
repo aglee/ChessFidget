@@ -149,7 +149,7 @@ func delay(_ delay:Double, closure:@escaping ()->()) {
 //		DispatchQueue.main.asyncAfter(deadline: when, execute: {
 //			self.engineProcess.launch()
 //		})
-		engineProcess.perform(#selector(launch), with: nil, afterDelay: 0.001)
+		engineProcess.perform(#selector(Process.launch), with: nil, afterDelay: 0.001)
 
 		// Set up to communicate with the engine.
 		portForEngineMoves.setDelegate(self)
@@ -298,7 +298,7 @@ func delay(_ delay:Double, closure:@escaping ()->()) {
 			// After the engine moved, we defer further moves until the
 			// current move is executed on the board
 			enableEngineMoves(false)
-			DispatchQueue.main.asyncAfter(deadline: DispatchTime(dontMoveBefore), execute: {
+			DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(dontMoveBefore)), execute: {
 				self.executeMove(move: move)
 			})
 
@@ -348,7 +348,7 @@ func delay(_ delay:Double, closure:@escaping ()->()) {
 	// MARK: - Private methods - engine startup and teardown
 
 	@objc private func runEngine() {
-//		@autoreleasepool {
+		autoreleasepool {
 //			[[NSThread currentThread] threadDictionary][@"InputHandle"] = fFromEngine;
 //			[[NSThread currentThread] threadDictionary][@"Engine"] = self;
 //
@@ -361,7 +361,7 @@ func delay(_ delay:Double, closure:@escaping ()->()) {
 //	//			pool  = [[NSAutoreleasePool alloc] init];
 //			}
 //			MBCLexerDestroy(scanner);
-//		}
+		}
 	}
 
 	private func removeChessObservers() {

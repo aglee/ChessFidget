@@ -43,15 +43,15 @@ class PromotionSheetController: NSWindowController {
 		if let type = PromotionType(rawValue: sender.tag) {
 			selectedPromotionType = type
 		}
-		self.window!.sheetParent?.endSheet(self.window!, returnCode: NSModalResponseCancel)
+		self.window!.sheetParent?.endSheet(self.window!, returnCode: NSApplication.ModalResponse.cancel)
 		self.window!.close()
 	}
 
 	// MARK: - NSWindowController methods
 
 	// This gets called when we do the init(window: nil).
-	override var windowNibName : String! {
-		return "PromotionSheetController"
+	override var windowNibName : NSNib.Name? {
+		return NSNib.Name(rawValue: "PromotionSheetController")
 	}
 
 }

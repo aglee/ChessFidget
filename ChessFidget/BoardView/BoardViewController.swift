@@ -112,7 +112,7 @@ class BoardViewController: NSViewController, GameObserver {
 				let sheetController = PromotionSheetController()
 				sheetController.setPieceColorForIcons(game.position.whoseTurn)
 				boardView.window?.beginSheet(sheetController.window!, completionHandler: {
-					(_: NSModalResponse) in
+					(_: NSApplication.ModalResponse) in
 					// The reference to sheetController within the closure prevents it from being dealloc'ed by ARC.
 					let moveType: MoveType = .pawnPromotion(type: sheetController.selectedPromotionType)
 					game.makeHumanMove(Move(from: startPoint, to: endPoint, type: moveType))
