@@ -12,7 +12,7 @@ struct PieceCharacterSet {
 
 	func character(_ pieceColor: PieceColor, _ pieceType: PieceType) -> Character {
 		switch pieceColor {
-		case .White:
+		case .white:
 			switch pieceType {
 			case .pawn: return "♙"
 			case .knight: return "♘"
@@ -21,7 +21,7 @@ struct PieceCharacterSet {
 			case .king: return "♔"
 			case .queen: return "♕"
 			}
-		case .Black:
+		case .black:
 			switch pieceType {
 			case .pawn: return "♟"
 			case .knight: return "♞"

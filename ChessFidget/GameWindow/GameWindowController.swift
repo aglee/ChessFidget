@@ -32,11 +32,11 @@ class GameWindowController: NSWindowController {
 	// MARK: - Action methods
 
 	@IBAction func resetGameWithHumanPlayingWhite(_: AnyObject?) {
-		resetGame(humanPlayerPieceColor: .White)
+		resetGame(humanPlayerPieceColor: .white)
 	}
 
 	@IBAction func resetGameWithHumanPlayingBlack(_: AnyObject?) {
-		resetGame(humanPlayerPieceColor: .Black)
+		resetGame(humanPlayerPieceColor: .black)
 	}
 
 	// MARK: - NSWindowController methods

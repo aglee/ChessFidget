@@ -11,14 +11,14 @@ struct Board {
 
 	init(newGame: Bool = true) {
 		for x in 0...7 {
-			self[x, 1] = Piece(.White, .pawn)
-			self[x, 6] = Piece(.Black, .pawn)
+			self[x, 1] = Piece(.white, .pawn)
+			self[x, 6] = Piece(.black, .pawn)
 		}
 
 		let pieceTypes: [PieceType] = [.rook, .knight, .bishop, .queen, .king, .bishop, .knight, .rook]
 		for (x, pieceType) in pieceTypes.enumerated() {
-			self[x, 0] = Piece(.White, pieceType)
-			self[x, 7] = Piece(.Black, pieceType)
+			self[x, 0] = Piece(.white, pieceType)
+			self[x, 7] = Piece(.black, pieceType)
 		}
 	}
 

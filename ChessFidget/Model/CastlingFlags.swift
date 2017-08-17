@@ -32,18 +32,18 @@ struct CastlingFlags {
 	private subscript(_ color: PieceColor, _ side: CastlingSide) -> Bool {
 		get {
 			switch (color, side) {
-			case (.White, .kingSide): return whiteCanStillCastleKingSide
-			case (.White, .queenSide): return whiteCanStillCastleQueenSide
-			case (.Black, .kingSide): return blackCanStillCastleKingSide
-			case (.Black, .queenSide): return blackCanStillCastleQueenSide
+			case (.white, .kingSide): return whiteCanStillCastleKingSide
+			case (.white, .queenSide): return whiteCanStillCastleQueenSide
+			case (.black, .kingSide): return blackCanStillCastleKingSide
+			case (.black, .queenSide): return blackCanStillCastleQueenSide
 			}
 		}
 		set {
 			switch (color, side) {
-			case (.White, .kingSide): whiteCanStillCastleKingSide = newValue
-			case (.White, .queenSide): whiteCanStillCastleQueenSide = newValue
-			case (.Black, .kingSide): blackCanStillCastleKingSide = newValue
-			case (.Black, .queenSide): blackCanStillCastleQueenSide = newValue
+			case (.white, .kingSide): whiteCanStillCastleKingSide = newValue
+			case (.white, .queenSide): whiteCanStillCastleQueenSide = newValue
+			case (.black, .kingSide): blackCanStillCastleKingSide = newValue
+			case (.black, .queenSide): blackCanStillCastleQueenSide = newValue
 			}
 		}
 	}

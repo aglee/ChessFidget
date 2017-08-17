@@ -9,7 +9,7 @@
 /// Represents the state of a chess game, including all information needed to determine whether any proposed move is legal.  The default initializer sets up the board with all pieces on their home squares and White to move.
 struct Position {
 	var board = Board()
-	var whoseTurn = PieceColor.White
+	var whoseTurn = PieceColor.white
 	var enPassantableGridPoint: GridPointXY? = nil
 	var castlingFlags = CastlingFlags()
 

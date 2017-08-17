@@ -36,7 +36,7 @@ import Foundation
 			// happens, we will have the engine already up and running, and it
 			// will reflect the correct state of the game.
 			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingNeither()
-		} else if humanPlayerPieceColor == .White {
+		} else if humanPlayerPieceColor == .white {
 			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingBlack()
 		} else {
 			engineWrapper = ChessEngineWrapper.chessEngineWithComputerPlayingWhite()
@@ -158,12 +158,12 @@ import Foundation
 
 		if position.board.isInCheck(position.whoseTurn) {
 			switch position.whoseTurn {
-			case .Black: return .WhiteWinsByCheckmate
-			case .White: return .BlackWinsByCheckmate
+			case .black: return .whiteWinsByCheckmate
+			case .white: return .blackWinsByCheckmate
 			}
 		}
 
-		return .DrawDueToStalemate
+		return .drawDueToStalemate
 	}
 
 	private func awaitTheNextMove() {

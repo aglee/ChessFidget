@@ -7,11 +7,11 @@
 //
 
 enum ReasonGameIsOver: String {
-	case BlackWinsByCheckmate = "Black wins by checkmate"
-	case WhiteWinsByCheckmate = "White wins by checkmate"
-	case DrawDueToStalemate = "Draw due to stalemate"
-	//TODO: Add case DrawDueToInsufficientMaterial
-	//TODO: Add case DrawDueTo50MoveRule
+	case blackWinsByCheckmate = "Black wins by checkmate"
+	case whiteWinsByCheckmate = "White wins by checkmate"
+	case drawDueToStalemate = "Draw due to stalemate"
+	//TODO: Add case drawDueToInsufficientMaterial
+	//TODO: Add case drawDueTo50MoveRule
 }
 
 /// Used for debugging game flow.  Doesn't enforce any sort of finite state machine, only checks whether the FSM is adhered to implicitly.

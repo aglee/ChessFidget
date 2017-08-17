@@ -7,18 +7,18 @@
 //
 
 enum PieceColor: Int {
-	case Black, White
+	case black, white
 
 	var opponent: PieceColor {
-		return self == .White ? .Black : .White
+		return self == .white ? .black : .white
 	}
 
 	var forwardDirection: Int {
-		return self == .White ? 1 : -1
+		return self == .white ? 1 : -1
 	}
 
 	var homeRow: Int {
-		return self == .White ? 0 : 7
+		return self == .white ? 0 : 7
 	}
 
 	var pawnRow: Int {
@@ -27,8 +27,8 @@ enum PieceColor: Int {
 
 	var debugString: String {
 		switch self {
-		case .Black: return "Black"
-		case .White: return "White"
+		case .black: return "Black"
+		case .white: return "White"
 		}
 	}
 }

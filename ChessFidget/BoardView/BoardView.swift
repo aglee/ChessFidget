@@ -114,7 +114,7 @@ class BoardView: NSView {
 	override var isFlipped: Bool {
 		guard let game = game
 			else { return false }
-		return game.humanPlayerPieceColor == .Black
+		return game.humanPlayerPieceColor == .black
 	}
 
 	// MARK: - Private methods  -- drawing

@@ -29,7 +29,7 @@ struct PieceIconSet {
 
 	private func imageName(_ color: PieceColor, _ type: PieceType) -> String {
 		switch color {
-		case .White:
+		case .white:
 			switch type {
 			case .pawn: return "wp"
 			case .knight: return "wn"
@@ -38,7 +38,7 @@ struct PieceIconSet {
 			case .king: return "wk"
 			case .queen: return "wq"
 			}
-		case .Black:
+		case .black:
 			switch type {
 			case .pawn: return "bp"
 			case .knight: return "bn"
