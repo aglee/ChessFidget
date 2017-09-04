@@ -14,7 +14,7 @@ class GameWindowController: NSWindowController {
 	@IBOutlet var computerPlaysRandomlyCheckbox: NSButton!
 	var game: Game {
 		didSet {
-			computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? NSControl.StateValue.onState : NSControl.StateValue.offState)
+			computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? .on : .off)
 		}
 	}
 
@@ -49,13 +49,13 @@ class GameWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
 		boardViewController.game = game
-		computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? NSControl.StateValue.onState : NSControl.StateValue.offState)
+		computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? .on : .off)
     }
 
 	// MARK: - Private methods
     
 	private func resetGame(humanPlayerPieceColor: PieceColor) {
-		game = Game(humanPlayerPieceColor: humanPlayerPieceColor, computerPlaysRandomly: computerPlaysRandomlyCheckbox.state == NSControl.StateValue.onState)
+		game = Game(humanPlayerPieceColor: humanPlayerPieceColor, computerPlaysRandomly: computerPlaysRandomlyCheckbox.state == .on)
 		boardViewController.game = game
 	}
 
