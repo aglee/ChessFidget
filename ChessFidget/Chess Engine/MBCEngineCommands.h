@@ -13,14 +13,14 @@ typedef unsigned MBCCompactMove;
 
 extern MBCCompactMove MBCEncodeMove(const char * move, int ponder);
 extern MBCCompactMove MBCEncodeDrop(const char * drop, int ponder);
-extern MBCCompactMove MBCEncodeIllegal();
-extern MBCCompactMove MBCEncodeLegal();
-extern MBCCompactMove MBCEncodePong();
-extern MBCCompactMove MBCEncodeStartGame();
-extern MBCCompactMove MBCEncodeWhiteWins();
-extern MBCCompactMove MBCEncodeBlackWins();
-extern MBCCompactMove MBCEncodeDraw();
-extern MBCCompactMove MBCEncodeTakeback();
+extern MBCCompactMove MBCEncodeIllegal(void);
+extern MBCCompactMove MBCEncodeLegal(void);
+extern MBCCompactMove MBCEncodePong(void);
+extern MBCCompactMove MBCEncodeStartGame(void);
+extern MBCCompactMove MBCEncodeWhiteWins(void);
+extern MBCCompactMove MBCEncodeBlackWins(void);
+extern MBCCompactMove MBCEncodeDraw(void);
+extern MBCCompactMove MBCEncodeTakeback(void);
 
 extern void MBCIgnoredText(const char * text);
 extern int MBCReadInput(char * buf, int max_size);
