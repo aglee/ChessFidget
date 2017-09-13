@@ -5,11 +5,10 @@
 */
 
 #ifdef __cplusplus
-#import "MBCMove.h"
 extern "C" {
-#else
-typedef unsigned MBCCompactMove;
 #endif
+
+typedef unsigned MBCCompactMove;
 
 extern MBCCompactMove MBCEncodeMove(const char * move, int ponder);
 extern MBCCompactMove MBCEncodeDrop(const char * drop, int ponder);
