@@ -92,10 +92,6 @@
 		73C9A5DF1F6A42C80096D45B /* ProcessWrapperDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */; };
 		73C9A5E01F6A42C80096D45B /* ProcessWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9A5DE1F6A42C80096D45B /* ProcessWrapper.swift */; };
 		73C9B0C61F6A7B050000AFA0 /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */; };
-		73DED44A1D8A40720000054B /* Chess-318.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4471D8A40720000054B /* Chess-318.tar.gz */; };
-		73DED44B1D8A40720000054B /* sjeng.ChessEngine in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4481D8A40720000054B /* sjeng.ChessEngine */; };
-		73DED44E1D8A410A0000054B /* sjeng.ChessEngine in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4481D8A40720000054B /* sjeng.ChessEngine */; };
-		73DED44F1D8A410B0000054B /* sjeng.ChessEngine in Resources */ = {isa = PBXBuildFile; fileRef = 73DED4481D8A40720000054B /* sjeng.ChessEngine */; };
 		73E31C1A1D74B8FF0013A33D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E31C191D74B8FF0013A33D /* Board.swift */; };
 		73E31C1B1D74B8FF0013A33D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E31C191D74B8FF0013A33D /* Board.swift */; };
 		73E31C1C1D74B8FF0013A33D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E31C191D74B8FF0013A33D /* Board.swift */; };
@@ -168,9 +164,6 @@
 		73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessWrapperDelegate.swift; sourceTree = "<group>"; };
 		73C9A5DE1F6A42C80096D45B /* ProcessWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessWrapper.swift; sourceTree = "<group>"; };
 		73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChessEngine.swift; sourceTree = "<group>"; };
-		73DED4461D8A40720000054B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		73DED4471D8A40720000054B /* Chess-318.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "Chess-318.tar.gz"; sourceTree = "<group>"; };
-		73DED4481D8A40720000054B /* sjeng.ChessEngine */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = sjeng.ChessEngine; sourceTree = "<group>"; };
 		73E31C191D74B8FF0013A33D /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -277,10 +270,7 @@
 		735BE02B1D872B4600989C6E /* Chess Engine */ = {
 			isa = PBXGroup;
 			children = (
-				73DED4461D8A40720000054B /* README.md */,
 				73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */,
-				73DED4471D8A40720000054B /* Chess-318.tar.gz */,
-				73DED4481D8A40720000054B /* sjeng.ChessEngine */,
 			);
 			path = "Chess Engine";
 			sourceTree = "<group>";
@@ -479,7 +469,6 @@
 				735E4B981D826CA400426794 /* bn.png in Resources */,
 				735E4BA41D826CA400426794 /* wn.png in Resources */,
 				735E4BA61D826CA400426794 /* wp.png in Resources */,
-				73DED44B1D8A40720000054B /* sjeng.ChessEngine in Resources */,
 				735E4B9A1D826CA400426794 /* bp.png in Resources */,
 				735E4B941D826CA400426794 /* bb.png in Resources */,
 				7352F7A91D6E08D000EF9B5F /* MainMenu.xib in Resources */,
@@ -490,7 +479,6 @@
 				735E4B9E1D826CA400426794 /* br.png in Resources */,
 				735E4BA01D826CA400426794 /* wb.png in Resources */,
 				735E4B961D826CA400426794 /* bk.png in Resources */,
-				73DED44A1D8A40720000054B /* Chess-318.tar.gz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,7 +486,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73DED44E1D8A410A0000054B /* sjeng.ChessEngine in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +495,6 @@
 			files = (
 				735E4BAB1D826CA400426794 /* wr.png in Resources */,
 				735E4BA71D826CA400426794 /* wp.png in Resources */,
-				73DED44F1D8A410B0000054B /* sjeng.ChessEngine in Resources */,
 				735E4BA11D826CA400426794 /* wb.png in Resources */,
 				735E4B9F1D826CA400426794 /* br.png in Resources */,
 				735E4B971D826CA400426794 /* bk.png in Resources */,

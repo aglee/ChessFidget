@@ -8,8 +8,11 @@
 
 import Foundation
 
+/// Communicates with the Sjeng chess engine that comes preinstalled on every Mac.
 class ChessEngine: ProcessWrapperDelegate {
 	weak var game: Game?
+
+	// Used for launching a Sjeng process and exchanging data with it.
 	private var processWrapper: ProcessWrapper
 
 	// MARK: - Init/deinit
@@ -17,8 +20,8 @@ class ChessEngine: ProcessWrapperDelegate {
 	init(game: Game) {
 		self.game = game
 
-		let chessEnginePath = Bundle.main.path(forResource: "sjeng", ofType: "ChessEngine")
-		self.processWrapper = ProcessWrapper(launchPath: chessEnginePath!, arguments: [])
+		let chessEnginePath = "/Applications/Chess.app/Contents/Resources/sjeng.ChessEngine"
+		self.processWrapper = ProcessWrapper(launchPath: chessEnginePath, arguments: [])
 		self.processWrapper.delegate = self
 	}
 
@@ -27,9 +30,9 @@ class ChessEngine: ProcessWrapperDelegate {
 	func startEngine(makeFirstMove: Bool) {
 		self.processWrapper.launchProcess()
 
-		self.sendCommandToEngine("sd 4")
-		self.sendCommandToEngine("st 1")
-		self.sendCommandToEngine("easy")
+		self.sendCommandToEngine("sd 4")  // Limit search depth.
+		self.sendCommandToEngine("st 1")  // Limit search time.
+		self.sendCommandToEngine("easy")  // Only search for moves while it is the computer's turn.
 
 		if makeFirstMove {
 			self.sendCommandToEngine("go")
