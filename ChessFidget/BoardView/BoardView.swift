@@ -8,7 +8,7 @@
 
 import Cocoa
 
-// TODO: Add an option to display the board flipped.
+// TODO: Add an option to flip the board at any time regardless of which color the user is playing.
 class BoardView: NSView {
 
 	// MARK: Properties - game play

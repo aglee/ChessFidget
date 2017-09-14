@@ -93,22 +93,26 @@ class ProcessWrapper {
 
 	// MARK: - Notification handlers
 
-	// Inform the delegate of the received data.  Resume reading from the pipe.
 	@objc private func didReadFromProcessStdout(_ note: Notification) {
+		// Inform the delegate of the received data.
 		let dataReceived = note.userInfo![NSFileHandleNotificationDataItem] as! Data
 		self.delegate?.didReadFromStdout(self, data: dataReceived)
+
+		// Resume reading from the pipe.
 		self.processStdout.fileHandleForReading.readInBackgroundAndNotify()
 	}
 
-	// Inform the delegate of the received data.  Resume reading from the pipe.
 	@objc private func didReadFromProcessStderr(_ note: Notification) {
+		// Inform the delegate of the received data.
 		let dataReceived = note.userInfo![NSFileHandleNotificationDataItem] as! Data
 		self.delegate?.didReadFromStderr(self, data: dataReceived)
+
+		// Resume reading from the pipe.
 		self.processStderr.fileHandleForReading.readInBackgroundAndNotify()
 	}
 
-	// Inform the delegate and perform cleanup.
 	@objc private func processDidTerminate(_ note: Notification) {
+		// Inform the delegate and perform cleanup.
 		self.stopObserving()
 		self.delegate?.didTerminate(self)
 		self.process = nil;
