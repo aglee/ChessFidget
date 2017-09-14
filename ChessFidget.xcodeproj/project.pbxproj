@@ -225,7 +225,6 @@
 				73963DF51D6E630C00C9D78B /* BoardView */,
 				736C90F81D7F22AB00A9020F /* PromotionWindow */,
 				735E4B821D826CA400426794 /* Piece Icons */,
-				736C90FF1D7F245600A9020F /* Piece Characters */,
 				7352F7A51D6E08D000EF9B5F /* Assets.xcassets */,
 				7352F7A71D6E08D000EF9B5F /* MainMenu.xib */,
 				7352F7AA1D6E08D000EF9B5F /* Info.plist */,
@@ -274,6 +273,7 @@
 			children = (
 				735E4B831D826CA400426794 /* gyanl */,
 				735E4B911D826CA400426794 /* PieceIconSet.swift */,
+				736C91001D7F246900A9020F /* PieceCharacterSet.swift */,
 			);
 			path = "Piece Icons";
 			sourceTree = "<group>";
@@ -305,14 +305,6 @@
 				736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */,
 			);
 			path = PromotionWindow;
-			sourceTree = "<group>";
-		};
-		736C90FF1D7F245600A9020F /* Piece Characters */ = {
-			isa = PBXGroup;
-			children = (
-				736C91001D7F246900A9020F /* PieceCharacterSet.swift */,
-			);
-			path = "Piece Characters";
 			sourceTree = "<group>";
 		};
 		73963DEE1D6E607600C9D78B /* GameWindow */ = {
