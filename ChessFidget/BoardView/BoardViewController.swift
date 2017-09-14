@@ -42,10 +42,12 @@ class BoardViewController: NSViewController, GameObserver {
 
 	// MARK: - NSResponder methods
 
-	override func mouseDown(with event: NSEvent) {
+	override func mouseUp(with event: NSEvent) {
 		let viewPoint = boardView.convert(event.locationInWindow, from: nil)
-		guard let clickedGridPoint = boardView.gridPointForSquareContaining(viewPoint: viewPoint)
-			else { return }
+		guard let clickedGridPoint = boardView.gridPointForSquareContaining(viewPoint: viewPoint) else {
+			super.mouseUp(with: event)
+			return
+		}
 
 		if let gameState = game?.gameState {
 			switch gameState {
