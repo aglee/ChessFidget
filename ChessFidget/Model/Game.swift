@@ -106,7 +106,8 @@ import Foundation
 
 		awaitTheNextMove()
 	}
-	
+
+	// Converts a string like "e2e4" into a Move instance.
 	private func moveFromEngineString(_ engineString: String) -> Move? {
 		var str = engineString.lowercased() as NSString
 		if str.hasSuffix("\n") {
@@ -166,38 +167,34 @@ import Foundation
 		return .drawDueToStalemate
 	}
 
+	// This is called when the game starts and after each move by either player.
+	// It performs the appropriate state transition.
 	private func awaitTheNextMove() {
 		if let reason = seeIfGameIsAutomaticallyOver() {
+			// The last move caused the game to be over.
 			print("+++ game is over -- \(reason)")
 			gameState = .gameIsOver(reason: reason)
 		} else if humanPlayerPieceColor == position.whoseTurn {
+			// It's the human's turn.  Nothing further to do except wait for
+			// them to interact with the UI.
 			gameState = .awaitingHumanMove
 		} else {
+			// It's the computer's turn.  If we aren't using AI, select a random
+			// valid move and have the computer make it.  If we *are* using AI,
+			// there is nothing further to do -- the chess engine is already
+			// "thinking" and we will get notified when it tells us its move.
 			gameState = .awaitingComputerMove
-			tellTheComputerToMove()
+
+			if computerPlaysRandomly {
+				let validMoves = position.validMoves
+				let delay = 0.1
+				let when = DispatchTime.now() + delay  //[agl] Why did I add a delay?
+				DispatchQueue.main.asyncAfter(deadline: when, execute: {
+					let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
+					self.makeMove(validMoves[moveIndex])
+				})
+			}
 		}
 	}
-
-	private func tellTheComputerToMove() {
-		assertExpectedGameState(.awaitingComputerMove);
-
-		if let reason = seeIfGameIsAutomaticallyOver() {
-			print("+++ game is over -- \(reason)")
-			gameState = .gameIsOver(reason: reason)
-			return
-		}
-
-		// If we aren't using AI, have the computer make a random valid move.
-		if computerPlaysRandomly {
-			let validMoves = position.validMoves
-			let delay = 0.1
-			let when = DispatchTime.now() + delay
-			DispatchQueue.main.asyncAfter(deadline: when, execute: {
-				let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
-				self.makeMove(validMoves[moveIndex])
-			})
-		}
-	}
-
 }
 
