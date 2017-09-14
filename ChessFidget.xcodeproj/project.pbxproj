@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		7331EB941F6B100000DF9E5D /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */; };
 		7331EB951F6B100000DF9E5D /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */; };
+		73394F1C1F6B2CEE0035115B /* ProcessWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9A5DE1F6A42C80096D45B /* ProcessWrapper.swift */; };
+		73394F1D1F6B2CEF0035115B /* ProcessWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9A5DE1F6A42C80096D45B /* ProcessWrapper.swift */; };
+		73394F1E1F6B2CF10035115B /* ProcessWrapperDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */; };
+		73394F1F1F6B2CF20035115B /* ProcessWrapperDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */; };
 		7352F7A41D6E08D000EF9B5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352F7A31D6E08D000EF9B5F /* AppDelegate.swift */; };
 		7352F7A61D6E08D000EF9B5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7352F7A51D6E08D000EF9B5F /* Assets.xcassets */; };
 		7352F7A91D6E08D000EF9B5F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7352F7A71D6E08D000EF9B5F /* MainMenu.xib */; };
@@ -536,8 +540,10 @@
 			files = (
 				7357325F1D80A43B00BB7EF1 /* GridPointXY.swift in Sources */,
 				73E31C1B1D74B8FF0013A33D /* Board.swift in Sources */,
+				73394F1E1F6B2CF10035115B /* ProcessWrapperDelegate.swift in Sources */,
 				735824C21D78CA000019D7B1 /* Move.swift in Sources */,
 				735824BE1D78BDD30019D7B1 /* CastlingFlags.swift in Sources */,
+				73394F1C1F6B2CEE0035115B /* ProcessWrapper.swift in Sources */,
 				735824C61D78FFC70019D7B1 /* MoveGenerator.swift in Sources */,
 				73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
 				7331EB941F6B100000DF9E5D /* ChessEngine.swift in Sources */,
@@ -559,9 +565,11 @@
 				73E31C1C1D74B8FF0013A33D /* Board.swift in Sources */,
 				735732601D80A43B00BB7EF1 /* GridPointXY.swift in Sources */,
 				735824C71D78FFC70019D7B1 /* MoveGenerator.swift in Sources */,
+				73394F1F1F6B2CF20035115B /* ProcessWrapperDelegate.swift in Sources */,
 				73963DFA1D6E630C00C9D78B /* BoardView.swift in Sources */,
 				73C1D7881D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
 				7331EB951F6B100000DF9E5D /* ChessEngine.swift in Sources */,
+				73394F1D1F6B2CEF0035115B /* ProcessWrapper.swift in Sources */,
 				736C90F41D7F0B5700A9020F /* NSFont+Extensions.swift in Sources */,
 				73963E571D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				735824C31D78CA000019D7B1 /* Move.swift in Sources */,
