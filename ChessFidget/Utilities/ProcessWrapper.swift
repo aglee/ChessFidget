@@ -13,6 +13,14 @@ class ProcessWrapper {
 	let launchPath: String
 	let arguments: [String]
 
+	var isRunning: Bool {
+		if let p = self.process {
+			return p.isRunning
+		} else {
+			return false
+		}
+	}
+
 	private var process: Process? = nil
 	private var isObserving: Bool = false
 
@@ -29,6 +37,7 @@ class ProcessWrapper {
 
 	deinit {
 		self.stopObserving()
+		self.process?.terminate()
 	}
 
 	// MARK: - Interacting with the process
