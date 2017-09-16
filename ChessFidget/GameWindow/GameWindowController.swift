@@ -9,20 +9,19 @@
 import Cocoa
 
 class GameWindowController: NSWindowController {
-
 	@IBOutlet var boardViewController: BoardViewController!
 	@IBOutlet var computerPlaysRandomlyCheckbox: NSButton!
+
 	var game: Game {
 		didSet {
-			computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? .on : .off)
+			computerPlaysRandomlyCheckbox.state =
+				game.computerPlaysRandomly ? .on : .off
 		}
 	}
 
 	init(game: Game) {
 		self.game = game
-
-		// Passing window:nil causes windowNibName to be used.
-		super.init(window: nil)
+		super.init(window: nil)  // Passing nil causes windowNibName to be used.
 	}
 	
 	required init?(coder: NSCoder) {

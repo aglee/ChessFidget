@@ -6,6 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
+/// The side being played by a chess player, either White or Black.
 enum PieceColor: Int {
 	case black, white
 
@@ -13,6 +14,8 @@ enum PieceColor: Int {
 		return self == .white ? .black : .white
 	}
 
+	/// Either 1 or -1, depending on the direction in which this color's pawns
+	/// move.
 	var forwardDirection: Int {
 		return self == .white ? 1 : -1
 	}
@@ -33,8 +36,11 @@ enum PieceColor: Int {
 	}
 }
 
+/// Directions in which a piece can move, and whether it can do so repeatedly.
+/// For example, bishops can repeat the vector but knights can't.
 typealias PieceMovement = (vectors: [VectorXY], canRepeat: Bool)
 
+/// Pawn, knight, etc.
 enum PieceType {
 	case pawn
 	case knight
@@ -60,6 +66,8 @@ enum PieceType {
 	]
 }
 
+
+/// A chess piece.
 struct Piece: Equatable {
 	let color: PieceColor
 	let type: PieceType

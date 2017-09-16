@@ -12,21 +12,21 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 	var gameWC: GameWindowController!
 
-	// MARK: - NSApplicationDelegate methods
+	// MARK: - NSApplicationDelegate protocol
 
-	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		chdirToAppSupportDirectory()
+	func applicationDidFinishLaunching(_: Notification) {
+		self.chdirToAppSupportDirectory()
 
-		gameWC.window?.center()
-		gameWC.showWindow(nil)
 		self.gameWC = GameWindowController(game: Game(humanPlays: .white,
 		                                              computerPlaysRandomly: true))
+		self.gameWC.window?.center()
+		self.gameWC.showWindow(nil)
 	}
 
 	// MARK: - Private methods
 
-	/// Change the working directory to a subdirectory of Application Support
-	/// so the .lrn files created by sjeng will go there instead of cluttering
+	/// Change the working directory to a subdirectory of Application Support.
+	/// The .lrn files created by sjeng will go there instead of cluttering
 	/// whatever directory we would otherwise be in by default.
 	private func chdirToAppSupportDirectory() {
 		let fm = FileManager.default
@@ -39,9 +39,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		}
 
 		// Create the app-specific subdirectory if it doesn't exist.
-		let appSpecificURL = appSupportURL.appendingPathComponent(Bundle.main.bundleIdentifier!)
+		let bundleID = Bundle.main.bundleIdentifier!
+		let appSpecificURL = appSupportURL.appendingPathComponent(bundleID)
 		do {
-			try fm.createDirectory(at: appSpecificURL, withIntermediateDirectories: true, attributes: nil)
+			try fm.createDirectory(at: appSpecificURL,
+			                       withIntermediateDirectories: true,
+			                       attributes: nil)
 		} catch {
 			print("ERROR: Could not create directory \(appSpecificURL)")
 			return
@@ -52,5 +55,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			print("ERROR: Could not change working directory to '\(appSpecificURL.path)'")
 		}
 	}
-	
 }

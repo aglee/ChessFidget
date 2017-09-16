@@ -8,11 +8,11 @@
 
 import Foundation
 
-/// Convenience wrapper around the Foundation.Process class.  Unlike Process,
-/// can be used more than once (discards the Process instance when it terminates
-/// and creates a new one if you do launchProcess again).  To **receive** data
-/// from the process, set up a delegate.  To **send** data to the process, use
-/// one of the writeToProcess methods.
+/// Convenience wrapper around the `Foundation.Process` class.
+/// - To **launch** the process, call `launchProcess()`.
+/// - To **receive** data from the process, set up a delegate.
+/// - To **send** data to the process, use the `writeToProcess` methods.
+/// - To **terminate** the process, call `terminateProcess()`.
 class ProcessWrapper {
 	weak var delegate: (AnyObject & ProcessWrapperDelegate)?
 	let launchPath: String
@@ -49,7 +49,7 @@ class ProcessWrapper {
 
 	func launchProcess() {
 		if let _ = self.process {
-			print("Task is already running.")
+			print("Process is already running.")
 			return;
 		}
 
@@ -79,24 +79,25 @@ class ProcessWrapper {
 	func writeToProcess(_ data: Data) {
 		guard data.count > 0 else { return }
 		guard let p = self.process else {
-			print("+++ [ERROR] Task is not running, cannot send data to it.")
+			print("+++ [ERROR] Process is not running, cannot send data to it.")
 			return
 		}
 		guard p.isRunning else {
-			print("+++ [ERROR] Task has been terminated, cannot send data to it.")
+			print("+++ [ERROR] Process has been terminated, cannot send data to it.")
 			return;
 		}
 		self.processStdin.fileHandleForWriting.write(data)
 	}
 
-	/// Convenience method that calls writeToProcess(_ data:).  Converts the
-	/// string to bytes using the UTF-8 encoding.
+	/// Sends UTF-8 data to the process's standard input.
 	func writeToProcess(_ string: String) {
 		if let d = string.data(using: String.Encoding.utf8) {
 			self.writeToProcess(d)
 		}
 	}
 
+	/// Kills the process.  The receiver can then launch a new process; unlike
+	/// `Process`, `ProcessWrapper` is reusable.
 	func terminateProcess() {
 		self.process?.terminate()
 		self.process = nil
@@ -132,7 +133,7 @@ class ProcessWrapper {
 	// MARK: - Private methods
 
 	/// Start listening for notifications.
-	func startObserving() {
+	private func startObserving() {
 		assert(self.process != nil, "Process is not running.")
 		if self.isObserving {
 			return;
@@ -154,7 +155,7 @@ class ProcessWrapper {
 	}
 
 	/// Stop listening for notifications.
-	func stopObserving() {
+	private func stopObserving() {
 		guard self.isObserving else {
 			return;
 		}

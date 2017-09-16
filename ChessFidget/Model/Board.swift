@@ -15,7 +15,8 @@ struct Board {
 			self[x, 6] = Piece(.black, .pawn)
 		}
 
-		let pieceTypes: [PieceType] = [.rook, .knight, .bishop, .queen, .king, .bishop, .knight, .rook]
+		let pieceTypes: [PieceType] = [.rook, .knight, .bishop, .queen, .king,
+		                               .bishop, .knight, .rook]
 		for (x, pieceType) in pieceTypes.enumerated() {
 			self[x, 0] = Piece(.white, pieceType)
 			self[x, 7] = Piece(.black, pieceType)
@@ -35,7 +36,10 @@ struct Board {
 	// MARK: - Evaluating moves
 
 	// Excluding endPoint.
-	func pathIsClear(from startPoint: GridPointXY, to endPoint: GridPointXY, vector: VectorXY, canRepeat: Bool) -> Bool {
+	func pathIsClear(from startPoint: GridPointXY,
+	                 to endPoint: GridPointXY,
+	                 vector: VectorXY,
+	                 canRepeat: Bool) -> Bool {
 		var gridPoint = startPoint
 		while true {
 			gridPoint = gridPoint + vector
@@ -57,7 +61,8 @@ struct Board {
 			return false
 		}
 
-		// Find all enemy pieces on the board and see if they attack the square the king is on.
+		// Find all enemy pieces on the board and see if they attack the square
+		// the king is on.
 		for x in 0...7 {
 			for y in 0...7 {
 				guard let piece = self[x, y] else {
@@ -90,8 +95,9 @@ struct Board {
 		return false
 	}
 
-	// Returns false if startPoint is empty.
-	func blindMoveWouldLeaveKingInCheck(from startPoint: GridPointXY, to endPoint: GridPointXY) -> Bool {
+	/// Returns false if there is no piece at startPoint.
+	func blindMoveWouldLeaveKingInCheck(from startPoint: GridPointXY,
+	                                    to endPoint: GridPointXY) -> Bool {
 		guard let piece = self[startPoint]
 			else { return false }
 		var tempBoard = self
@@ -99,8 +105,10 @@ struct Board {
 		return tempBoard.isInCheck(piece.color)
 	}
 
-	// Returns false if startPoint is empty.
-	func moveWouldLeaveKingInCheck(from startPoint: GridPointXY, to endPoint: GridPointXY, type moveType: MoveType) -> Bool {
+	/// Returns false if there is no piece at startPoint.
+	func moveWouldLeaveKingInCheck(from startPoint: GridPointXY,
+	                               to endPoint: GridPointXY,
+	                               type moveType: MoveType) -> Bool {
 		guard let piece = self[startPoint]
 			else { return false }
 		var tempBoard = self
@@ -115,7 +123,9 @@ struct Board {
 	}
 
 	// Assumes the move is valid and is correctly described by moveType.
-	mutating func makeMove(from startPoint: GridPointXY, to endPoint: GridPointXY, type moveType: MoveType) {
+	mutating func makeMove(from startPoint: GridPointXY,
+	                       to endPoint: GridPointXY,
+	                       type moveType: MoveType) {
 		guard let piece = self[startPoint] else {
 			print("ERROR: There's no piece on the starting square.")
 			return
@@ -129,21 +139,17 @@ struct Board {
 		case .captureEnPassant:
 			// Remove the pawn being captured.
 			self[endPoint.x, startPoint.y] = nil
-
 		case .pawnPromotion(let promotionType):
 			// Replace the pawn with the piece it's being promoted to.
 			self[endPoint] = Piece(piece.color, promotionType.pieceType)
-
 		case .castleKingSide:
 			// Move the king's rook.
 			self.blindlyMove(from: GridPointXY(7, piece.color.homeRow),
 			                 to: GridPointXY(5, piece.color.homeRow))
-
 		case .castleQueenSide:
 			// Move the queen's rook.
 			self.blindlyMove(from: GridPointXY(0, piece.color.homeRow),
 			                 to: GridPointXY(3, piece.color.homeRow))
-
 		default: break
 		}
 	}
@@ -172,7 +178,7 @@ struct Board {
 
 	// MARK: - Private methods
 
-	// Move whatever is at startPoint (including nil) to endPoint.
+	/// Move whatever piece is at startPoint (including nil) to endPoint.
 	private mutating func blindlyMove(from startPoint: GridPointXY, to endPoint: GridPointXY) {
 		self[endPoint] = self[startPoint]
 		self[startPoint] = nil
