@@ -32,11 +32,11 @@ class GameWindowController: NSWindowController {
 	// MARK: - Action methods
 
 	@IBAction func resetGameWithHumanPlayingWhite(_: AnyObject?) {
-		resetGame(humanPlayerPieceColor: .white)
+		resetGame(humanPlays: .white)
 	}
 
 	@IBAction func resetGameWithHumanPlayingBlack(_: AnyObject?) {
-		resetGame(humanPlayerPieceColor: .black)
+		resetGame(humanPlays: .black)
 	}
 
 	// MARK: - NSWindowController methods
@@ -54,8 +54,9 @@ class GameWindowController: NSWindowController {
 
 	// MARK: - Private methods
     
-	private func resetGame(humanPlayerPieceColor: PieceColor) {
-		game = Game(humanPlayerPieceColor: humanPlayerPieceColor, computerPlaysRandomly: computerPlaysRandomlyCheckbox.state == .on)
+	private func resetGame(humanPlays pieceColor: PieceColor) {
+		game = Game(humanPlays: pieceColor,
+		            computerPlaysRandomly: (computerPlaysRandomlyCheckbox.state == .on))
 		boardViewController.game = game
 	}
 

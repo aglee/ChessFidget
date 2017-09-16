@@ -24,8 +24,8 @@ class Game {
 
 	// MARK: - Init/deinit
 
-	init(humanPlayerPieceColor: PieceColor, computerPlaysRandomly: Bool) {
-		self.humanPlayerPieceColor = humanPlayerPieceColor
+	init(humanPlays pieceColor: PieceColor, computerPlaysRandomly: Bool) {
+		self.humanPlayerPieceColor = pieceColor
 		self.computerPlaysRandomly = computerPlaysRandomly
 	}
 
@@ -34,8 +34,9 @@ class Game {
 	func startPlay() {
 		assertExpectedGameState(.awaitingStart)
 		if !self.computerPlaysRandomly {
-			self.chessEngine = ChessEngine(game: self)
-			self.chessEngine?.startEngine(makeFirstMove: (self.humanPlayerPieceColor == .black))
+			let computerMovesFirst = (self.humanPlayerPieceColor == .black)
+			self.chessEngine = ChessEngine(game: self,
+			                               makeFirstMove: computerMovesFirst)
 		}
 		awaitTheNextMove()
 	}

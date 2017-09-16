@@ -17,23 +17,19 @@ class ChessEngine: ProcessWrapperDelegate {
 
 	// MARK: - Init/deinit
 
-	init(game: Game) {
+	init(game: Game, makeFirstMove: Bool) {
 		self.game = game
 
+		// Launch a Sjeng process.
 		let chessEnginePath = "/Applications/Chess.app/Contents/Resources/sjeng.ChessEngine"
 		self.processWrapper = ProcessWrapper(launchPath: chessEnginePath, arguments: [])
 		self.processWrapper.delegate = self
-	}
-
-	// MARK: - Communicating with the chess engine
-
-	func startEngine(makeFirstMove: Bool) {
 		self.processWrapper.launchProcess()
 
+		// Send initial commands to the engine.
 		self.sendCommandToEngine("sd 4")  // Limit search depth.
 		self.sendCommandToEngine("st 1")  // Limit search time.
 		self.sendCommandToEngine("easy")  // Only search for moves while it is the computer's turn.
-
 		if makeFirstMove {
 			self.sendCommandToEngine("go")
 		}
