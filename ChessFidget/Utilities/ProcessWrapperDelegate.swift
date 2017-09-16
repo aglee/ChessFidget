@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Delegate used by the ProcessWrapper class.
 protocol ProcessWrapperDelegate {
 	func didReadFromStdout(_ processWrapper: ProcessWrapper, data: Data)
 	func didReadFromStderr(_ processWrapper: ProcessWrapper, data: Data)

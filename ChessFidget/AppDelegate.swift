@@ -10,13 +10,12 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
 	var gameWC: GameWindowController!
 
 	// MARK: - NSApplicationDelegate methods
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		changeToAppSupportDirectory()
+		chdirToAppSupportDirectory()
 
 		gameWC = GameWindowController(game: Game(humanPlayerPieceColor: .white, computerPlaysRandomly: true))
 		gameWC.window?.center()
@@ -25,19 +24,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	// MARK: - Private methods
 
-	// We do this so the .lrn files created by sjeng go into the Application Support directory instead of cluttering the user's home directory or whatever directory we would otherwise be in by default.
-	private func changeToAppSupportDirectory() {
+	/// Change the working directory to a subdirectory of Application Support
+	/// so the .lrn files created by sjeng will go there instead of cluttering
+	/// whatever directory we would otherwise be in by default.
+	private func chdirToAppSupportDirectory() {
 		let fm = FileManager.default
 
 		// Locate the user's Application Support directory.
-		guard let appSupportURL = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+		guard let appSupportURL = fm.urls(for: .applicationSupportDirectory,
+		                                  in: .userDomainMask).first else {
 			print("ERROR: Could not locate Application Support directory")
 			return
 		}
 
 		// Create the app-specific subdirectory if it doesn't exist.
 		let appSpecificURL = appSupportURL.appendingPathComponent(Bundle.main.bundleIdentifier!)
-
 		do {
 			try fm.createDirectory(at: appSpecificURL, withIntermediateDirectories: true, attributes: nil)
 		} catch {

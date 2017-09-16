@@ -8,6 +8,11 @@
 
 import Foundation
 
+/// Convenience wrapper around the Foundation.Process class.  Unlike Process,
+/// can be used more than once (discards the Process instance when it terminates
+/// and creates a new one if you do launchProcess again).  To **receive** data
+/// from the process, set up a delegate.  To **send** data to the process, use
+/// one of the writeToProcess methods.
 class ProcessWrapper {
 	weak var delegate: (AnyObject & ProcessWrapperDelegate)?
 	let launchPath: String
@@ -67,6 +72,7 @@ class ProcessWrapper {
 		p.launch()
 	}
 
+	/// Sends data to the process's standard input.
 	func writeToProcess(_ data: Data) {
 		guard let p = self.process else {
 			print("+++ [ERROR] Task is not running, cannot send data to it.")
@@ -79,7 +85,8 @@ class ProcessWrapper {
 		self.processStdin.fileHandleForWriting.write(data)
 	}
 
-	// Convenience method that calls writeToProcess(_ data:).  Uses UTF-8.
+	/// Convenience method that calls writeToProcess(_ data:).  Converts the
+	/// string to bytes using the UTF-8 encoding.
 	func writeToProcess(_ string: String) {
 		if let d = string.data(using: String.Encoding.utf8) {
 			self.writeToProcess(d)
@@ -120,7 +127,7 @@ class ProcessWrapper {
 
 	// MARK: - Private methods
 
-	// Start listening for notifications.
+	/// Start listening for notifications.
 	func startObserving() {
 		assert(self.process != nil, "Process is not running.")
 		if self.isObserving {
@@ -142,6 +149,7 @@ class ProcessWrapper {
 		self.isObserving = true;
 	}
 
+	/// Stop listening for notifications.
 	func stopObserving() {
 		guard self.isObserving else {
 			return;

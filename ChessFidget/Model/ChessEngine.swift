@@ -39,7 +39,8 @@ class ChessEngine: ProcessWrapperDelegate {
 		}
 	}
 
-	// String should be like "d2d4", or "a7a8q".
+	/// Sends a move to the chess engine.
+	/// param	moveString	Should be in algebraic notation like "d2d4" or "a7a8q".
 	func sendEngineHumanMove(_ moveString: String) {
 		self.sendCommandToEngine(moveString)
 	}
@@ -47,12 +48,13 @@ class ChessEngine: ProcessWrapperDelegate {
 	// MARK: - ProcessWrapperDelegate methods
 
 	func didReadFromStdout(_ processWrapper: ProcessWrapper, data: Data) {
-		//self.showReceivedData(data)
+		//self.printReceivedData(data)
+
 		guard let s = stringFromData(data) else { return }
 		guard s.count > 0 else { return }
 
-		// If we get a line of text that parses as a valid move by the computer,
-		// play that move on the computer's behalf.
+		// Split the input into lines.  If we see a line that parses as a valid
+		// move by the computer, play that move on the computer's behalf.
 		// TODO: Is there any reason to handle other messages the computer might
 		// send, like "ponder", "Illegal move", or whatnot?
 		// TODO: Should theoretically handle the case where the output from the
@@ -69,7 +71,7 @@ class ChessEngine: ProcessWrapperDelegate {
 	}
 
 	func didReadFromStderr(_ processWrapper: ProcessWrapper, data: Data) {
-		self.showReceivedData(data)
+		self.printReceivedData(data)
 	}
 
 	func didTerminate(_ processWrapper: ProcessWrapper) {
@@ -82,7 +84,7 @@ class ChessEngine: ProcessWrapperDelegate {
 		return String(data: data, encoding: String.Encoding.utf8)
 	}
 
-	private func showReceivedData(_ data: Data) {
+	private func printReceivedData(_ data: Data) {
 		guard data.count > 0 else {
 			return
 		}
@@ -93,11 +95,12 @@ class ChessEngine: ProcessWrapperDelegate {
 		}
 	}
 
-	// command should not include a trailing newline.  This method adds it.
 	private func sendCommandToEngine(_ command: String) {
 		assert(self.processWrapper.isRunning,
 		       "The chess engine is not running. Can't send a command to it.")
 		print("+++ sending [\(command)] to the chess engine")
+		// Make sure there's a terminating newline.  Easy to forget, then wonder
+		// why the engine isn't responding.
 		var loweredString = command.lowercased()
 		if command.characters.last != "\n" {
 			loweredString += "\n"
