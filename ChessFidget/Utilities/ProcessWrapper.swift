@@ -53,27 +53,31 @@ class ProcessWrapper {
 			return;
 		}
 
+		// Set up a Process object.
 		let p = Process()
 		p.launchPath = self.launchPath
 		p.arguments = self.arguments
-		self.process = p
-
 		let inputPipe = Pipe()
 		let outputPipe = Pipe()
 		let errorPipe = Pipe()
 		p.standardInput = inputPipe
 		p.standardOutput = outputPipe
 		p.standardError = errorPipe
-		self.startObserving()
 		inputPipe.fileHandleForWriting.readInBackgroundAndNotify()
 		outputPipe.fileHandleForReading.readInBackgroundAndNotify()
 		outputPipe.fileHandleForReading.readInBackgroundAndNotify()
 
+		// Connect to that Process object.
+		self.process = p
+		self.startObserving()
+
+		// Launch the process.
 		p.launch()
 	}
 
 	/// Sends data to the process's standard input.
 	func writeToProcess(_ data: Data) {
+		guard data.count > 0 else { return }
 		guard let p = self.process else {
 			print("+++ [ERROR] Task is not running, cannot send data to it.")
 			return
@@ -118,7 +122,7 @@ class ProcessWrapper {
 		self.processStderr.fileHandleForReading.readInBackgroundAndNotify()
 	}
 
-	@objc private func processDidTerminate(_ note: Notification) {
+	@objc private func processDidTerminate(_: Notification) {
 		// Inform the delegate and perform cleanup.
 		self.stopObserving()
 		self.delegate?.didTerminate(self)

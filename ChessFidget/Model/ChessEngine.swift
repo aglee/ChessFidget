@@ -50,8 +50,8 @@ class ChessEngine: ProcessWrapperDelegate {
 	func didReadFromStdout(_ processWrapper: ProcessWrapper, data: Data) {
 		//self.printReceivedData(data)
 
+		guard data.count > 0 else { return }
 		guard let s = stringFromData(data) else { return }
-		guard s.count > 0 else { return }
 
 		// Split the input into lines.  If we see a line that parses as a valid
 		// move by the computer, play that move on the computer's behalf.
