@@ -9,5 +9,17 @@
 import Foundation
 
 class HumanPlayer: Player {
-	
+	override var isHuman: Bool { return true }
+
+	init() {
+		super.init(name: "Human")
+	}
+
+	// MARK: - Player methods
+
+	override func generateMove() {
+	}
+
+	override func opponentDidMove(_ move: Move) {
+	}
 }
