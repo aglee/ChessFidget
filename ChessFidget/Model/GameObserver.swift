@@ -6,8 +6,7 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-/// Basically a delegate, but different from typical delegates in that a Game
-/// can have multiple GameObservers.
+/// Basically a delegate.
 protocol GameObserver {
 	func gameDidApplyMove(_ game: Game, move: Move, player: Player)
 	func gameDidEnd(_ game: Game, reason: ReasonGameIsOver)

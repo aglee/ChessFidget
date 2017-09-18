@@ -8,6 +8,13 @@
 
 import Foundation
 
+
+// NOTE TO SELF: I'm trying to design this class with the idea that in the
+// future I might want to add the option to instantiate a `Game` with a
+// different initial board (possibly already in a mated/drawn position), and/or
+// with Black to move.
+
+
 /// Represents a chess game.  Players are represented by instances of `Player`
 /// subclasses.
 class Game {
@@ -20,11 +27,6 @@ class Game {
 
 	/// Standard game setup, with all pieces in their home squares, with White
 	/// to move.
-	///
-	/// NOTE TO SELF: Currently this is the only initializer, but I'm trying
-	/// to design this class with the idea that in the future I might want to
-	/// add the option to instantiate a `Game` with a different initial board
-	/// (possibly already in a mated/drawn position), and/or with Black to move.
 	init(white: Player, black: Player) {
 		self.position = Position()
 		self.gameState = .awaitingMove
