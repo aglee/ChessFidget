@@ -60,7 +60,9 @@ class Game {
 		generateNextMove()
 	}
 
-	/// Assumes the given move is valid for the current position.
+	/// Each `Player` must call this method when it has finished generating the
+	/// move it wants to make.  This method assumes `move` is valid and is being
+	/// sent on behalf of `self.playerToMove`.
 	func applyGeneratedMove(_ move: Move) {
 		guard let playerToMove = playerToMove else {
 			print("+++ [ERROR] Something is screwy -- playerToMove is nil.")
