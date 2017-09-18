@@ -37,7 +37,7 @@ class BoardViewController: NSViewController, GameObserver {
 		                                    attribute: .height,
 		                                    multiplier: 1.0,
 		                                    constant: 0.0)
-		boardView.addConstraint(squareness);  // TODO: Do this in IB.
+		boardView.addConstraint(squareness)  // TODO: Do this in IB.
 	}
 
 	// MARK: - NSResponder methods
@@ -76,7 +76,7 @@ class BoardViewController: NSViewController, GameObserver {
 	// MARK: - Private methods
 
 	private func handleClickWhileAwaitingHumanMove(_ clickedGridPoint: GridPointXY) {
-		game?.assertExpectedGameState(.awaitingMove);
+		game?.assertExpectedGameState(.awaitingMove)
 
 		guard let game = game
 			else { return }
@@ -94,7 +94,7 @@ class BoardViewController: NSViewController, GameObserver {
 	}
 
 	private func tryProposedMove(from startPoint: GridPointXY, to endPoint: GridPointXY) {
-		game?.assertExpectedGameState(.awaitingMove);
+		game?.assertExpectedGameState(.awaitingMove)
 		guard let game = game
 			else { return }
 		let validator = MoveValidator(position: game.position,

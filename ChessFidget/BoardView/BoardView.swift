@@ -83,7 +83,7 @@ class BoardView: NSView {
 		return NSRect(x: boardRect.origin.x + CGFloat(x) * squareWidth,
 		              y: boardRect.origin.y + CGFloat(y) * squareHeight,
 		              width: squareWidth,
-		              height: squareHeight);
+		              height: squareHeight)
 	}
 
 	private func rectForSquareAtGridPoint(_ gridPoint: GridPointXY) -> NSRect {

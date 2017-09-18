@@ -50,7 +50,7 @@ class ProcessWrapper {
 	func launchProcess() {
 		if let _ = self.process {
 			print("Process is already running.")
-			return;
+			return
 		}
 
 		// Set up a Process object.
@@ -84,7 +84,7 @@ class ProcessWrapper {
 		}
 		guard p.isRunning else {
 			print("+++ [ERROR] Process has been terminated, cannot send data to it.")
-			return;
+			return
 		}
 		self.processStdin.fileHandleForWriting.write(data)
 	}
@@ -127,7 +127,7 @@ class ProcessWrapper {
 		// Inform the delegate and perform cleanup.
 		self.stopObserving()
 		self.delegate?.didTerminate(self)
-		self.process = nil;
+		self.process = nil
 	}
 
 	// MARK: - Private methods
@@ -136,7 +136,7 @@ class ProcessWrapper {
 	private func startObserving() {
 		assert(self.process != nil, "Process is not running.")
 		if self.isObserving {
-			return;
+			return
 		}
 		let nc = NotificationCenter.default
 		nc.addObserver(self,
@@ -151,13 +151,13 @@ class ProcessWrapper {
 		               selector: #selector(processDidTerminate(_:)),
 		               name: Process.didTerminateNotification,
 		               object: self.process)
-		self.isObserving = true;
+		self.isObserving = true
 	}
 
 	/// Stop listening for notifications.
 	private func stopObserving() {
 		guard self.isObserving else {
-			return;
+			return
 		}
 		let nc = NotificationCenter.default
 		nc.removeObserver(self,
@@ -169,6 +169,6 @@ class ProcessWrapper {
 		nc.removeObserver(self,
 		                  name: Process.didTerminateNotification,
 		                  object: self.process)
-		self.isObserving = false;
+		self.isObserving = false
 	}
 }
