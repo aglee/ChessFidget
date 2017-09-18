@@ -29,7 +29,7 @@ struct Position {
 
 	/// Assumes `move` is valid for the current player and the current state of
 	/// the board, and that it is correctly characterized by its `type`.
-	mutating func makeMove(_ move: Move) {
+	mutating func makeMoveAndSwitchTurn(_ move: Move) {
 		// Update the pieces on the board.
 		board.makeMove(from: move.start, to: move.end, type: move.type)
 

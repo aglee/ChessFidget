@@ -69,7 +69,7 @@ class Game {
 				played by \(self.position.whoseTurn.debugString) \
 				(\(playerWhoMoved.name))
 				""")
-			self.position.makeMove(move)
+			self.position.makeMoveAndSwitchTurn(move)
 			self.gameObserver?.gameDidApplyMove(self, move: move, player: playerWhoMoved)
 			playerWhoMovesNext.opponentDidMove(move)
 			self.checkForEndOfGame()
