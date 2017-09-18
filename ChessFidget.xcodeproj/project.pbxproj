@@ -29,6 +29,9 @@
 		735824C31D78CA000019D7B1 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C01D78CA000019D7B1 /* Move.swift */; };
 		735824C61D78FFC70019D7B1 /* MoveGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C41D78FFC70019D7B1 /* MoveGenerator.swift */; };
 		735824C71D78FFC70019D7B1 /* MoveGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735824C41D78FFC70019D7B1 /* MoveGenerator.swift */; };
+		735A5C591F6FA4F200966805 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C581F6FA4F200966805 /* Player.swift */; };
+		735A5C5A1F6FA4F200966805 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C581F6FA4F200966805 /* Player.swift */; };
+		735A5C5B1F6FA4F200966805 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C581F6FA4F200966805 /* Player.swift */; };
 		735BE04E1D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
 		735BE04F1D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
 		735BE0501D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
@@ -136,6 +139,7 @@
 		735824BC1D78BDCE0019D7B1 /* CastlingFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CastlingFlags.swift; sourceTree = "<group>"; };
 		735824C01D78CA000019D7B1 /* Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
 		735824C41D78FFC70019D7B1 /* MoveGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveGenerator.swift; sourceTree = "<group>"; };
+		735A5C581F6FA4F200966805 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		735BE04D1D87627300989C6E /* GameObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObserver.swift; sourceTree = "<group>"; };
 		735E4B841D826CA400426794 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		735E4B851D826CA400426794 /* bb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bb.png; sourceTree = "<group>"; };
@@ -267,9 +271,18 @@
 				736BE5131D888B94001B680E /* GameState.swift */,
 				73963E641D6FC57000C9D78B /* Game.swift */,
 				735BE04D1D87627300989C6E /* GameObserver.swift */,
-				73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */,
+				735A5C571F6FA4E200966805 /* Player */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		735A5C571F6FA4E200966805 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */,
+				735A5C581F6FA4F200966805 /* Player.swift */,
+			);
+			path = Player;
 			sourceTree = "<group>";
 		};
 		735E4B821D826CA400426794 /* Piece Icons */ = {
@@ -512,6 +525,7 @@
 				73E31C1A1D74B8FF0013A33D /* Board.swift in Sources */,
 				7357325E1D80A43B00BB7EF1 /* GridPointXY.swift in Sources */,
 				73C9B0C61F6A7B050000AFA0 /* ChessEngine.swift in Sources */,
+				735A5C591F6FA4F200966805 /* Player.swift in Sources */,
 				73830B301D79994700259FD2 /* MoveGenerator.swift in Sources */,
 				73963DF91D6E630C00C9D78B /* BoardView.swift in Sources */,
 				73C1D7861D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
@@ -553,6 +567,7 @@
 				73963E661D6FC57000C9D78B /* Game.swift in Sources */,
 				73963E5A1D6FC51600C9D78B /* Position.swift in Sources */,
 				736BE5151D88D2DB001B680E /* GameState.swift in Sources */,
+				735A5C5A1F6FA4F200966805 /* Player.swift in Sources */,
 				7352F7B41D6E08D100EF9B5F /* ChessFidgetTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -565,6 +580,7 @@
 				73E31C1C1D74B8FF0013A33D /* Board.swift in Sources */,
 				735732601D80A43B00BB7EF1 /* GridPointXY.swift in Sources */,
 				735824C71D78FFC70019D7B1 /* MoveGenerator.swift in Sources */,
+				735A5C5B1F6FA4F200966805 /* Player.swift in Sources */,
 				73394F1F1F6B2CF20035115B /* ProcessWrapperDelegate.swift in Sources */,
 				73963DFA1D6E630C00C9D78B /* BoardView.swift in Sources */,
 				73C1D7881D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
