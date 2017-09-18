@@ -32,6 +32,9 @@
 		735A5C591F6FA4F200966805 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C581F6FA4F200966805 /* Player.swift */; };
 		735A5C5A1F6FA4F200966805 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C581F6FA4F200966805 /* Player.swift */; };
 		735A5C5B1F6FA4F200966805 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C581F6FA4F200966805 /* Player.swift */; };
+		735A5C5D1F6FD5A000966805 /* HumanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */; };
+		735A5C5E1F6FD5A000966805 /* HumanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */; };
+		735A5C5F1F6FD5A000966805 /* HumanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */; };
 		735BE04E1D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
 		735BE04F1D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
 		735BE0501D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
@@ -140,6 +143,7 @@
 		735824C01D78CA000019D7B1 /* Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
 		735824C41D78FFC70019D7B1 /* MoveGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveGenerator.swift; sourceTree = "<group>"; };
 		735A5C581F6FA4F200966805 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanPlayer.swift; sourceTree = "<group>"; };
 		735BE04D1D87627300989C6E /* GameObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObserver.swift; sourceTree = "<group>"; };
 		735E4B841D826CA400426794 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		735E4B851D826CA400426794 /* bb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bb.png; sourceTree = "<group>"; };
@@ -279,8 +283,9 @@
 		735A5C571F6FA4E200966805 /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */,
 				735A5C581F6FA4F200966805 /* Player.swift */,
+				735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */,
+				73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -534,6 +539,7 @@
 				735824C11D78CA000019D7B1 /* Move.swift in Sources */,
 				737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */,
 				736BE5141D888B94001B680E /* GameState.swift in Sources */,
+				735A5C5D1F6FD5A000966805 /* HumanPlayer.swift in Sources */,
 				736C91011D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
 				73C9A5E01F6A42C80096D45B /* ProcessWrapper.swift in Sources */,
 				73963DF11D6E608D00C9D78B /* GameWindowController.swift in Sources */,
@@ -554,6 +560,7 @@
 			files = (
 				7357325F1D80A43B00BB7EF1 /* GridPointXY.swift in Sources */,
 				73E31C1B1D74B8FF0013A33D /* Board.swift in Sources */,
+				735A5C5E1F6FD5A000966805 /* HumanPlayer.swift in Sources */,
 				73394F1E1F6B2CF10035115B /* ProcessWrapperDelegate.swift in Sources */,
 				735824C21D78CA000019D7B1 /* Move.swift in Sources */,
 				735824BE1D78BDD30019D7B1 /* CastlingFlags.swift in Sources */,
@@ -589,6 +596,7 @@
 				736C90F41D7F0B5700A9020F /* NSFont+Extensions.swift in Sources */,
 				73963E571D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				735824C31D78CA000019D7B1 /* Move.swift in Sources */,
+				735A5C5F1F6FD5A000966805 /* HumanPlayer.swift in Sources */,
 				737EE93C1D75CC1F00B5144B /* Piece.swift in Sources */,
 				736BE5161D88D2DC001B680E /* GameState.swift in Sources */,
 				736C91021D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
