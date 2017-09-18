@@ -6,9 +6,10 @@
 //  Copyright © 2016 Andy Lee. All rights reserved.
 //
 
-/// Quick and dirty approximation of property observation.
+/// Basically a delegate, but different from typical delegates in that a Game
+/// can have multiple GameObservers.
 protocol GameObserver {
-	func gameDidChangeState(_ game: Game, oldValue: GameState)
-	func gameDidMakeMove(_ game: Game, move: Move)
+	func gameDidApplyMove(_ game: Game, move: Move, player: Player)
+	func gameDidEnd(_ game: Game, reason: ReasonGameIsOver)
 }
 
