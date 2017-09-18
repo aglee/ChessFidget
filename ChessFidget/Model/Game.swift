@@ -48,16 +48,19 @@ class Game {
 	}
 
 	convenience init(humanPlaysWhite: Bool) {
-		let human = HumanPlayer()
-		let computer = ChessEngine()
-		self.init(white: (humanPlaysWhite ? human : computer),
-		          black: (humanPlaysWhite ? computer : human))
+		if humanPlaysWhite {
+			self.init(white: HumanPlayer(),
+			          black: ChessEngine(makeFirstMove: false))
+		} else {
+			self.init(white: ChessEngine(makeFirstMove: true),
+			          black: HumanPlayer())
+		}
 	}
 
 	// MARK: - Game play
 
 	func startPlay() {
-		generateNextMove()
+		self.checkForEndOfGame()
 	}
 
 	/// Each `Player` must call this method when it has finished generating the
@@ -68,24 +71,18 @@ class Game {
 			print("+++ [ERROR] Something is screwy -- playerToMove is nil.")
 			return
 		}
-		print("+++ \(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(playerToMove.name))")
-		position.makeMove(move)
-		gameObserver?.gameDidApplyMove(self, move: move, player: playerToMove)
-		self.playerToMove?.opponentDidMove(move)  // TODO: Potential for subtle bug because position.makeMove() changes self.playerToMove -- it's a side effect thing.
-		generateNextMove()
+		DispatchQueue.main.async {
+			print("""
+				+++ \(move.debugString) (\(move.type)) \
+				played by \(self.position.whoseTurn.debugString) \
+				(\(playerToMove.name))
+				""")
+			self.position.makeMove(move)
+			self.gameObserver?.gameDidApplyMove(self, move: move, player: playerToMove)
+			self.playerToMove?.opponentDidMove(move)  // TODO: Potential for subtle bug because position.makeMove() changes self.playerToMove -- it's a side effect thing.
+			self.checkForEndOfGame()
+		}
 	}
-
-//	func applyMove(_ moveString: String, from player: Player) {
-//		guard let move = position.moveFromAlgebraicString(moveString, reportErrors: true) else {
-//			print("ERROR: Couldn't create a Move from the string '\(moveString)'.")
-//			return
-//		}
-//
-//		DispatchQueue.main.async {
-//			print("+++ about to make computer's move \(move.debugString)")
-//			self.makeMove(move, from: player)
-//		}
-//	}
 
 //	func engineDidApproveHumanMove(_ moveString: String) {
 //		print("+++ \(type(of: self)).\(#function) -- \(moveString)")
@@ -124,17 +121,6 @@ class Game {
 		gameObserver?.gameDidEnd(self, reason: gameEndReason)
 	}
 
-	private func generateNextMove() {
-		DispatchQueue.main.async {  // TODO: Is GCD needed?
-			self.checkForEndOfGame()
-			if case .gameIsOver = self.gameState {
-				return
-			}
-			self.playerToMove?.generateMove()
-		}
-
-
-
 //		if humanPlayerPieceColor == position.whoseTurn {
 //			// It's the human's turn.  Nothing further to do except wait for
 //			// them to interact with the UI.
@@ -156,6 +142,7 @@ class Game {
 //				})
 //			}
 //		}
-	}
+
+
 }
 

@@ -38,7 +38,11 @@ class BoardView: NSView {
 			needsDisplay = true
 		}
 	}
-	var lastComputerMove: Move?
+	var lastComputerMove: Move? {
+		didSet {
+			needsDisplay = true
+		}
+	}
 	var overlayText: String? {
 		didSet {
 			needsDisplay = true

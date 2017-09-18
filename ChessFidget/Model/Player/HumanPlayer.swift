@@ -17,9 +17,6 @@ class HumanPlayer: Player {
 
 	// MARK: - Player methods
 
-	override func generateMove() {
-	}
-
 	override func opponentDidMove(_ move: Move) {
 	}
 }

@@ -18,7 +18,7 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 
 	// MARK: - Init/deinit
 
-	init() {
+	init(makeFirstMove: Bool) {
 		// Initialize properties.
 		let chessEnginePath = "/Applications/Chess.app/Contents/Resources/sjeng.ChessEngine"
 		self.processWrapper = ProcessWrapper(launchPath: chessEnginePath, arguments: [])
@@ -32,13 +32,12 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		self.sendCommandToEngine("sd 4")  // Limit search depth.
 		self.sendCommandToEngine("st 1")  // Limit search time.
 		self.sendCommandToEngine("easy")  // Only search for moves while it is the computer's turn.
+		if makeFirstMove {
+			self.sendCommandToEngine("go")
+		}
 	}
 
 	// MARK: - Player methods
-
-	override func generateMove() {
-		self.sendCommandToEngine("go")
-	}
 
 	override func opponentDidMove(_ move: Move) {
 		self.sendCommandToEngine(move.algebraicString)
@@ -47,7 +46,7 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 	// MARK: - ProcessWrapperDelegate protocol
 
 	func didReadFromStdout(_ processWrapper: ProcessWrapper, data: Data) {
-		self.printReceivedData(data)  // This is handy to uncomment when debugging.
+		//self.printReceivedData(data)  // This is handy to uncomment when debugging.
 
 		guard data.count > 0 else { return }
 		guard let s = stringFromData(data) else { return }
