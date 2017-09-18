@@ -37,7 +37,7 @@ class BoardViewController: NSViewController, GameObserver {
 		                                    attribute: .height,
 		                                    multiplier: 1.0,
 		                                    constant: 0.0)
-		boardView.addConstraint(squareness);
+		boardView.addConstraint(squareness);  // TODO: Do this in IB.
 	}
 
 	// MARK: - NSResponder methods
@@ -51,36 +51,32 @@ class BoardViewController: NSViewController, GameObserver {
 
 		if let gameState = game?.gameState {
 			switch gameState {
-			case .awaitingHumanMove:
+			case .awaitingMove:
 				handleClickWhileAwaitingHumanMove(clickedGridPoint)
 			default:
-				break
+				super.mouseUp(with: event)
 			}
 		}
 	}
 
 	// MARK: - GameObserver methods
 
-	func gameDidChangeState(_ game: Game, oldValue: GameState) {
-		if case .gameIsOver(let reason) = game.gameState {
-			boardView.overlayText = reason.rawValue
+	func gameDidApplyMove(_ game: Game, move: Move, player: Player) {
+		if player.isHuman {
+			boardView.lastComputerMove = nil
 		} else {
-			boardView.overlayText = nil
+			boardView.lastComputerMove = move
 		}
 	}
 
-	func gameDidMakeMove(_ game: Game, move: Move) {
-		if game.position.whoseTurn == game.humanPlayerPieceColor {
-			boardView.lastComputerMove = move
-		} else {
-			boardView.lastComputerMove = nil
-		}
+	func gameDidEnd(_ game: Game, reason: ReasonGameIsOver) {
+		boardView.overlayText = reason.rawValue
 	}
 
 	// MARK: - Private methods
 
 	private func handleClickWhileAwaitingHumanMove(_ clickedGridPoint: GridPointXY) {
-		game?.assertExpectedGameState(.awaitingHumanMove);
+		game?.assertExpectedGameState(.awaitingMove);
 
 		guard let game = game
 			else { return }
@@ -91,20 +87,19 @@ class BoardViewController: NSViewController, GameObserver {
 			}
 		} else {
 			if clickedGridPoint != boardView.selectedGridPoint! {
-				tryProposedHumanMove(from: boardView.selectedGridPoint!, to: clickedGridPoint)
+				tryProposedMove(from: boardView.selectedGridPoint!, to: clickedGridPoint)
 				boardView.selectedGridPoint = nil
 			}
 		}
 	}
 
-	private func tryProposedHumanMove(from startPoint: GridPointXY, to endPoint: GridPointXY) {
-		game?.assertExpectedGameState(.awaitingHumanMove);
-
+	private func tryProposedMove(from startPoint: GridPointXY, to endPoint: GridPointXY) {
+		game?.assertExpectedGameState(.awaitingMove);
 		guard let game = game
 			else { return }
-
-		let validator = MoveValidator(position: game.position, startPoint: startPoint, endPoint: endPoint)
-
+		let validator = MoveValidator(position: game.position,
+		                              startPoint: startPoint,
+		                              endPoint: endPoint)
 		switch validator.validateMove() {
 		case .invalid(let reason):
 			Swift.print("Invalid move \(startPoint.squareName)-\(endPoint.squareName): \(reason)")
@@ -117,10 +112,10 @@ class BoardViewController: NSViewController, GameObserver {
 					(_: NSApplication.ModalResponse) in
 					// The reference to sheetController within the closure prevents it from being dealloc'ed by ARC.
 					let moveType: MoveType = .pawnPromotion(type: sheetController.selectedPromotionType)
-					game.makeHumanMove(Move(from: startPoint, to: endPoint, type: moveType))
+					game.applyGeneratedMove(Move(from: startPoint, to: endPoint, type: moveType))
 				})
 			} else {
-				game.makeHumanMove(Move(from: startPoint, to: endPoint, type: moveType))
+				game.applyGeneratedMove(Move(from: startPoint, to: endPoint, type: moveType))
 			}
 		}
 	}

@@ -16,9 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	func applicationDidFinishLaunching(_: Notification) {
 		self.chdirToAppSupportDirectory()
-
-		self.gameWC = GameWindowController(game: Game(humanPlays: .white,
-		                                              computerPlaysRandomly: true))
+		self.gameWC = GameWindowController(game: Game(humanPlaysWhite: true))
 		self.gameWC.window?.center()
 		self.gameWC.showWindow(nil)
 	}

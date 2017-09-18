@@ -8,14 +8,15 @@
 
 import Cocoa
 
+/// Window in which a game of chess is played.
 class GameWindowController: NSWindowController {
 	@IBOutlet var boardViewController: BoardViewController!
 	@IBOutlet var computerPlaysRandomlyCheckbox: NSButton!
 
 	var game: Game {
 		didSet {
-			computerPlaysRandomlyCheckbox.state =
-				game.computerPlaysRandomly ? .on : .off
+//			computerPlaysRandomlyCheckbox.state =
+//				game.computerPlaysRandomly ? .on : .off
 		}
 	}
 
@@ -31,11 +32,11 @@ class GameWindowController: NSWindowController {
 	// MARK: - Action methods
 
 	@IBAction func resetGameWithHumanPlayingWhite(_: AnyObject?) {
-		resetGame(humanPlays: .white)
+		resetGame(humanPlaysWhite: true)
 	}
 
 	@IBAction func resetGameWithHumanPlayingBlack(_: AnyObject?) {
-		resetGame(humanPlays: .black)
+		resetGame(humanPlaysWhite: false)
 	}
 
 	// MARK: - NSWindowController methods
@@ -48,15 +49,14 @@ class GameWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
 		boardViewController.game = game
-		computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? .on : .off)
+//		computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? .on : .off)
     }
 
 	// MARK: - Private methods
     
-	private func resetGame(humanPlays pieceColor: PieceColor) {
-		game = Game(humanPlays: pieceColor,
-		            computerPlaysRandomly: (computerPlaysRandomlyCheckbox.state == .on))
-		boardViewController.game = game
+	private func resetGame(humanPlaysWhite: Bool) {
+		self.game = Game(humanPlaysWhite: humanPlaysWhite)
+		boardViewController.game = self.game
 	}
 
 }
