@@ -52,6 +52,22 @@ struct Move {
 		self.type = type
 	}
 
+	// MARK: - String representations
+
+	var algebraicString: String {
+		let startAndEndSquares = "\(self.start.squareName)\(self.end.squareName)"
+		if case .pawnPromotion(let promoType) = self.type {
+			switch promoType {
+			case .promoteToBishop: return startAndEndSquares + "b"
+			case .promoteToKnight: return startAndEndSquares + "n"
+			case .promoteToRook: return startAndEndSquares + "r"
+			case .promoteToQueen: return startAndEndSquares + "q"
+			}
+		} else {
+			return startAndEndSquares
+		}
+	}
+
 	var debugString: String {
 		return "\(start.squareName)-\(end.squareName)"
 	}
