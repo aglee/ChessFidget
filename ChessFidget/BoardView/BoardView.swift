@@ -18,11 +18,19 @@ class BoardView: NSView {
 			lastComputerMove = nil
 			needsDisplay = true
 			needsLayout = true  // Because the BoardView may need to re-reckon things if isFlipped changes depending on which color the human player is in the new value of game.
+			if let playerWithFirstMove = game?.playerToMove {
+				displayBlackPOV = !playerWithFirstMove.isHuman
+			}
 
 			// TODO: Seems the above isn't enough to force proper redraw when the flippedness changes, hence the fudging below.
 			let sv = superview
 			removeFromSuperview()
 			sv?.addSubview(self)
+		}
+	}
+	var displayBlackPOV = false {
+		didSet {
+			needsDisplay = true
 		}
 	}
 	var selectedGridPoint: GridPointXY? {
@@ -112,9 +120,7 @@ class BoardView: NSView {
 	}
 
 	override var isFlipped: Bool {
-		guard let game = game
-			else { return false }
-		return game.humanPlayerPieceColor == .black
+		return displayBlackPOV
 	}
 
 	// MARK: - Private methods  -- drawing
