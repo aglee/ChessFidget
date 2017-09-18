@@ -18,18 +18,6 @@ class Game {
 
 	var gameObserver: GameObserver?
 
-	/// The player whose turn it is, or nil if the game is over.
-	private var playerToMove: Player? {
-		switch gameState {
-		case .awaitingMove:
-			switch position.whoseTurn {
-			case .white: return whitePlayer
-			case .black: return blackPlayer
-			}
-		case .gameIsOver: return nil
-		}
-	}
-
 	/// Standard game setup, with all pieces in their home squares, with White
 	/// to move.
 	///
@@ -64,22 +52,26 @@ class Game {
 	}
 
 	/// Each `Player` must call this method when it has finished generating the
-	/// move it wants to make.  This method assumes `move` is valid and is being
-	/// sent on behalf of `self.playerToMove`.
+	/// move it wants to make.  This method assumes `move` is a legal move for
+	/// the player whose turn it is in the current position.
 	func applyGeneratedMove(_ move: Move) {
-		guard let playerToMove = playerToMove else {
-			print("+++ [ERROR] Something is screwy -- playerToMove is nil.")
+		if case .gameIsOver = gameState {
+			print("+++ Game is over. Move will be ignored.")
 			return
 		}
+
+		let playerWhoMoved = (position.whoseTurn == .white ? whitePlayer : blackPlayer)
+		let playerWhoMovesNext = (position.whoseTurn == .white ? blackPlayer : whitePlayer)
+
 		DispatchQueue.main.async {
 			print("""
 				+++ \(move.debugString) (\(move.type)) \
 				played by \(self.position.whoseTurn.debugString) \
-				(\(playerToMove.name))
+				(\(playerWhoMoved.name))
 				""")
 			self.position.makeMove(move)
-			self.gameObserver?.gameDidApplyMove(self, move: move, player: playerToMove)
-			self.playerToMove?.opponentDidMove(move)  // TODO: Potential for subtle bug because position.makeMove() changes self.playerToMove -- it's a side effect thing.
+			self.gameObserver?.gameDidApplyMove(self, move: move, player: playerWhoMoved)
+			playerWhoMovesNext.opponentDidMove(move)
 			self.checkForEndOfGame()
 		}
 	}
