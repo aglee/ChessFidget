@@ -36,8 +36,12 @@ enum PieceColor: Int {
 	}
 }
 
-/// Directions in which a piece can move, and whether it can do so repeatedly.
-/// For example, bishops can repeat the vector but knights can't.
+/// Describes the ways a chess piece can move.
+/// - `vectors` contains the smallest possible movements in all directions.
+/// - `canRepeat` indicates whether multiples of vectors are allowed.
+/// For example, a bishop can go arbitrarily far along one of its diagonal
+/// vectors (assuming no obstruction), but a knight can only do one hop along
+/// one of its L-shaped vectors.
 typealias PieceMovement = (vectors: [VectorXY], canRepeat: Bool)
 
 /// Pawn, knight, etc.
@@ -49,6 +53,9 @@ enum PieceType {
 	case queen
 	case king
 
+	/// Describes the ways the piece can move, except for pawns, whose peculiar
+	/// rules cannot be parametrized in this way.  The `vectors` list for pawns
+	/// is empty.
 	var movement: PieceMovement {
 		return PieceType.pieceMovements[self]!
 	}
