@@ -19,7 +19,7 @@ class Game {
 	var gameObserver: GameObserver?
 
 	/// The player whose turn it is, or nil if the game is over.
-	var playerToMove: Player? {
+	private var playerToMove: Player? {
 		switch gameState {
 		case .awaitingMove:
 			switch position.whoseTurn {

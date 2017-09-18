@@ -18,8 +18,8 @@ class BoardView: NSView {
 			lastComputerMove = nil
 			needsDisplay = true
 			needsLayout = true  // Because the BoardView may need to re-reckon things if isFlipped changes depending on which color the human player is in the new value of game.
-			if let playerWithFirstMove = game?.playerToMove {
-				displayBlackPOV = !playerWithFirstMove.isHuman
+			if let game = game {
+				displayBlackPOV = (game.blackPlayer.isHuman && !game.whitePlayer.isHuman)
 			}
 
 			// TODO: Seems the above isn't enough to force proper redraw when the flippedness changes, hence the fudging below.
