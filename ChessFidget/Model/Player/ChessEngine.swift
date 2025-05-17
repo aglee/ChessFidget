@@ -119,17 +119,18 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 	
 	private func startMoveForcingTimer() {
 		if moveForcingTimer != nil { return }
-		moveForcingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] _ in
+		
+		// Sometimes we send "stop" and never get a move from the engine.  It doesn't
+		// feel like repeating the timer is the right solution -- this is a stopgap.
+		moveForcingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
 			if case .awaitingMove = self?.owningGame?.gameState {
 				print(";;; Move timer triggered")
 				self?.sendCommandToEngine("stop")
-				self?.stopMoveForcingTimer()
 			}
 		}
 	}
 	
 	private func stopMoveForcingTimer() {
-		if moveForcingTimer == nil { return }
 		moveForcingTimer?.invalidate()
 		moveForcingTimer = nil
 	}
