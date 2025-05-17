@@ -50,7 +50,7 @@ class Game {
 	// MARK: - Game play
 
 	func startPlay() {
-		self.checkForEndOfGame()
+		checkForEndOfGame()
 	}
 
 	/// Each `Player` must call this method when it has finished generating the
@@ -65,12 +65,13 @@ class Game {
 		let playerWhoMoved = (position.whoseTurn == .white ? whitePlayer : blackPlayer)
 		let playerWhoMovesNext = (position.whoseTurn == .white ? blackPlayer : whitePlayer)
 
-		DispatchQueue.main.async {
-			print(";;; \(move.debugString) (\(move.type)) played by \(self.position.whoseTurn.debugString) (\(playerWhoMoved.name))")
-			self.position.makeMoveAndSwitchTurn(move)
-			self.gameObserver?.gameDidApplyMove(self, move: move, player: playerWhoMoved)
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self else { return }
+			print(";;; \(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(playerWhoMoved.name))")
+			position.makeMoveAndSwitchTurn(move)
+			gameObserver?.gameDidApplyMove(self, move: move, player: playerWhoMoved)
 			playerWhoMovesNext.opponentDidMove(move)
-			self.checkForEndOfGame()
+			checkForEndOfGame()
 		}
 	}
 
@@ -84,7 +85,7 @@ class Game {
 
 	// MARK: - Private methods
 
-	// Checks whether the game is over.  If so, sets `self.gameState`.
+	// Checks whether the game is over.  If so, sets `gameState`.
 	func checkForEndOfGame() {
 		// If we already know the game is over, no need to check again.
 		if case .gameIsOver = gameState {
@@ -128,7 +129,7 @@ class Game {
 //				let when = DispatchTime.now() + delay  //[agl] Why did I add a delay?
 //				DispatchQueue.main.asyncAfter(deadline: when, execute: {
 //					let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
-//					self.makeMove(validMoves[moveIndex])
+//					makeMove(validMoves[moveIndex])
 //				})
 //			}
 //		}

@@ -15,10 +15,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	// MARK: - NSApplicationDelegate protocol
 
 	func applicationDidFinishLaunching(_: Notification) {
-		self.chdirToAppSupportDirectory()
-		self.gameWC = GameWindowController(game: Game(humanPlaysWhite: true))
-		self.gameWC.window?.center()
-		self.gameWC.showWindow(nil)
+		chdirToAppSupportDirectory()
+		gameWC = GameWindowController(game: Game(humanPlaysWhite: true))
+		gameWC.window?.center()
+		gameWC.showWindow(nil)
 	}
 
 	// MARK: - Private methods

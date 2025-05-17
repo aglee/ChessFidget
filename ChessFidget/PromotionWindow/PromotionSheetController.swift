@@ -21,7 +21,7 @@ class PromotionSheetController: NSWindowController {
 		super.init(window: nil)
 
 		// Force the nib to be loaded, which will set all our IBOutlets.
-		self.loadWindow()
+		loadWindow()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -40,11 +40,13 @@ class PromotionSheetController: NSWindowController {
 	// MARK: - Action methods
 
 	@IBAction func selectPromotionType(_ sender: NSButton) {
+		guard let window else { return }
+
 		if let type = PromotionType(rawValue: sender.tag) {
 			selectedPromotionType = type
 		}
-		self.window!.sheetParent?.endSheet(self.window!, returnCode: NSApplication.ModalResponse.cancel)
-		self.window!.close()
+		window.sheetParent?.endSheet(window, returnCode: NSApplication.ModalResponse.cancel)
+		window.close()
 	}
 
 	// MARK: - NSWindowController methods

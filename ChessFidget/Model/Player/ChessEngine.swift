@@ -30,15 +30,15 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		super.init(name: "Computer")
 
 		// Launch the engine and send initial commands.
-		self.processWrapper.delegate = self
-		self.processWrapper.launchProcess()
-//		self.sendCommandToEngine("sd 4")  // Limit search depth.
-		self.sendCommandToEngine("sd 1")  // Limit search depth.
-		self.sendCommandToEngine("st 1")  // Limit search time.
-		self.sendCommandToEngine("easy")  // Only search for moves while it is the computer's turn.
+		processWrapper.delegate = self
+		processWrapper.launchProcess()
+//		sendCommandToEngine("sd 4")  // Limit search depth.
+		sendCommandToEngine("sd 1")  // Limit search depth.
+		sendCommandToEngine("st 1")  // Limit search time.
+		sendCommandToEngine("easy")  // Only search for moves while it is the computer's turn.
 		if makeFirstMove {
 			startMoveForcingTimer()
-			self.sendCommandToEngine("go")
+			sendCommandToEngine("go")
 		}
 	}
 
@@ -46,13 +46,13 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 
 	override func opponentDidMove(_ move: Move) {
 		startMoveForcingTimer()
-		self.sendCommandToEngine(move.algebraicString)
+		sendCommandToEngine(move.algebraicString)
 	}
 
 	// MARK: - ProcessWrapperDelegate protocol
 
 	func didReadFromStdout(_ processWrapper: ProcessWrapper, data: Data) {
-		//self.printReceivedData(data)  // This is handy to uncomment when debugging.
+		//printReceivedData(data)  // This is handy to uncomment when debugging.
 
 		guard data.count > 0 else { return }
 		guard let s = stringFromData(data) else { return }
@@ -67,16 +67,16 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		// very short strings.
 		let lines = s.components(separatedBy: "\n")
 		for line in lines {
-			if let move = self.owningGame?.position.moveFromAlgebraicString(line, reportErrors: false) {
+			if let move = owningGame?.position.moveFromAlgebraicString(line, reportErrors: false) {
 				stopMoveForcingTimer()
 				print(";;; Received from engine: [\(line)]")
-				self.owningGame?.applyGeneratedMove(move)
+				owningGame?.applyGeneratedMove(move)
 			}
 		}
 	}
 
 	func didReadFromStderr(_ processWrapper: ProcessWrapper, data: Data) {
-		self.printReceivedData(data)
+		printReceivedData(data)
 	}
 
 	func didTerminate(_ processWrapper: ProcessWrapper) {
@@ -101,7 +101,7 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 	}
 
 	private func sendCommandToEngine(_ command: String) {
-		assert(self.processWrapper.isRunning,
+		assert(processWrapper.isRunning,
 		       "The chess engine is not running. Can't send a command to it.")
 		print(";;; sending [\(command)] to the chess engine")
 		// Make sure there's a terminating newline.  Easy to forget, then wonder
@@ -110,7 +110,7 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		if command.last != "\n" {
 			loweredString += "\n"
 		}
-		self.processWrapper.writeToProcess(loweredString)
+		processWrapper.writeToProcess(loweredString)
 	}
 	
 	// MARK: - Move timer

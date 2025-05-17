@@ -55,8 +55,8 @@ class GameWindowController: NSWindowController {
 	// MARK: - Private methods
     
 	private func resetGame(humanPlaysWhite: Bool) {
-		self.game = Game(humanPlaysWhite: humanPlaysWhite)
-		boardViewController.game = self.game
+		game = Game(humanPlaysWhite: humanPlaysWhite)
+		boardViewController.game = game
 	}
 
 }

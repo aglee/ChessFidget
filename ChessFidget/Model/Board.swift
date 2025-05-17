@@ -132,7 +132,7 @@ struct Board {
 		}
 
 		// In all cases we move the piece that's at start to end.
-		self.blindlyMove(from: startPoint, to: endPoint)
+		blindlyMove(from: startPoint, to: endPoint)
 
 		// Do additional moving/removing/replacing as needed for special cases.
 		switch moveType {
@@ -144,12 +144,12 @@ struct Board {
 			self[endPoint] = Piece(piece.color, promotionType.pieceType)
 		case .castleKingSide:
 			// Move the king's rook.
-			self.blindlyMove(from: GridPointXY(7, piece.color.homeRow),
-			                 to: GridPointXY(5, piece.color.homeRow))
+			blindlyMove(from: GridPointXY(7, piece.color.homeRow),
+						to: GridPointXY(5, piece.color.homeRow))
 		case .castleQueenSide:
 			// Move the queen's rook.
-			self.blindlyMove(from: GridPointXY(0, piece.color.homeRow),
-			                 to: GridPointXY(3, piece.color.homeRow))
+			blindlyMove(from: GridPointXY(0, piece.color.homeRow),
+						to: GridPointXY(3, piece.color.homeRow))
 		default: break
 		}
 	}

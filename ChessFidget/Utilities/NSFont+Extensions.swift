@@ -15,12 +15,12 @@ extension NSFont {
 	/// Stack Overflow.
 	func sizedToFit(string: String, into area: CGSize, padding: CGFloat = 10.0) -> NSFont? {
 		// Use standard size to prevent error accrual.
-		guard let sampleFont = NSFont(descriptor: self.fontDescriptor, size: 12.0) else {
+		guard let sampleFont = NSFont(descriptor: fontDescriptor, size: 12.0) else {
 			return nil
 		}
 		let sampleSize = string.size(withAttributes:[NSAttributedStringKey.font: sampleFont])
 		let scale = scaleToAspectFit(source: sampleSize, into: area, padding: padding)
-		return NSFont(descriptor: self.fontDescriptor, size: scale * sampleFont.pointSize)
+		return NSFont(descriptor: fontDescriptor, size: scale * sampleFont.pointSize)
 	}
 
 	// MARK: - Private methods
