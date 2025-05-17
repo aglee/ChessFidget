@@ -101,6 +101,9 @@
 		73B820AE2DD8F64300AC577B /* RandomMover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820AD2DD8F64300AC577B /* RandomMover.swift */; };
 		73B820AF2DD8F64300AC577B /* RandomMover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820AD2DD8F64300AC577B /* RandomMover.swift */; };
 		73B820B02DD8F64300AC577B /* RandomMover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820AD2DD8F64300AC577B /* RandomMover.swift */; };
+		73B820B72DD90B9700AC577B /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820B62DD90B9700AC577B /* NSView+Extensions.swift */; };
+		73B820B82DD90B9700AC577B /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820B62DD90B9700AC577B /* NSView+Extensions.swift */; };
+		73B820B92DD90B9700AC577B /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820B62DD90B9700AC577B /* NSView+Extensions.swift */; };
 		73C1D7861D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
 		73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
 		73C1D7881D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
@@ -179,6 +182,7 @@
 		73963E641D6FC57000C9D78B /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		73B820AC2DD8CDEE00AC577B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		73B820AD2DD8F64300AC577B /* RandomMover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomMover.swift; sourceTree = "<group>"; };
+		73B820B62DD90B9700AC577B /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
 		73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveValidator.swift; sourceTree = "<group>"; };
 		73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessWrapperDelegate.swift; sourceTree = "<group>"; };
 		73C9A5DE1F6A42C80096D45B /* ProcessWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessWrapper.swift; sourceTree = "<group>"; };
@@ -360,6 +364,7 @@
 			children = (
 				73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */,
 				736C90F21D7F0B5700A9020F /* NSFont+Extensions.swift */,
+				73B820B62DD90B9700AC577B /* NSView+Extensions.swift */,
 				7357325D1D80A43B00BB7EF1 /* GridPointXY.swift */,
 				73C9A5DE1F6A42C80096D45B /* ProcessWrapper.swift */,
 				73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */,
@@ -543,6 +548,7 @@
 				73830B301D79994700259FD2 /* MoveGenerator.swift in Sources */,
 				73963DF91D6E630C00C9D78B /* BoardView.swift in Sources */,
 				73C1D7861D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
+				73B820B82DD90B9700AC577B /* NSView+Extensions.swift in Sources */,
 				736C90F31D7F0B5700A9020F /* NSFont+Extensions.swift in Sources */,
 				73963E551D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				735824C11D78CA000019D7B1 /* Move.swift in Sources */,
@@ -584,6 +590,7 @@
 				73963E661D6FC57000C9D78B /* Game.swift in Sources */,
 				73963E5A1D6FC51600C9D78B /* Position.swift in Sources */,
 				736BE5151D88D2DB001B680E /* GameState.swift in Sources */,
+				73B820B72DD90B9700AC577B /* NSView+Extensions.swift in Sources */,
 				735A5C5A1F6FA4F200966805 /* Player.swift in Sources */,
 				7352F7B41D6E08D100EF9B5F /* ChessFidgetTests.swift in Sources */,
 			);
@@ -613,6 +620,7 @@
 				736C91021D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
 				73963DF21D6E608D00C9D78B /* GameWindowController.swift in Sources */,
 				73963E671D6FC57000C9D78B /* Game.swift in Sources */,
+				73B820B92DD90B9700AC577B /* NSView+Extensions.swift in Sources */,
 				7352F7BF1D6E08D100EF9B5F /* ChessFidgetUITests.swift in Sources */,
 				73963E5B1D6FC51600C9D78B /* Position.swift in Sources */,
 				73963DFC1D6E630C00C9D78B /* BoardViewController.swift in Sources */,

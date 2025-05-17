@@ -1,3 +1,4 @@
+- **Still having the problem where no move is received from the Sjeng engine.**
 - Handle failure to connect to chess engine, in case Apple moves it again, or removes it, or whatever.
 - Figure out what's the deal with Sjeng's `st` command, which doesn't seem to have any effect any more.
 - Sjeng help doesn't show `easy` as a command -- should I remove that as well?
