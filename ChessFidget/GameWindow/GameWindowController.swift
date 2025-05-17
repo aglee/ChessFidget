@@ -11,14 +11,8 @@ import Cocoa
 /// Window in which a game of chess is played.
 class GameWindowController: NSWindowController {
 	@IBOutlet var boardViewController: BoardViewController!
-	@IBOutlet var computerPlaysRandomlyCheckbox: NSButton!
 
-	var game: Game {
-		didSet {
-//			computerPlaysRandomlyCheckbox.state =
-//				game.computerPlaysRandomly ? .on : .off
-		}
-	}
+	var game: Game
 
 	init(game: Game) {
 		self.game = game
@@ -31,17 +25,29 @@ class GameWindowController: NSWindowController {
 
 	// MARK: - Action methods
 
-	@IBAction func resetGameWithHumanPlayingWhite(_: AnyObject?) {
-		resetGame(humanPlaysWhite: true)
-	}
-
-	@IBAction func resetGameWithHumanPlayingBlack(_: AnyObject?) {
-		resetGame(humanPlaysWhite: false)
+	private var newGameDialogController = NewGameDialogController()
+	
+	@IBAction func newGame(_: AnyObject?) {
+		guard let window else { return }
+		guard let dialogWindow = newGameDialogController.window else { return }
+		window.beginSheet(dialogWindow) { [weak self] response in
+			guard let self else { return }
+			guard response == .OK else { return }
+			guard let engineType = newGameDialogController.selectedEngineType else { return }
+			let engine = EnginePlayer.newPlayer(engineType)
+			if newGameDialogController.selectedPieceColor == .white {
+				game = Game(white: HumanPlayer(), black: engine)
+			} else {
+				game = Game(white: engine, black: HumanPlayer())
+			}
+			boardViewController.game = self.game
+			game.startPlay()
+		}
 	}
 
 	// MARK: - NSWindowController methods
 	
-	// This gets called when we do the init(window: nil).
+	/// This gets called when we do `init(window: nil)`.
 	override var windowNibName : NSNib.Name? {
 		return NSNib.Name(rawValue: "GameWindowController")
 	}
@@ -49,14 +55,6 @@ class GameWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
 		boardViewController.game = game
-//		computerPlaysRandomlyCheckbox.state = (game.computerPlaysRandomly ? .on : .off)
     }
-
-	// MARK: - Private methods
-    
-	private func resetGame(humanPlaysWhite: Bool) {
-		game = Game(humanPlaysWhite: humanPlaysWhite)
-		boardViewController.game = game
-	}
 
 }

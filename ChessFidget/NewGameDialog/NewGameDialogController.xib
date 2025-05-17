@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NewGameDialogController" customModule="ChessFidget" customModuleProvider="target">
+            <connections>
+                <outlet property="enginesRadioContainer" destination="p8Y-Uo-RGS" id="Dq9-w8-6aR"/>
+                <outlet property="pieceColorsRadioContainer" destination="yNb-TB-yOj" id="gaX-cr-Jxv"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="New Game" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="345" height="255"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="345" height="255"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="yNb-TB-yOj">
+                        <rect key="frame" x="123" y="144" width="119" height="40"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QDD-Cy-LuS">
+                                <rect key="frame" x="6" y="-1" width="105" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Black pieces" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="npB-JQ-J1e">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="selectPieceColor:" target="-2" id="AZM-Un-GxE"/>
+                                </connections>
+                            </button>
+                            <button tag="1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bAt-U1-FSM">
+                                <rect key="frame" x="6" y="23" width="105" height="18"/>
+                                <buttonCell key="cell" type="radio" title="White pieces" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="ipP-SY-kbx">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="selectPieceColor:" target="-2" id="lY4-06-0Xh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="QDD-Cy-LuS" firstAttribute="leading" secondItem="yNb-TB-yOj" secondAttribute="leading" constant="8" id="0il-HA-3s8"/>
+                            <constraint firstAttribute="trailing" secondItem="bAt-U1-FSM" secondAttribute="trailing" constant="8" id="3tX-jE-EYA"/>
+                            <constraint firstItem="bAt-U1-FSM" firstAttribute="leading" secondItem="yNb-TB-yOj" secondAttribute="leading" constant="8" id="6JA-KC-4cQ"/>
+                            <constraint firstItem="bAt-U1-FSM" firstAttribute="top" secondItem="yNb-TB-yOj" secondAttribute="top" id="7Ck-l3-L5S"/>
+                            <constraint firstItem="QDD-Cy-LuS" firstAttribute="top" secondItem="bAt-U1-FSM" secondAttribute="bottom" constant="8" id="9rB-UL-Kdc"/>
+                            <constraint firstAttribute="bottom" secondItem="QDD-Cy-LuS" secondAttribute="bottom" id="BE6-13-hpu"/>
+                            <constraint firstAttribute="trailing" secondItem="QDD-Cy-LuS" secondAttribute="trailing" constant="8" id="ztJ-Pk-OK3"/>
+                        </constraints>
+                    </customView>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="p8Y-Uo-RGS">
+                        <rect key="frame" x="123" y="88" width="172" height="40"/>
+                        <subviews>
+                            <button tag="1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yBn-DH-2ZT">
+                                <rect key="frame" x="6" y="-1" width="158" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Uses chess engine" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3Nd-pk-kZx">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="selectEngine:" target="-2" id="roB-mK-4Rc"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sFt-aC-pIr">
+                                <rect key="frame" x="6" y="23" width="158" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Makes random moves" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="kZd-NH-dvD">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="selectEngine:" target="-2" id="bkS-LL-nAI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="sFt-aC-pIr" firstAttribute="top" secondItem="p8Y-Uo-RGS" secondAttribute="top" id="T3E-yW-9or"/>
+                            <constraint firstAttribute="trailing" secondItem="yBn-DH-2ZT" secondAttribute="trailing" constant="8" id="ZLf-gC-42Z"/>
+                            <constraint firstItem="yBn-DH-2ZT" firstAttribute="leading" secondItem="p8Y-Uo-RGS" secondAttribute="leading" constant="8" id="eIY-yZ-4c4"/>
+                            <constraint firstAttribute="bottom" secondItem="yBn-DH-2ZT" secondAttribute="bottom" id="hsv-RL-YjE"/>
+                            <constraint firstAttribute="trailing" secondItem="sFt-aC-pIr" secondAttribute="trailing" constant="8" id="jUM-2E-NZj"/>
+                            <constraint firstItem="yBn-DH-2ZT" firstAttribute="top" secondItem="sFt-aC-pIr" secondAttribute="bottom" constant="8" id="pgF-kl-LjY"/>
+                            <constraint firstItem="sFt-aC-pIr" firstAttribute="leading" secondItem="p8Y-Uo-RGS" secondAttribute="leading" constant="8" id="yOY-Uc-q43"/>
+                        </constraints>
+                    </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bIr-NO-90I">
+                        <rect key="frame" x="279" y="13" width="53" height="32"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Brw-B2-3T8">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="ok:" target="-2" id="cbh-qE-WOo"/>
+                        </connections>
+                    </button>
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Is-ZX-csQ">
+                        <rect key="frame" x="84" y="168" width="33" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="You:" id="yTw-pV-B5V">
+                            <font key="font" metaFont="systemBold"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cwa-mo-WvS">
+                        <rect key="frame" x="18" y="112" width="99" height="16"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="The computer:" id="QLp-Z3-nNb">
+                            <font key="font" metaFont="systemBold"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L0J-yO-ruz">
+                        <rect key="frame" x="18" y="214" width="97" height="21"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="New Game" id="Z7F-Gx-qkD">
+                            <font key="font" metaFont="systemBold" size="18"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I9x-Vk-tW0">
+                        <rect key="frame" x="205" y="13" width="76" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mAB-7S-N9F">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="nAi-GQ-mve"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="p8Y-Uo-RGS" firstAttribute="leading" secondItem="yNb-TB-yOj" secondAttribute="leading" id="3UN-fo-HeH"/>
+                    <constraint firstAttribute="bottom" secondItem="I9x-Vk-tW0" secondAttribute="bottom" constant="20" symbolic="YES" id="4MP-rk-pbC"/>
+                    <constraint firstItem="Cwa-mo-WvS" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="F7S-rl-Pos"/>
+                    <constraint firstItem="p8Y-Uo-RGS" firstAttribute="top" secondItem="yNb-TB-yOj" secondAttribute="bottom" constant="16" id="Lox-gL-oyl"/>
+                    <constraint firstItem="yNb-TB-yOj" firstAttribute="leading" secondItem="9Is-ZX-csQ" secondAttribute="trailing" constant="8" id="PiK-u9-W1v"/>
+                    <constraint firstItem="yNb-TB-yOj" firstAttribute="top" secondItem="9Is-ZX-csQ" secondAttribute="top" id="Qwp-bL-GyU"/>
+                    <constraint firstItem="p8Y-Uo-RGS" firstAttribute="top" secondItem="Cwa-mo-WvS" secondAttribute="top" id="Z20-qn-dcj"/>
+                    <constraint firstItem="p8Y-Uo-RGS" firstAttribute="leading" secondItem="Cwa-mo-WvS" secondAttribute="trailing" constant="8" id="ZAF-xK-ukQ"/>
+                    <constraint firstItem="bIr-NO-90I" firstAttribute="leading" secondItem="I9x-Vk-tW0" secondAttribute="trailing" constant="12" symbolic="YES" id="aRn-KE-3Ej"/>
+                    <constraint firstItem="L0J-yO-ruz" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="d8E-SW-u30"/>
+                    <constraint firstAttribute="bottom" secondItem="bIr-NO-90I" secondAttribute="bottom" constant="20" symbolic="YES" id="dR2-Cb-HX1"/>
+                    <constraint firstItem="9Is-ZX-csQ" firstAttribute="top" secondItem="L0J-yO-ruz" secondAttribute="bottom" constant="30" id="gix-AA-rxX"/>
+                    <constraint firstAttribute="trailing" secondItem="bIr-NO-90I" secondAttribute="trailing" constant="20" symbolic="YES" id="kjC-ok-49k"/>
+                    <constraint firstItem="L0J-yO-ruz" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="yL8-Oo-uip"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="128.5" y="119.5"/>
+        </window>
+    </objects>
+</document>

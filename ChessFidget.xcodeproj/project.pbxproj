@@ -104,6 +104,8 @@
 		73B820AE2DD8F64300AC577B /* RandomMover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820AD2DD8F64300AC577B /* RandomMover.swift */; };
 		73B820AF2DD8F64300AC577B /* RandomMover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820AD2DD8F64300AC577B /* RandomMover.swift */; };
 		73B820B02DD8F64300AC577B /* RandomMover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820AD2DD8F64300AC577B /* RandomMover.swift */; };
+		73B820B32DD9064100AC577B /* NewGameDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820B12DD9064100AC577B /* NewGameDialogController.swift */; };
+		73B820B42DD9064100AC577B /* NewGameDialogController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73B820B22DD9064100AC577B /* NewGameDialogController.xib */; };
 		73B820B72DD90B9700AC577B /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820B62DD90B9700AC577B /* NSView+Extensions.swift */; };
 		73B820B82DD90B9700AC577B /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820B62DD90B9700AC577B /* NSView+Extensions.swift */; };
 		73B820B92DD90B9700AC577B /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820B62DD90B9700AC577B /* NSView+Extensions.swift */; };
@@ -186,6 +188,8 @@
 		73963E641D6FC57000C9D78B /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		73B820AC2DD8CDEE00AC577B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		73B820AD2DD8F64300AC577B /* RandomMover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomMover.swift; sourceTree = "<group>"; };
+		73B820B12DD9064100AC577B /* NewGameDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameDialogController.swift; sourceTree = "<group>"; };
+		73B820B22DD9064100AC577B /* NewGameDialogController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewGameDialogController.xib; sourceTree = "<group>"; };
 		73B820B62DD90B9700AC577B /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
 		73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveValidator.swift; sourceTree = "<group>"; };
 		73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessWrapperDelegate.swift; sourceTree = "<group>"; };
@@ -259,6 +263,7 @@
 				7352F7CC1D6E158F00EF9B5F /* Model */,
 				73963DEE1D6E607600C9D78B /* GameWindow */,
 				73963DF51D6E630C00C9D78B /* BoardView */,
+				73B820B52DD9064A00AC577B /* NewGameDialog */,
 				736C90F81D7F22AB00A9020F /* PromotionWindow */,
 				735E4B821D826CA400426794 /* Piece Icons */,
 				7352F7A51D6E08D000EF9B5F /* Assets.xcassets */,
@@ -385,6 +390,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		73B820B52DD9064A00AC577B /* NewGameDialog */ = {
+			isa = PBXGroup;
+			children = (
+				73B820B12DD9064100AC577B /* NewGameDialogController.swift */,
+				73B820B22DD9064100AC577B /* NewGameDialogController.xib */,
+			);
+			path = NewGameDialog;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -508,6 +522,7 @@
 				7352F7A91D6E08D000EF9B5F /* MainMenu.xib in Resources */,
 				735E4BAA1D826CA400426794 /* wr.png in Resources */,
 				73963DF31D6E608D00C9D78B /* GameWindowController.xib in Resources */,
+				73B820B42DD9064100AC577B /* NewGameDialogController.xib in Resources */,
 				73963DFD1D6E630C00C9D78B /* BoardViewController.xib in Resources */,
 				736C90FD1D7F22DD00A9020F /* PromotionSheetController.xib in Resources */,
 				735E4B9E1D826CA400426794 /* br.png in Resources */,
@@ -569,6 +584,7 @@
 				736BE5141D888B94001B680E /* GameState.swift in Sources */,
 				734D3C392DD919C30043340C /* EnginePlayer.swift in Sources */,
 				735A5C5D1F6FD5A000966805 /* HumanPlayer.swift in Sources */,
+				73B820B32DD9064100AC577B /* NewGameDialogController.swift in Sources */,
 				736C91011D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
 				73C9A5E01F6A42C80096D45B /* ProcessWrapper.swift in Sources */,
 				73963DF11D6E608D00C9D78B /* GameWindowController.swift in Sources */,
