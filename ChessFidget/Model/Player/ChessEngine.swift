@@ -102,7 +102,7 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		// Make sure there's a terminating newline.  Easy to forget, then wonder
 		// why the engine isn't responding.
 		var loweredString = command.lowercased()
-		if command.characters.last != "\n" {
+		if command.last != "\n" {
 			loweredString += "\n"
 		}
 		self.processWrapper.writeToProcess(loweredString)

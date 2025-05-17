@@ -22,8 +22,9 @@ struct GridPointXY: Equatable, Hashable {
 
 	// MARK: - Hashable protocol
 
-	var hashValue: Int {
-		return x ^ y
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(x)
+		hasher.combine(y)
 	}
 
 	// MARK: - Equatable protocol

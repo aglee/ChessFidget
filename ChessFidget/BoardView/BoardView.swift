@@ -176,7 +176,7 @@ class BoardView: NSView {
 	private func drawOverlayText() {
 		guard let overlayText = overlayText
 			else { return }
-		if overlayText.characters.count == 0 {
+		if overlayText.count == 0 {
 			return
 		}
 
