@@ -9,8 +9,6 @@
 import Foundation
 
 /// Abstract base class representing a player in a chess game.
-/// Upon generating the move it wants to play, the player must call
-/// `applyGeneratedMove` on its `owningGame`.
 class Player {
 	/// Don't set this.  `Game` will set it for each `Player` passed to its
 	/// `init` method.
@@ -22,6 +20,7 @@ class Player {
 		self.name = name
 	}
 
-	/// Called when the player's opponent has made a move.
-	func opponentDidMove(_ move: Move) { }
+	/// Upon generating the move it wants to play, the player must call
+	/// `applyGeneratedMove` on its `owningGame`.
+	func beginTurn() { fatalError("Must override 'beginTurn()'.") }
 }

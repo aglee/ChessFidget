@@ -18,7 +18,7 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 
 	// MARK: - Init/deinit
 
-	init(makeFirstMove: Bool) {
+	init() {
 		// Initialize properties.
 		let oldChessEnginePath = "/Applications/Chess.app/Contents/Resources/sjeng.ChessEngine"
 		let chessEnginePath = (FileManager.default.fileExists(atPath: oldChessEnginePath)
@@ -27,7 +27,7 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		self.processWrapper = ProcessWrapper(launchPath: chessEnginePath, arguments: [])
 
 		// Call a designated initializer in super.
-		super.init(name: "Computer")
+		super.init(name: "Sjeng Engine")
 
 		// Launch the engine and send initial commands.
 		processWrapper.delegate = self
@@ -36,17 +36,17 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		sendCommandToEngine("sd 1")  // Limit search depth.
 		sendCommandToEngine("st 1")  // Limit search time.
 		sendCommandToEngine("easy")  // Only search for moves while it is the computer's turn.
-		if makeFirstMove {
-			startMoveForcingTimer()
-			sendCommandToEngine("go")
-		}
 	}
 
 	// MARK: - Player methods
 
-	override func opponentDidMove(_ move: Move) {
+	override func beginTurn() {
 		startMoveForcingTimer()
-		sendCommandToEngine(move.algebraicString)
+		if let move = owningGame?.moveHistory.last {
+			sendCommandToEngine(move.algebraicString)
+		} else {
+			sendCommandToEngine("go")
+		}
 	}
 
 	// MARK: - ProcessWrapperDelegate protocol

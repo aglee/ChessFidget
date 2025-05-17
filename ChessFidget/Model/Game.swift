@@ -22,6 +22,7 @@ class Game {
 	private(set) var gameState: GameState
 	private(set) var whitePlayer: Player
 	private(set) var blackPlayer: Player
+	private(set) var moveHistory: [Move] = []
 
 	var gameObserver: GameObserver?
 
@@ -39,11 +40,9 @@ class Game {
 
 	convenience init(humanPlaysWhite: Bool) {
 		if humanPlaysWhite {
-			self.init(white: HumanPlayer(),
-			          black: ChessEngine(makeFirstMove: false))
+			self.init(white: HumanPlayer(), black: ChessEngine())
 		} else {
-			self.init(white: ChessEngine(makeFirstMove: true),
-			          black: HumanPlayer())
+			self.init(white: ChessEngine(), black: HumanPlayer())
 		}
 	}
 
@@ -51,6 +50,9 @@ class Game {
 
 	func startPlay() {
 		checkForEndOfGame()
+		if case .awaitingMove = gameState {
+			whitePlayer.beginTurn()
+		}
 	}
 
 	/// Each `Player` must call this method when it has finished generating the
@@ -69,9 +71,12 @@ class Game {
 			guard let self = self else { return }
 			print(";;; \(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(playerWhoMoved.name))")
 			position.makeMoveAndSwitchTurn(move)
+			moveHistory.append(move)
 			gameObserver?.gameDidApplyMove(self, move: move, player: playerWhoMoved)
-			playerWhoMovesNext.opponentDidMove(move)
 			checkForEndOfGame()
+			if case .awaitingMove = gameState {
+				playerWhoMovesNext.beginTurn()
+			}
 		}
 	}
 

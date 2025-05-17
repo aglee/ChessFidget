@@ -17,6 +17,6 @@ class HumanPlayer: Player {
 
 	// MARK: - Player methods
 
-	override func opponentDidMove(_ move: Move) {
+	override func beginTurn() {
 	}
 }

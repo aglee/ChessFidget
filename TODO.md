@@ -4,6 +4,10 @@
 - Is there a way to configure Sjeng without having to put the `sjeng.rc` file in the home directory?
 - Does Sjeng's `sd` command still work?  It seems to be playing pretty strong even when I limit depth to 1.
 - My `NSTimer` workaround forces Sjeng to play fast, but it always plays the French Defense.
+- Localize.
+
+
+
 
 
 
