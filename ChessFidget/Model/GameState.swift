@@ -19,5 +19,6 @@ enum ReasonGameIsOver: String {  // TODO: Localize.
 	case drawDueToStalemate = "Draw due to stalemate"
 	//TODO: Add case drawDueToInsufficientMaterial
 	//TODO: Add case drawDueTo50MoveRule
+	//TODO: Add cases blackDidResign, whiteDidResign
 }
 

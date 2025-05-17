@@ -32,10 +32,12 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		// Launch the engine and send initial commands.
 		self.processWrapper.delegate = self
 		self.processWrapper.launchProcess()
-		self.sendCommandToEngine("sd 4")  // Limit search depth.
+//		self.sendCommandToEngine("sd 4")  // Limit search depth.
+		self.sendCommandToEngine("sd 1")  // Limit search depth.
 		self.sendCommandToEngine("st 1")  // Limit search time.
 		self.sendCommandToEngine("easy")  // Only search for moves while it is the computer's turn.
 		if makeFirstMove {
+			startMoveForcingTimer()
 			self.sendCommandToEngine("go")
 		}
 	}
@@ -43,6 +45,7 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 	// MARK: - Player methods
 
 	override func opponentDidMove(_ move: Move) {
+		startMoveForcingTimer()
 		self.sendCommandToEngine(move.algebraicString)
 	}
 
@@ -65,6 +68,8 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		let lines = s.components(separatedBy: "\n")
 		for line in lines {
 			if let move = self.owningGame?.position.moveFromAlgebraicString(line, reportErrors: false) {
+				stopMoveForcingTimer()
+				print(";;; Received from engine: [\(line)]")
 				self.owningGame?.applyGeneratedMove(move)
 			}
 		}
@@ -106,6 +111,27 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 			loweredString += "\n"
 		}
 		self.processWrapper.writeToProcess(loweredString)
+	}
+	
+	// MARK: - Move timer
+	
+	private var moveForcingTimer: Timer?
+	
+	private func startMoveForcingTimer() {
+		if moveForcingTimer != nil { return }
+		moveForcingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] _ in
+			if case .awaitingMove = self?.owningGame?.gameState {
+				print(";;; Move timer triggered")
+				self?.sendCommandToEngine("stop")
+				self?.stopMoveForcingTimer()
+			}
+		}
+	}
+	
+	private func stopMoveForcingTimer() {
+		if moveForcingTimer == nil { return }
+		moveForcingTimer?.invalidate()
+		moveForcingTimer = nil
 	}
 }
 
