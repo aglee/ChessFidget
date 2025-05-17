@@ -96,14 +96,14 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 		if let stringFromData = stringFromData(data) {
 			print(stringFromData, terminator: "")
 		} else {
-			print("+++ [WARNING] Could not convert received data to string.")
+			print(";;; [WARNING] Could not convert received data to string.")
 		}
 	}
 
 	private func sendCommandToEngine(_ command: String) {
 		assert(self.processWrapper.isRunning,
 		       "The chess engine is not running. Can't send a command to it.")
-		print("+++ sending [\(command)] to the chess engine")
+		print(";;; sending [\(command)] to the chess engine")
 		// Make sure there's a terminating newline.  Easy to forget, then wonder
 		// why the engine isn't responding.
 		var loweredString = command.lowercased()

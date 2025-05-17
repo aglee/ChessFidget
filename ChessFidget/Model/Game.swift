@@ -58,7 +58,7 @@ class Game {
 	/// the player whose turn it is in the current position.
 	func applyGeneratedMove(_ move: Move) {
 		if case .gameIsOver = gameState {
-			print("+++ Game is over. Move will be ignored.")
+			print(";;; Game is over. Move will be ignored.")
 			return
 		}
 
@@ -66,11 +66,7 @@ class Game {
 		let playerWhoMovesNext = (position.whoseTurn == .white ? blackPlayer : whitePlayer)
 
 		DispatchQueue.main.async {
-			print("""
-				+++ \(move.debugString) (\(move.type)) \
-				played by \(self.position.whoseTurn.debugString) \
-				(\(playerWhoMoved.name))
-				""")
+			print(";;; \(move.debugString) (\(move.type)) played by \(self.position.whoseTurn.debugString) (\(playerWhoMoved.name))")
 			self.position.makeMoveAndSwitchTurn(move)
 			self.gameObserver?.gameDidApplyMove(self, move: move, player: playerWhoMoved)
 			playerWhoMovesNext.opponentDidMove(move)
@@ -79,7 +75,7 @@ class Game {
 	}
 
 //	func engineDidApproveHumanMove(_ moveString: String) {
-//		print("+++ \(type(of: self)).\(#function) -- \(moveString)")
+//		print(";;; \(type(of: self)).\(#function) -- \(moveString)")
 //	}
 
 	func assertExpectedGameState(_ expectedGameState: GameState) {
@@ -110,7 +106,7 @@ class Game {
 		} else {
 			gameEndReason = .drawDueToStalemate
 		}
-		print("+++ game is over -- \(gameEndReason)")
+		print(";;; game is over -- \(gameEndReason)")
 		gameState = .gameIsOver(reason: gameEndReason)
 		gameObserver?.gameDidEnd(self, reason: gameEndReason)
 	}

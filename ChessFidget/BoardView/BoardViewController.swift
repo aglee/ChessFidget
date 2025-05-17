@@ -104,7 +104,7 @@ class BoardViewController: NSViewController, GameObserver {
 		                              endPoint: endPoint)
 		switch validator.validateMove() {
 		case .invalid(let reason):
-			Swift.print("+++ Invalid move \(startPoint.squareName)-\(endPoint.squareName): \(reason)")
+			Swift.print(";;; Invalid move \(startPoint.squareName)-\(endPoint.squareName): \(reason)")
 		case .valid(let moveType):
 			if case .pawnPromotion = moveType {
 				// Ask the user what piece type to promote the pawn to.

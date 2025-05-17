@@ -79,11 +79,11 @@ class ProcessWrapper {
 	func writeToProcess(_ data: Data) {
 		guard data.count > 0 else { return }
 		guard let p = self.process else {
-			print("+++ [ERROR] Process is not running, cannot send data to it.")
+			print(";;; [ERROR] Process is not running, cannot send data to it.")
 			return
 		}
 		guard p.isRunning else {
-			print("+++ [ERROR] Process has been terminated, cannot send data to it.")
+			print(";;; [ERROR] Process has been terminated, cannot send data to it.")
 			return
 		}
 		self.processStdin.fileHandleForWriting.write(data)
