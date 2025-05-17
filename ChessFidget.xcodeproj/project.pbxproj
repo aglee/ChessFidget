@@ -13,6 +13,9 @@
 		73394F1D1F6B2CEF0035115B /* ProcessWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9A5DE1F6A42C80096D45B /* ProcessWrapper.swift */; };
 		73394F1E1F6B2CF10035115B /* ProcessWrapperDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */; };
 		73394F1F1F6B2CF20035115B /* ProcessWrapperDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */; };
+		734D3C372DD919C30043340C /* EnginePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734D3C362DD919C30043340C /* EnginePlayer.swift */; };
+		734D3C382DD919C30043340C /* EnginePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734D3C362DD919C30043340C /* EnginePlayer.swift */; };
+		734D3C392DD919C30043340C /* EnginePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734D3C362DD919C30043340C /* EnginePlayer.swift */; };
 		7352F7A41D6E08D000EF9B5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7352F7A31D6E08D000EF9B5F /* AppDelegate.swift */; };
 		7352F7A61D6E08D000EF9B5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7352F7A51D6E08D000EF9B5F /* Assets.xcassets */; };
 		7352F7A91D6E08D000EF9B5F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7352F7A71D6E08D000EF9B5F /* MainMenu.xib */; };
@@ -133,6 +136,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		734D3C362DD919C30043340C /* EnginePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnginePlayer.swift; sourceTree = "<group>"; };
 		7352F7A01D6E08D000EF9B5F /* ChessFidget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessFidget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7352F7A31D6E08D000EF9B5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7352F7A51D6E08D000EF9B5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -215,6 +219,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		734D3C3A2DD919FA0043340C /* Engines */ = {
+			isa = PBXGroup;
+			children = (
+				734D3C362DD919C30043340C /* EnginePlayer.swift */,
+				73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */,
+				73B820AD2DD8F64300AC577B /* RandomMover.swift */,
+			);
+			path = Engines;
+			sourceTree = "<group>";
+		};
 		7352F7971D6E08D000EF9B5F = {
 			isa = PBXGroup;
 			children = (
@@ -294,9 +308,8 @@
 			isa = PBXGroup;
 			children = (
 				735A5C581F6FA4F200966805 /* Player.swift */,
-				73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */,
 				735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */,
-				73B820AD2DD8F64300AC577B /* RandomMover.swift */,
+				734D3C3A2DD919FA0043340C /* Engines */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -554,6 +567,7 @@
 				735824C11D78CA000019D7B1 /* Move.swift in Sources */,
 				737EE93A1D75CC1F00B5144B /* Piece.swift in Sources */,
 				736BE5141D888B94001B680E /* GameState.swift in Sources */,
+				734D3C392DD919C30043340C /* EnginePlayer.swift in Sources */,
 				735A5C5D1F6FD5A000966805 /* HumanPlayer.swift in Sources */,
 				736C91011D7F246900A9020F /* PieceCharacterSet.swift in Sources */,
 				73C9A5E01F6A42C80096D45B /* ProcessWrapper.swift in Sources */,
@@ -576,6 +590,7 @@
 				7357325F1D80A43B00BB7EF1 /* GridPointXY.swift in Sources */,
 				73E31C1B1D74B8FF0013A33D /* Board.swift in Sources */,
 				73B820AF2DD8F64300AC577B /* RandomMover.swift in Sources */,
+				734D3C382DD919C30043340C /* EnginePlayer.swift in Sources */,
 				735A5C5E1F6FD5A000966805 /* HumanPlayer.swift in Sources */,
 				73394F1E1F6B2CF10035115B /* ProcessWrapperDelegate.swift in Sources */,
 				735824C21D78CA000019D7B1 /* Move.swift in Sources */,
@@ -624,6 +639,7 @@
 				7352F7BF1D6E08D100EF9B5F /* ChessFidgetUITests.swift in Sources */,
 				73963E5B1D6FC51600C9D78B /* Position.swift in Sources */,
 				73963DFC1D6E630C00C9D78B /* BoardViewController.swift in Sources */,
+				734D3C372DD919C30043340C /* EnginePlayer.swift in Sources */,
 				735E4BAD1D826CA400426794 /* PieceIconSet.swift in Sources */,
 				735BE0501D87627300989C6E /* GameObserver.swift in Sources */,
 				735824BF1D78BDD40019D7B1 /* CastlingFlags.swift in Sources */,

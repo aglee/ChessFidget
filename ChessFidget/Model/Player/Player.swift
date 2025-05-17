@@ -14,7 +14,7 @@ class Player {
 	/// `init` method.
 	weak var owningGame: Game?
 	private(set) var name: String
-	var isHuman: Bool { false }
+	var isHuman: Bool { fatalError("Must override 'isHuman'.") }
 
 	init(name: String) {
 		self.name = name
@@ -26,3 +26,4 @@ class Player {
 		if !isHuman { fatalError("Must override 'beginTurn()'.") }
 	}
 }
+

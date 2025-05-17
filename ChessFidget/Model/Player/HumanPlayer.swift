@@ -11,12 +11,7 @@ import Foundation
 class HumanPlayer: Player {
 	override var isHuman: Bool { true }
 
-	init() {
-		super.init(name: "Human")
-	}
+	init() { super.init(name: "Human") }
 
-	// MARK: - Player methods
-
-	override func beginTurn() {
-	}
+	override func beginTurn() {	}
 }

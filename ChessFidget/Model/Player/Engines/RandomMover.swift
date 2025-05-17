@@ -8,10 +8,8 @@
 
 import Cocoa
 
-class RandomMover: Player {
-	override var isHuman: Bool { return false }
-
-	init() {
+class RandomMover: EnginePlayer {
+	required init() {
 		super.init(name: "Random Mover")
 	}
 
