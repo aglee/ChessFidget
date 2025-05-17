@@ -84,6 +84,7 @@ class BoardView: NSView {
 	// MARK: - Geometry
 
 	private func rectForSquareAtGridPoint(_ x: Int, _ y: Int) -> NSRect {
+		let x = displayBlackPOV ? 7 - x : x
 		return NSRect(x: boardRect.origin.x + CGFloat(x) * squareWidth,
 		              y: boardRect.origin.y + CGFloat(y) * squareHeight,
 		              width: squareWidth,
@@ -94,7 +95,7 @@ class BoardView: NSView {
 		return rectForSquareAtGridPoint(gridPoint.x, gridPoint.y)
 	}
 
-	// viewPoint is in the receiver's coordinate system.
+	/// `viewPoint` is in the receiver's coordinate system.
 	func gridPointForSquareContaining(viewPoint: NSPoint) -> GridPointXY? {
 		if squareWidth == 0.0 || squareHeight == 0.0 {
 			return nil
@@ -106,8 +107,9 @@ class BoardView: NSView {
 			return nil
 		}
 
-		return GridPointXY(Int(floor((point.x - boardRect.origin.x) / squareWidth)),
-		               Int(floor((point.y - boardRect.origin.y) / squareHeight)))
+		let x = Int(floor((point.x - boardRect.origin.x) / squareWidth))
+		return GridPointXY(displayBlackPOV ? 7 - x : x,
+						   Int(floor((point.y - boardRect.origin.y) / squareHeight)))
 	}
 
 	// MARK: - NSView methods
