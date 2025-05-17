@@ -18,6 +18,6 @@ class RandomMover: EnginePlayer {
 		let validMoves = owningGame.position.validMoves
 		guard !validMoves.isEmpty else { return }
 		let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
-		owningGame.applyGeneratedMove(validMoves[moveIndex])
+		owningGame.applyMove(validMoves[moveIndex])
 	}
 }

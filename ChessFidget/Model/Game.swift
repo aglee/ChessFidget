@@ -55,10 +55,10 @@ class Game {
 		}
 	}
 
-	/// Each `Player` must call this method when it has finished generating the
+	/// Each `EnginePlayer` must call this method when it has finished generating the
 	/// move it wants to make.  This method assumes `move` is a legal move for
 	/// the player whose turn it is in the current position.
-	func applyGeneratedMove(_ move: Move) {
+	func applyMove(_ move: Move) {
 		if case .gameIsOver = gameState {
 			print(";;; Game is over. Move will be ignored.")
 			return

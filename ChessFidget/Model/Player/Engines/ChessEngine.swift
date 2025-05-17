@@ -68,7 +68,7 @@ class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
 			if let move = owningGame?.position.moveFromAlgebraicString(line, reportErrors: false) {
 				stopMoveForcingTimer()
 				print(";;; Received from engine: [\(line)]")
-				owningGame?.applyGeneratedMove(move)
+				owningGame?.applyMove(move)
 			}
 		}
 	}
