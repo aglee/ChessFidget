@@ -174,6 +174,7 @@
 		73963E541D6FC07E00C9D78B /* NSRect+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRect+Extensions.swift"; sourceTree = "<group>"; };
 		73963E581D6FC51600C9D78B /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		73963E641D6FC57000C9D78B /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		73B820AC2DD8CDEE00AC577B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveValidator.swift; sourceTree = "<group>"; };
 		73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessWrapperDelegate.swift; sourceTree = "<group>"; };
 		73C9A5DE1F6A42C80096D45B /* ProcessWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessWrapper.swift; sourceTree = "<group>"; };
@@ -210,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				739180AB1D90BDB000E5143A /* README.md */,
+				73B820AC2DD8CDEE00AC577B /* TODO.md */,
 				7352F7A21D6E08D000EF9B5F /* ChessFidget */,
 				7352F7B21D6E08D100EF9B5F /* ChessFidgetTests */,
 				7352F7BD1D6E08D100EF9B5F /* ChessFidgetUITests */,
@@ -450,6 +452,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

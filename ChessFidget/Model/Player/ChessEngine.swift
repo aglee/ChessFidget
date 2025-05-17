@@ -20,7 +20,10 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 
 	init(makeFirstMove: Bool) {
 		// Initialize properties.
-		let chessEnginePath = "/Applications/Chess.app/Contents/Resources/sjeng.ChessEngine"
+		let oldChessEnginePath = "/Applications/Chess.app/Contents/Resources/sjeng.ChessEngine"
+		let chessEnginePath = (FileManager.default.fileExists(atPath: oldChessEnginePath)
+							   ? oldChessEnginePath
+							   : "/System/" + oldChessEnginePath)
 		self.processWrapper = ProcessWrapper(launchPath: chessEnginePath, arguments: [])
 
 		// Call a designated initializer in super.
