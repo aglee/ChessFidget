@@ -98,6 +98,9 @@
 		73963E651D6FC57000C9D78B /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E641D6FC57000C9D78B /* Game.swift */; };
 		73963E661D6FC57000C9D78B /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E641D6FC57000C9D78B /* Game.swift */; };
 		73963E671D6FC57000C9D78B /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73963E641D6FC57000C9D78B /* Game.swift */; };
+		73B820AE2DD8F64300AC577B /* RandomMover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820AD2DD8F64300AC577B /* RandomMover.swift */; };
+		73B820AF2DD8F64300AC577B /* RandomMover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820AD2DD8F64300AC577B /* RandomMover.swift */; };
+		73B820B02DD8F64300AC577B /* RandomMover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B820AD2DD8F64300AC577B /* RandomMover.swift */; };
 		73C1D7861D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
 		73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
 		73C1D7881D77B8FC00E91F30 /* MoveValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */; };
@@ -175,6 +178,7 @@
 		73963E581D6FC51600C9D78B /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		73963E641D6FC57000C9D78B /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		73B820AC2DD8CDEE00AC577B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		73B820AD2DD8F64300AC577B /* RandomMover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomMover.swift; sourceTree = "<group>"; };
 		73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveValidator.swift; sourceTree = "<group>"; };
 		73C9A5DD1F6A42C80096D45B /* ProcessWrapperDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessWrapperDelegate.swift; sourceTree = "<group>"; };
 		73C9A5DE1F6A42C80096D45B /* ProcessWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessWrapper.swift; sourceTree = "<group>"; };
@@ -286,8 +290,9 @@
 			isa = PBXGroup;
 			children = (
 				735A5C581F6FA4F200966805 /* Player.swift */,
-				735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */,
 				73C9B0C51F6A7B050000AFA0 /* ChessEngine.swift */,
+				735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */,
+				73B820AD2DD8F64300AC577B /* RandomMover.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -531,6 +536,7 @@
 			files = (
 				736C90FB1D7F22DD00A9020F /* PromotionSheetController.swift in Sources */,
 				73E31C1A1D74B8FF0013A33D /* Board.swift in Sources */,
+				73B820B02DD8F64300AC577B /* RandomMover.swift in Sources */,
 				7357325E1D80A43B00BB7EF1 /* GridPointXY.swift in Sources */,
 				73C9B0C61F6A7B050000AFA0 /* ChessEngine.swift in Sources */,
 				735A5C591F6FA4F200966805 /* Player.swift in Sources */,
@@ -563,6 +569,7 @@
 			files = (
 				7357325F1D80A43B00BB7EF1 /* GridPointXY.swift in Sources */,
 				73E31C1B1D74B8FF0013A33D /* Board.swift in Sources */,
+				73B820AF2DD8F64300AC577B /* RandomMover.swift in Sources */,
 				735A5C5E1F6FD5A000966805 /* HumanPlayer.swift in Sources */,
 				73394F1E1F6B2CF10035115B /* ProcessWrapperDelegate.swift in Sources */,
 				735824C21D78CA000019D7B1 /* Move.swift in Sources */,
@@ -588,6 +595,7 @@
 			files = (
 				736C90FC1D7F22DD00A9020F /* PromotionSheetController.swift in Sources */,
 				73E31C1C1D74B8FF0013A33D /* Board.swift in Sources */,
+				73B820AE2DD8F64300AC577B /* RandomMover.swift in Sources */,
 				735732601D80A43B00BB7EF1 /* GridPointXY.swift in Sources */,
 				735824C71D78FFC70019D7B1 /* MoveGenerator.swift in Sources */,
 				735A5C5B1F6FA4F200966805 /* Player.swift in Sources */,

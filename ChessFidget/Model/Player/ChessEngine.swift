@@ -115,6 +115,7 @@ class ChessEngine: Player, ProcessWrapperDelegate {
 	
 	// MARK: - Move timer
 	
+	/// Workaround for the fact that the `st` command no longer seems to work with Sjeng.
 	private var moveForcingTimer: Timer?
 	
 	private func startMoveForcingTimer() {

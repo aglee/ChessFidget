@@ -9,7 +9,7 @@
 import Foundation
 
 class HumanPlayer: Player {
-	override var isHuman: Bool { return true }
+	override var isHuman: Bool { true }
 
 	init() {
 		super.init(name: "Human")

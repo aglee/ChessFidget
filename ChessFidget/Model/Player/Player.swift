@@ -14,13 +14,15 @@ class Player {
 	/// `init` method.
 	weak var owningGame: Game?
 	private(set) var name: String
-	var isHuman: Bool { fatalError("Must override property 'isHuman'.") }
+	var isHuman: Bool { false }
 
 	init(name: String) {
 		self.name = name
 	}
 
-	/// Upon generating the move it wants to play, the player must call
-	/// `applyGeneratedMove` on its `owningGame`.
-	func beginTurn() { fatalError("Must override 'beginTurn()'.") }
+	/// If the player is non-human, it must generate a move and call `applyGeneratedMove()` on its
+	/// `owningGame`.
+	func beginTurn() {
+		if !isHuman { fatalError("Must override 'beginTurn()'.") }
+	}
 }

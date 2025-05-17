@@ -26,7 +26,7 @@ class Game {
 
 	var gameObserver: GameObserver?
 
-	/// Standard game setup, with all pieces in their home squares, with White
+	/// Standard game setup, with all pieces on their home squares, with White
 	/// to move.
 	init(white: Player, black: Player) {
 		self.position = Position()
@@ -116,29 +116,6 @@ class Game {
 		gameState = .gameIsOver(reason: gameEndReason)
 		gameObserver?.gameDidEnd(self, reason: gameEndReason)
 	}
-
-//		if humanPlayerPieceColor == position.whoseTurn {
-//			// It's the human's turn.  Nothing further to do except wait for
-//			// them to interact with the UI.
-//			gameState = .awaitingHumanMove
-//		} else {
-//			// It's the computer's turn.  If we aren't using AI, select a random
-//			// valid move and have the computer make it.  If we *are* using AI,
-//			// there is nothing further to do -- the chess engine is already
-//			// "thinking" and we will get notified when it tells us its move.
-//			gameState = .awaitingComputerMove
-//
-//			if computerPlaysRandomly {
-//				let validMoves = position.validMoves
-//				let delay = 0.1
-//				let when = DispatchTime.now() + delay  //[agl] Why did I add a delay?
-//				DispatchQueue.main.asyncAfter(deadline: when, execute: {
-//					let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
-//					makeMove(validMoves[moveIndex])
-//				})
-//			}
-//		}
-
 
 }
 
