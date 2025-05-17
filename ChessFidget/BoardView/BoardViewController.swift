@@ -18,7 +18,6 @@ class BoardViewController: NSViewController, GameObserver {
 				game?.gameObserver = self
 				boardView.game = game
 				boardView.overlayText = nil
-				game?.startPlay()
 			}
 		}
 	}
