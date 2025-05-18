@@ -185,7 +185,7 @@ class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
 
 	private func sendCommandToEngine(_ command: String) {
 		assert(processWrapper.isRunning, ";;; The chess engine is not running. Can't send a command to it.")
-		let command = command.replacingOccurrences(of: "\n", with: "").lowercased()
+		let command = command.replacingOccurrences(of: "\n", with: "")
 		print(";;; sending [\(command)] to the chess engine")
 		processWrapper.writeToProcess(command + "\n")
 	}
