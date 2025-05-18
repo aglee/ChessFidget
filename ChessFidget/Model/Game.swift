@@ -78,7 +78,7 @@ class Game {
 	/// move it wants to make.  This method assumes `move` is a legal move for
 	/// the player whose turn it is in the current position.
 	func applyMove(_ move: Move) {
-		if case .gameIsOver = completionState {
+		if case .gameOver = completionState {
 			print(";;; Game is over. Move will be ignored.")
 			return
 		}
@@ -117,7 +117,7 @@ class Game {
 	// Checks whether the game is over.  If so, sets `completionState`.
 	func checkForEndOfGame() {
 		// If we already know the game is over, no need to check again.
-		if case .gameIsOver = completionState {
+		if case .gameOver = completionState {
 			return
 		}
 
@@ -137,7 +137,7 @@ class Game {
 			gameEndReason = .drawDueToStalemate
 		}
 		print(";;; game is over -- \(gameEndReason)")
-		completionState = .gameIsOver(reason: gameEndReason)
+		completionState = .gameOver(reason: gameEndReason)
 		gameObserver?.gameDidEnd(self, reason: gameEndReason)
 	}
 

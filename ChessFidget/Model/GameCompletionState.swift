@@ -9,7 +9,7 @@
 /// Is the game over or not?
 enum GameCompletionState {
 	case awaitingMove
-	case gameIsOver(reason: ReasonGameIsOver)
+	case gameOver(reason: ReasonGameIsOver)
 }
 
 /// Reasons a game can be over.
