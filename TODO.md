@@ -10,7 +10,8 @@
 - If you click on one of your own pieces, then another, the second one should immediately become selected.
 - Add ability to drag the mouse.
 - Consider adding an eval bar.
-
+- Show moves more clearly.
+- Make move history visible, including half move clock.
 
 
 

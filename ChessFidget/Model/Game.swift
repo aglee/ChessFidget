@@ -19,7 +19,7 @@ import Foundation
 /// subclasses.
 class Game {
 	private(set) var position: Position
-	private(set) var gameState: GameState
+	private(set) var completionState: GameCompletionState
 	private(set) var whitePlayer: Player
 	private(set) var blackPlayer: Player
 	private(set) var moveHistory: [Move] = []
@@ -55,7 +55,7 @@ class Game {
 	/// to move.
 	init(white: Player, black: Player, board: Board = Board.withClassicalLayout()) {
 		self.position = Position(board: board)
-		self.gameState = .awaitingMove
+		self.completionState = .awaitingMove
 		self.whitePlayer = white
 		self.blackPlayer = black
 
@@ -69,7 +69,7 @@ class Game {
 
 	func startPlay() {
 		checkForEndOfGame()
-		if case .awaitingMove = gameState {
+		if case .awaitingMove = completionState {
 			whitePlayer.beginTurn()
 		}
 	}
@@ -78,7 +78,7 @@ class Game {
 	/// move it wants to make.  This method assumes `move` is a legal move for
 	/// the player whose turn it is in the current position.
 	func applyMove(_ move: Move) {
-		if case .gameIsOver = gameState {
+		if case .gameIsOver = completionState {
 			print(";;; Game is over. Move will be ignored.")
 			return
 		}
@@ -98,7 +98,7 @@ class Game {
 			moveHistory.append(move)
 			gameObserver?.gameDidApplyMove(self, move: move, player: playerWhoMoved)
 			checkForEndOfGame()
-			if case .awaitingMove = gameState {
+			if case .awaitingMove = completionState {
 				playerWhoMovesNext.beginTurn()
 			}
 		}
@@ -108,16 +108,16 @@ class Game {
 //		print(";;; \(type(of: self)).\(#function) -- \(moveString)")
 //	}
 
-	func assertExpectedGameState(_ expectedGameState: GameState) {
-		assert("\(gameState)" == "\(expectedGameState)", "Expected game state to be '\(expectedGameState)'.")
+	func assertExpectedGameCompletionState(_ expectedState: GameCompletionState) {
+		assert("\(completionState)" == "\(expectedState)", "Expected game state to be '\(expectedState)'.")
 	}
 
 	// MARK: - Private methods
 
-	// Checks whether the game is over.  If so, sets `gameState`.
+	// Checks whether the game is over.  If so, sets `completionState`.
 	func checkForEndOfGame() {
 		// If we already know the game is over, no need to check again.
-		if case .gameIsOver = gameState {
+		if case .gameIsOver = completionState {
 			return
 		}
 
@@ -137,7 +137,7 @@ class Game {
 			gameEndReason = .drawDueToStalemate
 		}
 		print(";;; game is over -- \(gameEndReason)")
-		gameState = .gameIsOver(reason: gameEndReason)
+		completionState = .gameIsOver(reason: gameEndReason)
 		gameObserver?.gameDidEnd(self, reason: gameEndReason)
 	}
 

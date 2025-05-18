@@ -50,8 +50,8 @@ class BoardViewController: NSViewController, GameObserver {
 			return
 		}
 
-		if let gameState = game?.gameState {
-			switch gameState {
+		if let gameCompletionState = game?.completionState {
+			switch gameCompletionState {
 			case .awaitingMove:
 				handleClickWhileAwaitingHumanMove(clickedGridPoint)
 			default:
@@ -77,7 +77,7 @@ class BoardViewController: NSViewController, GameObserver {
 	// MARK: - Private methods
 
 	private func handleClickWhileAwaitingHumanMove(_ clickedGridPoint: GridPointXY) {
-		game?.assertExpectedGameState(.awaitingMove)
+		game?.assertExpectedGameCompletionState(.awaitingMove)
 
 		guard let game = game
 			else { return }
@@ -95,7 +95,7 @@ class BoardViewController: NSViewController, GameObserver {
 	}
 
 	private func tryProposedMove(from startPoint: GridPointXY, to endPoint: GridPointXY) {
-		game?.assertExpectedGameState(.awaitingMove)
+		game?.assertExpectedGameCompletionState(.awaitingMove)
 		guard let game = game
 			else { return }
 		let validator = MoveValidator(position: game.position,

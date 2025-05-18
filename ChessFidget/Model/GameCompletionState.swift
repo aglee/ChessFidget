@@ -1,5 +1,5 @@
 //
-//  GameState.swift
+//  GameCompletionState.swift
 //  ChessFidget
 //
 //  Created by Andy Lee on 9/13/16.
@@ -7,7 +7,7 @@
 //
 
 /// Is the game over or not?
-enum GameState {
+enum GameCompletionState {
 	case awaitingMove
 	case gameIsOver(reason: ReasonGameIsOver)
 }
