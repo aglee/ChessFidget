@@ -137,10 +137,10 @@ class BoardView: NSView {
 	}
 
 	private func drawGrid() {
-		whiteSquareColor.set()
+		(displayBlackPOV ? blackSquareColor : whiteSquareColor).set()
 		boardRect.fill()
 
-		blackSquareColor.set()
+		(displayBlackPOV ? whiteSquareColor : blackSquareColor).set()
 		for x in 0...7 {
 			for y in 0...7 {
 				if (x+y) % 2 == 0 {
