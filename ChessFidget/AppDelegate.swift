@@ -16,9 +16,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	func applicationDidFinishLaunching(_: Notification) {
 		chdirToAppSupportDirectory()
-		gameWC = GameWindowController(game: Game(humanPlaysWhite: true))
+		gameWC = GameWindowController(game: Game(white: HumanPlayer(), black: RandomMover()))
 		gameWC.window?.center()
 		gameWC.showWindow(nil)
+		gameWC.newGame(nil)
 	}
 
 	// MARK: - Private methods

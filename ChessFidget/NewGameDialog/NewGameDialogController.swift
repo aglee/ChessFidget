@@ -11,20 +11,19 @@ import Cocoa
 class NewGameDialogController: NSWindowController {
 	
 	@IBOutlet var pieceColorsRadioContainer: NSView!
+	@IBOutlet var boardOptionsRadioContainer: NSView!
 	@IBOutlet var enginesRadioContainer: NSView!
 	
 	var selectedPieceColor: PieceColor {
 		get { pieceColorsRadioContainer.tagOfSelectedButtonSubview() == 0 ? .black : .white }
-		set {
-			let tag = newValue == .black ? 0 : 1
-			if let button = pieceColorsRadioContainer.buttonSubviewWithTag(tag),
-			   button.state != .on
-			{
-				button.state = .on
-			}
-		}
+		set { pieceColorsRadioContainer.selectButtonSubviewWithTag(newValue == .black ? 0 : 1) }
 	}
-
+	
+	var selectedBoardArrangement: Int {
+		get { boardOptionsRadioContainer.tagOfSelectedButtonSubview() ?? 0 }
+		set { boardOptionsRadioContainer.selectButtonSubviewWithTag(newValue) }
+	}
+	
 	var selectedEngineType: EngineType? {
 		if let tag = enginesRadioContainer.tagOfSelectedButtonSubview() {
 			return EngineType(rawValue: tag)
@@ -46,6 +45,9 @@ class NewGameDialogController: NSWindowController {
 	/// Common action for radio buttons.
 	@IBAction func selectPieceColor(_ sender: Any?) { }
 
+	/// Common action for radio buttons.
+	@IBAction func selectBoardArrangement(_ sender: Any?) { }
+	
 	/// Common action for radio buttons.
 	@IBAction func selectEngine(_ sender: Any?) { }
 	

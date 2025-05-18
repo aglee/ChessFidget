@@ -20,4 +20,11 @@ extension NSView {
 	func buttonSubviewWithTag(_ tag: Int) -> NSButton? {
 		subviews.compactMap { $0 as? NSButton }.first(where: { $0.tag == tag })
 	}
+	
+	/// To be used with a view that has radio buttons as subviews.
+	func selectButtonSubviewWithTag(_ tag: Int) {
+		if let button = buttonSubviewWithTag(tag), button.state != .on {
+			button.state = .on
+		}
+	}
 }

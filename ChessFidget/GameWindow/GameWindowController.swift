@@ -35,10 +35,13 @@ class GameWindowController: NSWindowController {
 			guard response == .OK else { return }
 			guard let engineType = newGameDialogController.selectedEngineType else { return }
 			let engine = EnginePlayer.newPlayer(engineType)
+			let board = (newGameDialogController.selectedBoardArrangement == 1
+						 ? Board.withMonaLisaPracticeLayout()
+						 : Board.withClassicalLayout())
 			if newGameDialogController.selectedPieceColor == .white {
-				game = Game(white: HumanPlayer(), black: engine)
+				game = Game(white: HumanPlayer(), black: engine, board: board)
 			} else {
-				game = Game(white: engine, black: HumanPlayer())
+				game = Game(white: engine, black: HumanPlayer(), board: board)
 			}
 			boardViewController.game = self.game
 			game.startPlay()

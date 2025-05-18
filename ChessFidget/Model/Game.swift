@@ -53,12 +53,14 @@ class Game {
 
 	/// Standard game setup, with all pieces on their home squares, with White
 	/// to move.
-	init(white: Player, black: Player, board: Board = Board.withMonaLisaPracticeLayout()   /*withClassicalLayout()*/) {
+	init(white: Player, black: Player, board: Board = Board.withClassicalLayout()) {
 		self.position = Position(board: board)
 		self.gameState = .awaitingMove
 		self.whitePlayer = white
 		self.blackPlayer = black
 
+		// Make these connections last, because the Player objects may need to know stuff
+		// like what the board arrangement is before they can begin play.
 		self.whitePlayer.owningGame = self
 		self.blackPlayer.owningGame = self
 	}
