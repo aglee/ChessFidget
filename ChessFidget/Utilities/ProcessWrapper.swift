@@ -17,22 +17,46 @@ class ProcessWrapper {
 	weak var delegate: (AnyObject & ProcessWrapperDelegate)?
 	let launchPath: String
 	let arguments: [String]
+	var isRunning: Bool { process?.isRunning ?? false }
 
-	var isRunning: Bool {
-		if let p = process {
-			return p.isRunning
-		} else {
-			return false
+	private var process: Process? = nil {
+		willSet {
+			guard let p = process else { return }
+			let nc = NotificationCenter.default
+			if let stdout = p.standardOutput as? Pipe {
+				nc.removeObserver(self,
+								  name: FileHandle.readCompletionNotification,
+								  object: stdout.fileHandleForReading)
+			}
+			if let stderr = p.standardError as? Pipe {
+				nc.removeObserver(self,
+								  name: FileHandle.readCompletionNotification,
+								  object: stderr.fileHandleForReading)
+			}
+			nc.removeObserver(self, name: Process.didTerminateNotification, object: p)
+		}
+		didSet {
+			guard let p = process else { return }
+			let nc = NotificationCenter.default
+			if let stdout = p.standardOutput as? Pipe {
+				nc.addObserver(self,
+							   selector: #selector(didReadFromProcessStdout(_:)),
+							   name: FileHandle.readCompletionNotification,
+							   object: stdout.fileHandleForReading)
+			}
+			if let stderr = p.standardError as? Pipe {
+				nc.addObserver(self,
+							   selector: #selector(didReadFromProcessStderr(_:)),
+							   name: FileHandle.readCompletionNotification,
+							   object: stderr.fileHandleForReading)
+			}
+			nc.addObserver(self,
+						   selector: #selector(processDidTerminate(_:)),
+						   name: Process.didTerminateNotification,
+						   object: p)
 		}
 	}
-
-	private var process: Process? = nil
-	private var isObserving: Bool = false
-
-	private var processStdin: Pipe { return process?.standardInput as! Pipe }
-	private var processStdout: Pipe { return process?.standardOutput as! Pipe }
-	private var processStderr: Pipe { return process?.standardError as! Pipe }
-
+	
 	// MARK: - Init/deinit
 
 	init(launchPath: String, arguments: [String]) {
@@ -41,19 +65,21 @@ class ProcessWrapper {
 	}
 
 	deinit {
-		stopObserving()
+		print(";;; ProcessWrapper deinit -- \((launchPath as NSString).lastPathComponent)")
 		process?.terminate()
+		process = nil
 	}
 
 	// MARK: - Interacting with the process
 
 	func launchProcess() {
-		if let _ = process {
-			print("Process is already running.")
+		if process != nil {
+			print(";;; Process is already running.")
 			return
 		}
 
-		// Set up a Process object.
+		// Create a Process object.  Note that the `didSet` for our `process` property
+		// relies on the various pipes having been set up.
 		let p = Process()
 		p.launchPath = launchPath
 		p.arguments = arguments
@@ -63,15 +89,12 @@ class ProcessWrapper {
 		p.standardInput = inputPipe
 		p.standardOutput = outputPipe
 		p.standardError = errorPipe
+		process = p
+
+		// Launch the process.
 		inputPipe.fileHandleForWriting.readInBackgroundAndNotify()
 		outputPipe.fileHandleForReading.readInBackgroundAndNotify()
 		errorPipe.fileHandleForReading.readInBackgroundAndNotify()
-
-		// Connect to that Process object.
-		process = p
-		startObserving()
-
-		// Launch the process.
 		p.launch()
 	}
 
@@ -79,14 +102,15 @@ class ProcessWrapper {
 	func writeToProcess(_ data: Data) {
 		guard data.count > 0 else { return }
 		guard let p = process else {
-			print(";;; [ERROR] Process is not running, cannot send data to it.")
-			return
+			return print(";;; [ERROR] Process is not running, cannot send data to it.")
 		}
 		guard p.isRunning else {
-			print(";;; [ERROR] Process has been terminated, cannot send data to it.")
-			return
+			return print(";;; [ERROR] Process has been terminated, cannot send data to it.")
 		}
-		processStdin.fileHandleForWriting.write(data)
+		guard let stdinPipe = p.standardInput as? Pipe else {
+			return print(";;; [ERROR] Process is expected to have a pipe for stdin.")
+		}
+		stdinPipe.fileHandleForWriting.write(data)
 	}
 
 	/// Sends UTF-8 data to the process's standard input.
@@ -105,70 +129,36 @@ class ProcessWrapper {
 
 	// MARK: - Notification handlers
 
-	@objc private func didReadFromProcessStdout(_ note: Notification) {
+	@objc private func didReadFromProcessStdout(_ notif: Notification) {
+		guard let stdout = notif.object as? FileHandle else {
+			return print(";;; [ERROR] Expected a FileHandle as the stdout notification object.")
+		}
+		
 		// Inform the delegate of the received data.
-		let dataReceived = note.userInfo![NSFileHandleNotificationDataItem] as! Data
+		let dataReceived = notif.userInfo![NSFileHandleNotificationDataItem] as! Data
 		delegate?.didReadFromStdout(self, data: dataReceived)
 
 		// Resume reading from the pipe.
-		processStdout.fileHandleForReading.readInBackgroundAndNotify()
+		stdout.readInBackgroundAndNotify()
 	}
 
-	@objc private func didReadFromProcessStderr(_ note: Notification) {
+	@objc private func didReadFromProcessStderr(_ notif: Notification) {
+		guard let stderr = notif.object as? FileHandle else {
+			return print(";;; [ERROR] Expected a FileHandle as the stderr notification object.")
+		}
+		
 		// Inform the delegate of the received data.
-		let dataReceived = note.userInfo![NSFileHandleNotificationDataItem] as! Data
+		let dataReceived = notif.userInfo![NSFileHandleNotificationDataItem] as! Data
 		delegate?.didReadFromStderr(self, data: dataReceived)
 
 		// Resume reading from the pipe.
-		processStderr.fileHandleForReading.readInBackgroundAndNotify()
+		stderr.readInBackgroundAndNotify()
 	}
 
 	@objc private func processDidTerminate(_: Notification) {
 		// Inform the delegate and perform cleanup.
-		stopObserving()
 		delegate?.didTerminate(self)
 		process = nil
 	}
 
-	// MARK: - Private methods
-
-	/// Start listening for notifications.
-	private func startObserving() {
-		assert(process != nil, "Process is not running.")
-		if isObserving {
-			return
-		}
-		let nc = NotificationCenter.default
-		nc.addObserver(self,
-		               selector: #selector(didReadFromProcessStdout(_:)),
-		               name: FileHandle.readCompletionNotification,
-		               object: processStdout.fileHandleForReading)
-		nc.addObserver(self,
-		               selector: #selector(didReadFromProcessStderr(_:)),
-		               name: FileHandle.readCompletionNotification,
-		               object: processStderr.fileHandleForReading)
-		nc.addObserver(self,
-		               selector: #selector(processDidTerminate(_:)),
-		               name: Process.didTerminateNotification,
-		               object: process)
-		isObserving = true
-	}
-
-	/// Stop listening for notifications.
-	private func stopObserving() {
-		guard isObserving else {
-			return
-		}
-		let nc = NotificationCenter.default
-		nc.removeObserver(self,
-		                  name: FileHandle.readCompletionNotification,
-		                  object: processStdout.fileHandleForReading)
-		nc.removeObserver(self,
-		                  name: FileHandle.readCompletionNotification,
-		                  object: processStderr.fileHandleForReading)
-		nc.removeObserver(self,
-		                  name: Process.didTerminateNotification,
-		                  object: process)
-		isObserving = false
-	}
 }

@@ -100,6 +100,12 @@ class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
 	// MARK: - ProcessWrapperDelegate protocol
 
 	func didReadFromStdout(_ processWrapper: ProcessWrapper, data: Data) {
+		DispatchQueue.main.async { [weak self] in
+			self?.handleDataFromProcessStdout(data)
+		}
+	}
+	
+	private func handleDataFromProcessStdout(_ data: Data) {
 		// This can be handy when debugging.
 		let printLinesReceived = true
 		
@@ -133,6 +139,12 @@ class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
 	}
 
 	func didReadFromStderr(_ processWrapper: ProcessWrapper, data: Data) {
+		DispatchQueue.main.async { [weak self] in
+			self?.handleDataFromProcessStderr(data)
+		}
+	}
+	
+	private func handleDataFromProcessStderr(_ data: Data) {
 		guard data.count > 0 else { return }
 		if let stringFromData = stringFromData(data) {
 			print(";;; [stderr]", stringFromData)
@@ -142,7 +154,9 @@ class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
 	}
 
 	func didTerminate(_ processWrapper: ProcessWrapper) {
-		print(";;; \(type(of: self)) -- process terminated")
+		DispatchQueue.main.async { [weak self] in
+			print(";;; \(type(of: self)) -- process terminated")
+		}
 	}
 
 	// MARK: - Private methods
