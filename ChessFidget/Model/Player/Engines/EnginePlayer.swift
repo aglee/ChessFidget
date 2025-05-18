@@ -9,12 +9,12 @@
 import Foundation
 
 enum EngineType: Int {
-	case random = 0
+	case randomMover = 0
 	case sjeng = 1
 
 	var engineClass: EnginePlayer.Type {
 		return switch self {
-		case .random: RandomMover.self
+		case .randomMover: RandomMover.self
 		case .sjeng: ChessEngine.self
 		}
 	}
