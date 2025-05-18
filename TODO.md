@@ -4,7 +4,7 @@
 - Is there a way to configure Sjeng without having to put the `sjeng.rc` file in the home directory?
 - Follow up on the bug I found in Sjeng's `sd` command: <https://github.com/apple-oss-distributions/Chess/compare/main...aglee:Chess:main?expand=1>, FB17637104.
 - Localize.
-- Add a little randomization to the Mona Lisa practice layout.  This may mean it's not always guaranteed to work against a strong enough opponent, but it should still be doable if you get lucky and the lone King plays poorly enough.  The more randomness, the more difficult it's likely to be.
+- Add a little randomization to the Mona Lisa practice layout.  This may mean it's not always guaranteed to work against a strong enough opponent, but it should still be doable if you get lucky and the lone King plays poorly enough.  The more randomness, the more difficult it's likely to be.  Randomness can be about placement of your pawns, placement of the kings, and adding some number of pawns on the opponent's side.  There are other challenges that could be thrown in too, like covering up squares so you can't see what pieces are on them.  Or the thing Aman said he's seen Ben Finegold do, lining up pieces along the side of the board instead of the bottom.  Maybe multiple boards at once?
 - Add the ability to play Mona Lisa with the black pieces, just for variety.
 - Add ability to premove.
 - If you click on one of your own pieces, then another, the second one should immediately become selected.
@@ -12,8 +12,9 @@
 - Consider adding an eval bar.
 - Show moves more clearly.
 - Make move history visible, including half move clock.
-- Instead of Sjeng, consider this Swift chess AI library, which looks a lot like what I want and is under an MIT license <https://github.com/SteveBarnegren/SwiftChess/tree/master>.  It looks like it could replace my own whole library outright -- but I'm not interested in that, I just want a lightweight AI engine.
-
+- Instead of Sjeng, consider this Swift chess AI library, which looks a lot like what I want and is under an MIT license <https://github.com/SteveBarnegren/SwiftChess/tree/master>.  It looks like it could replace my own whole library outright -- but I'm not interested in that aspect, I just want a lightweight AI engine, and hopefully to learn from reading someone else's code.
+- Add a timer and a move counter to see how long it takes to do the Mona Lisa.
+- Detect when the Mona Lisa has failed.  The cases I can think of are losing a piece, promoting incorrectly (e.g. two dark-square bishops), and stalemate.
 
 
 

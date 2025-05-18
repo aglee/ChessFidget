@@ -110,7 +110,7 @@
                                 <rect key="frame" x="18" y="0.0" width="193" height="70"/>
                                 <textFieldCell key="cell" selectable="YES" alignment="left" id="G36-BH-ieG">
                                     <font key="font" metaFont="smallSystem"/>
-                                    <string key="title">I recommend the random moves option for Mona Lisa checkmate practice. It'll be faster and the quality of your opponent's play doesn't matter much.</string>
+                                    <string key="title">I recommend the random moves option for Mona Lisa checkmate practice. It'll be faster and the quality of your opponent's play doesn't matter much anyway.</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
