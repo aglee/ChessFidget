@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	// MARK: - Private methods
 
 	/// Change the working directory to a subdirectory of Application Support.
-	/// The .lrn files created by sjeng will go there instead of cluttering
+	/// The .lrn files created by Sjeng will go there instead of cluttering
 	/// whatever directory we would otherwise be in by default.
 	private func chdirToAppSupportDirectory() {
 		let fm = FileManager.default
