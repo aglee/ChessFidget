@@ -8,14 +8,12 @@
 
 import Cocoa
 
-// TODO: Add an option to flip the board at any time regardless of which color the user is playing.
 class BoardView: NSView {
 
 	// MARK: Properties - game play
-
+	
 	var game: Game? {
 		didSet {
-			lastComputerMove = nil
 			needsDisplay = true
 			needsLayout = true  // Because the BoardView may need to re-reckon things if isFlipped changes depending on which color the human player is in the new value of game.
 			if let game = game {
@@ -28,34 +26,17 @@ class BoardView: NSView {
 			sv?.addSubview(self)
 		}
 	}
-	var displayBlackPOV = false {
-		didSet {
-			needsDisplay = true
-		}
-	}
-	var selectedGridPoint: GridPointXY? {
-		didSet {
-			needsDisplay = true
-		}
-	}
-	var lastComputerMove: Move? {
-		didSet {
-			needsDisplay = true
-		}
-	}
-	var overlayText: String? {
-		didSet {
-			needsDisplay = true
-		}
-	}
+	var displayBlackPOV = false { didSet { needsDisplay = true } }
+	var selectedGridPoint: GridPointXY? { didSet { needsDisplay = true } }
+	var overlayText: String? { didSet { needsDisplay = true } }
 
-	// MARK: Properties - appearance
+	// MARK: - Properties - styling
 
 	var backgroundColor = NSColor.white
 	var whiteSquareColor = NSColor.yellow
 	var blackSquareColor = NSColor.brown
 	var selectedSquareHighlightColor = NSColor.blue
-	var lastComputerMoveHighlightColor = NSColor.red
+	var lastMoveHighlightColor = NSColor.red
 	var borderWidthForHighlightingSquares: CGFloat = 4.0
 	var overlayTextBackgroundColor = NSColor(calibratedWhite: 0.75, alpha: 0.5)
 
@@ -69,20 +50,14 @@ class BoardView: NSView {
 
 	var pieceIcons = PieceIconSet.defaultSet()
 
-	// MARK: Properties - geometry
-
-	private var boardRect: NSRect {
-		return bounds.insetBy(dx: 12.0, dy: 12.0)
-	}
-	private var squareWidth: CGFloat {
-		return boardRect.size.width / 8.0
-	}
-	private var squareHeight: CGFloat {
-		return boardRect.size.height / 8.0
-	}
-
 	// MARK: - Geometry
+	
+	private var boardRect: NSRect { bounds.insetBy(dx: 12.0, dy: 12.0) }
+	private var squareWidth: CGFloat { boardRect.size.width / 8.0 }
+	private var squareHeight: CGFloat { boardRect.size.height / 8.0 }
 
+	override var isFlipped: Bool { return displayBlackPOV }
+	
 	private func rectForSquareAtGridPoint(_ x: Int, _ y: Int) -> NSRect {
 		let x = displayBlackPOV ? 7 - x : x
 		return NSRect(x: boardRect.origin.x + CGFloat(x) * squareWidth,
@@ -95,13 +70,13 @@ class BoardView: NSView {
 		return rectForSquareAtGridPoint(gridPoint.x, gridPoint.y)
 	}
 
-	/// `viewPoint` is in the receiver's coordinate system.
-	func gridPointForSquareContaining(viewPoint: NSPoint) -> GridPointXY? {
+	/// The given point is in the receiver's coordinate system.
+	func gridPointForSquareContaining(_ localPoint: NSPoint) -> GridPointXY? {
 		if squareWidth == 0.0 || squareHeight == 0.0 {
 			return nil
 		}
 
-		let point = NSPointToCGPoint(viewPoint)
+		let point = NSPointToCGPoint(localPoint)
 
 		if !boardRect.contains(point) {
 			return nil
@@ -112,31 +87,137 @@ class BoardView: NSView {
 						   Int(floor((point.y - boardRect.origin.y) / squareHeight)))
 	}
 
-	// MARK: - NSView methods
+	// MARK: - Mouse events
+
+	override func mouseDown(with event: NSEvent) {
+		super.mouseDown(with: event)
+		
+		guard game?.completionState == .awaitingMove else { return }
+		guard let clickedGridPoint = gridPointForMouseEvent(event) else { return }
+		
+		mouseDownGridPoint = clickedGridPoint
+		mouseStillDownGridPoint = clickedGridPoint
+		if gridPointIsOccupiedByTheActivePlayer(clickedGridPoint) {
+//			print(";;; mouseDown -- setting selectedGridPoint to \(mouseDownGridPoint.squareName)")
+			selectedGridPoint = mouseDownGridPoint
+		}
+	}
+	
+	override func mouseDragged(with event: NSEvent) {
+		super.mouseDragged(with: event)
+		if let mouseDownGridPoint {
+			mouseStillDownGridPoint = gridPointForMouseEvent(event)
+			if mouseStillDownGridPoint != mouseDownGridPoint && gridPointIsOccupiedByTheActivePlayer(mouseDownGridPoint) {
+//				print(";;; mouseDragged -- setting selectedGridPoint to \(mouseDownGridPoint.squareName)")
+				selectedGridPoint = mouseDownGridPoint
+			}
+		}
+	}
+	
+	override func mouseUp(with event: NSEvent) {
+		super.mouseUp(with: event)
+
+		mouseStillDownGridPoint = nil
+		if let mouseDownGridPoint,
+		   let mouseUpGridPoint = gridPointForMouseEvent(event),
+		   let game,
+		   case .awaitingMove = game.completionState
+		{
+			if mouseDownGridPoint == mouseUpGridPoint {
+				// The user CLICKED a single square.
+				if let selectedGridPoint {
+					if mouseUpGridPoint == selectedGridPoint {
+						// Clicking the already selected square keeps it selected.
+//						print(";;; mouseUp -- clicked already-selected square -- no change")
+					} else {
+						// Clicking a square other than the already selected square means
+						// the user is proposing a move.
+						applyMoveIfPossible(from: selectedGridPoint, to: mouseUpGridPoint)
+//						print(";;; mouseUp -- clicked square other than the selected one -- proposed move, unsetting selectedGridPoint")
+						self.selectedGridPoint = nil
+					}
+				} else {
+					if gridPointIsOccupiedByTheActivePlayer(mouseUpGridPoint) {
+						// There is no selected square, and the one that was clicked is
+						// valid to be selected, so select it.
+//						print(";;; mouseUp -- setting selectedGridPoint to \(mouseUpGridPoint.squareName)")
+						self.selectedGridPoint = mouseUpGridPoint
+					} else {
+						// Ignore clicks on empty squares and squares occupied by the
+						// opponent's pieces.
+//						print(";;; mouseUp -- clicked on a nonstarter square -- no change")
+					}
+				}
+			} else {
+				// The user DRAGGED from one square to a different square.  If the first
+				// square was a valid square to start a move with, propose the move.
+				applyMoveIfPossible(from: mouseDownGridPoint, to: mouseUpGridPoint)
+//				print(";;; mouseUp -- dragged to second square -- proposed move, unsetting selectedGridPoint")
+				selectedGridPoint = nil
+			}
+		}
+		mouseDownGridPoint = nil
+	}
+
+	private var mouseDownGridPoint: GridPointXY? { didSet { needsDisplay = true } }
+	private var mouseStillDownGridPoint: GridPointXY? { didSet { needsDisplay = true } }
+	
+	private func gridPointForMouseEvent(_ event: NSEvent) -> GridPointXY? {
+		let localPoint = convert(event.locationInWindow, from: nil)
+		return gridPointForSquareContaining(localPoint)
+	}
+
+	private func gridPointIsOccupiedByTheActivePlayer(_ gridPoint: GridPointXY) -> Bool {
+		guard let piece = game?.position.board[gridPoint] else { return false }
+		return piece.color == game?.position.whoseTurn
+	}
+
+	private let promotionSheetController = PromotionSheetController()
+
+	private func applyMoveIfPossible(from startPoint: GridPointXY, to endPoint: GridPointXY) {
+		guard let game, let window else { return }
+
+		func applyMove(_ move: Move) {
+			game.applyMove(move)
+			if case .gameOver(let reason) = game.completionState {
+				overlayText = reason.rawValue
+			}
+			needsDisplay = true
+		}
+
+		switch game.validateMove(from: startPoint, to: endPoint) {
+		case .invalid(let reason):
+			print(";;; Invalid move \(startPoint.squareName)-\(endPoint.squareName): \(reason)")
+		case .valid(let moveType):
+			if case .pawnPromotion = moveType {
+				// Ask the user what piece type to promote the pawn to.
+				promotionSheetController.setPieceColorForIcons(game.position.whoseTurn)
+				window.beginSheet(promotionSheetController.window!) { [weak self] _ in
+					guard let self else { return }
+					let moveType: MoveType = .pawnPromotion(type: promotionSheetController.selectedPromotionType)
+					applyMove(Move(from: startPoint, to: endPoint, type: moveType))
+				}
+			} else {
+				applyMove(Move(from: startPoint, to: endPoint, type: moveType))
+			}
+		}
+	}
+
+	// MARK: - Drawing
 
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 
 		drawBackground()
-		drawGrid()
 		drawPieces()
-		drawHighlightOnSelectedSquare()
-		drawHighlightOnLastComputerMove()
+		drawSquareHighlights()
 		drawOverlayText()
 	}
-
-	override var isFlipped: Bool {
-		return displayBlackPOV
-	}
-
-	// MARK: - Private methods  -- drawing
 
 	private func drawBackground() {
 		backgroundColor.set()
 		bounds.fill()
-	}
 
-	private func drawGrid() {
 		(displayBlackPOV ? blackSquareColor : whiteSquareColor).set()
 		boardRect.fill()
 
@@ -161,17 +242,24 @@ class BoardView: NSView {
 		}
 	}
 
-	private func drawHighlightOnSelectedSquare() {
-		if let gridPoint = selectedGridPoint {
-			selectedSquareHighlightColor.set()
-			rectForSquareAtGridPoint(gridPoint).frame(withWidth: borderWidthForHighlightingSquares)
+	private func drawSquareHighlights() {
+		if let lastMove = game?.moveHistory.last {
+			lastMoveHighlightColor.set()
+			rectForSquareAtGridPoint(lastMove.start).frame(withWidth: borderWidthForHighlightingSquares)
+			rectForSquareAtGridPoint(lastMove.end).frame(withWidth: borderWidthForHighlightingSquares)
 		}
-	}
 
-	private func drawHighlightOnLastComputerMove() {
-		if let move = lastComputerMove {
-			lastComputerMoveHighlightColor.set()
-			rectForSquareAtGridPoint(move.end).frame(withWidth: borderWidthForHighlightingSquares)
+		if let selectedGridPoint {
+			selectedSquareHighlightColor.set()
+			rectForSquareAtGridPoint(selectedGridPoint).frame(withWidth: borderWidthForHighlightingSquares)
+		}
+
+		if let mouseStillDownGridPoint {
+			selectedSquareHighlightColor.set()
+			if let selectedGridPoint {
+				rectForSquareAtGridPoint(selectedGridPoint).frame(withWidth: borderWidthForHighlightingSquares)
+			}
+			rectForSquareAtGridPoint(mouseStillDownGridPoint).frame(withWidth: borderWidthForHighlightingSquares)
 		}
 	}
 

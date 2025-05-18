@@ -38,9 +38,6 @@
 		735A5C5D1F6FD5A000966805 /* HumanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */; };
 		735A5C5E1F6FD5A000966805 /* HumanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */; };
 		735A5C5F1F6FD5A000966805 /* HumanPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */; };
-		735BE04E1D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
-		735BE04F1D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
-		735BE0501D87627300989C6E /* GameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735BE04D1D87627300989C6E /* GameObserver.swift */; };
 		735E4B941D826CA400426794 /* bb.png in Resources */ = {isa = PBXBuildFile; fileRef = 735E4B851D826CA400426794 /* bb.png */; };
 		735E4B951D826CA400426794 /* bb.png in Resources */ = {isa = PBXBuildFile; fileRef = 735E4B851D826CA400426794 /* bb.png */; };
 		735E4B961D826CA400426794 /* bk.png in Resources */ = {isa = PBXBuildFile; fileRef = 735E4B861D826CA400426794 /* bk.png */; };
@@ -156,7 +153,6 @@
 		735824C41D78FFC70019D7B1 /* MoveGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveGenerator.swift; sourceTree = "<group>"; };
 		735A5C581F6FA4F200966805 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		735A5C5C1F6FD5A000966805 /* HumanPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanPlayer.swift; sourceTree = "<group>"; };
-		735BE04D1D87627300989C6E /* GameObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObserver.swift; sourceTree = "<group>"; };
 		735E4B841D826CA400426794 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		735E4B851D826CA400426794 /* bb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bb.png; sourceTree = "<group>"; };
 		735E4B861D826CA400426794 /* bk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bk.png; sourceTree = "<group>"; };
@@ -303,7 +299,6 @@
 				73C1D7851D77B8FC00E91F30 /* MoveValidator.swift */,
 				736BE5131D888B94001B680E /* GameCompletionState.swift */,
 				73963E641D6FC57000C9D78B /* Game.swift */,
-				735BE04D1D87627300989C6E /* GameObserver.swift */,
 				735A5C571F6FA4E200966805 /* Player */,
 			);
 			path = Model;
@@ -594,7 +589,6 @@
 				73963E591D6FC51600C9D78B /* Position.swift in Sources */,
 				73963DFB1D6E630C00C9D78B /* BoardViewController.swift in Sources */,
 				735E4BAC1D826CA400426794 /* PieceIconSet.swift in Sources */,
-				735BE04E1D87627300989C6E /* GameObserver.swift in Sources */,
 				735824BD1D78BDCE0019D7B1 /* CastlingFlags.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -615,7 +609,6 @@
 				735824C61D78FFC70019D7B1 /* MoveGenerator.swift in Sources */,
 				73C1D7871D77B8FC00E91F30 /* MoveValidator.swift in Sources */,
 				7331EB941F6B100000DF9E5D /* ChessEngine.swift in Sources */,
-				735BE04F1D87627300989C6E /* GameObserver.swift in Sources */,
 				737EE93B1D75CC1F00B5144B /* Piece.swift in Sources */,
 				73963E561D6FC07E00C9D78B /* NSRect+Extensions.swift in Sources */,
 				73963E661D6FC57000C9D78B /* Game.swift in Sources */,
@@ -657,7 +650,6 @@
 				73963DFC1D6E630C00C9D78B /* BoardViewController.swift in Sources */,
 				734D3C372DD919C30043340C /* EnginePlayer.swift in Sources */,
 				735E4BAD1D826CA400426794 /* PieceIconSet.swift in Sources */,
-				735BE0501D87627300989C6E /* GameObserver.swift in Sources */,
 				735824BF1D78BDD40019D7B1 /* CastlingFlags.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

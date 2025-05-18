@@ -21,6 +21,19 @@
 - Set up variations for useful exercises like mating with bishop and knight.
 - Make an iPad version -- could be a way to study SwiftUI.
 - Thinking of changing how I think of the `Player` objects.  Each of them could be treated like a stream of moves.  The job of the `Game` object would then be to alternate between pulling from the two streams, rather than the current conceptual model, where it's each `Player` object's job to call `applyMove()`.
+- Add an option to flip the board at any time regardless of which color the user is playing.
+- Impose a minimum window size.
+
+- `var game` should probably be `weak`.
+
+- Rename:
+	- `owningGame` -> `game`
+	- `squareName` -> `algebraicNotation`
+	- `fen` -> `fenNotation`
+	- `GameObserver` -> `GameDelegate`
+	- `checkForEndOfGame` -> `checkWhetherGameIsOver`
+
+
 
 
 

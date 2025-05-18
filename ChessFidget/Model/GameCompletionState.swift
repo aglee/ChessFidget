@@ -7,7 +7,7 @@
 //
 
 /// Is the game over or not?
-enum GameCompletionState {
+enum GameCompletionState: Equatable {
 	case awaitingMove
 	case gameOver(reason: ReasonGameIsOver)
 }

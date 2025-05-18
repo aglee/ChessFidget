@@ -25,8 +25,6 @@ class Game {
 	private(set) var moveHistory: [Move] = []
 	private(set) var movesWithoutCaptureOrPawnAdvance = 0  // Should this be here or in Position?
 
-	var gameObserver: GameObserver?
-	
 	var fen: String {
 		let pieces = position.board.fen
 		let activeColor = position.whoseTurn == .white ? "w" : "b"
@@ -74,6 +72,11 @@ class Game {
 		}
 	}
 
+	func validateMove(from startPoint: GridPointXY, to endPoint: GridPointXY) -> MoveValidity {
+		let validator = MoveValidator(position: position, startPoint: startPoint, endPoint: endPoint)
+		return validator.validateMove()
+	}
+
 	/// Each `EnginePlayer` must call this method when it has finished generating the
 	/// move it wants to make.  This method assumes `move` is a legal move for
 	/// the player whose turn it is in the current position.
@@ -86,36 +89,24 @@ class Game {
 		let playerWhoMoved = (position.whoseTurn == .white ? whitePlayer : blackPlayer)
 		let playerWhoMovesNext = (position.whoseTurn == .white ? blackPlayer : whitePlayer)
 
-		DispatchQueue.main.async { [weak self] in
-			guard let self = self else { return }
-			print(";;; \(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(playerWhoMoved.name))")
-			if position.board[move.start]?.type == .pawn || position.board[move.end] != nil {
-				movesWithoutCaptureOrPawnAdvance = 0
-			} else {
-				movesWithoutCaptureOrPawnAdvance += 1
-			}
-			position.makeMoveAndSwitchTurn(move)
-			moveHistory.append(move)
-			gameObserver?.gameDidApplyMove(self, move: move, player: playerWhoMoved)
-			checkForEndOfGame()
-			if case .awaitingMove = completionState {
-				playerWhoMovesNext.beginTurn()
-			}
+		print(";;; \(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(playerWhoMoved.name))")
+		if position.board[move.start]?.type == .pawn || position.board[move.end] != nil {
+			movesWithoutCaptureOrPawnAdvance = 0
+		} else {
+			movesWithoutCaptureOrPawnAdvance += 1
 		}
-	}
-
-//	func engineDidApproveHumanMove(_ moveString: String) {
-//		print(";;; \(type(of: self)).\(#function) -- \(moveString)")
-//	}
-
-	func assertExpectedGameCompletionState(_ expectedState: GameCompletionState) {
-		assert("\(completionState)" == "\(expectedState)", "Expected game state to be '\(expectedState)'.")
+		position.makeMoveAndSwitchTurn(move)
+		moveHistory.append(move)
+		checkForEndOfGame()
+		if case .awaitingMove = completionState {
+			playerWhoMovesNext.beginTurn()
+		}
 	}
 
 	// MARK: - Private methods
 
 	// Checks whether the game is over.  If so, sets `completionState`.
-	func checkForEndOfGame() {
+	private func checkForEndOfGame() {
 		// If we already know the game is over, no need to check again.
 		if case .gameOver = completionState {
 			return
@@ -138,7 +129,6 @@ class Game {
 		}
 		print(";;; game is over -- \(gameEndReason)")
 		completionState = .gameOver(reason: gameEndReason)
-		gameObserver?.gameDidEnd(self, reason: gameEndReason)
 	}
 
 }
