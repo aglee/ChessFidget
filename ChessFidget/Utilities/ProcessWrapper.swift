@@ -65,7 +65,7 @@ class ProcessWrapper {
 		p.standardError = errorPipe
 		inputPipe.fileHandleForWriting.readInBackgroundAndNotify()
 		outputPipe.fileHandleForReading.readInBackgroundAndNotify()
-		outputPipe.fileHandleForReading.readInBackgroundAndNotify()
+		errorPipe.fileHandleForReading.readInBackgroundAndNotify()
 
 		// Connect to that Process object.
 		process = p
