@@ -23,27 +23,44 @@ class Game {
 	private(set) var whitePlayer: Player
 	private(set) var blackPlayer: Player
 	private(set) var moveHistory: [Move] = []
+	private(set) var movesWithoutCaptureOrPawnAdvance = 0  // Should this be here or in Position?
 
 	var gameObserver: GameObserver?
+	
+	var fen: String {
+		let pieces = position.board.fen
+		let activeColor = position.whoseTurn == .white ? "w" : "b"
+		let castling = position.castlingFlags.fen
+		
+		// In FEN notation, this is the square the pawn passed over, not the square
+		// where it landed.
+		let enPassantPoint: String
+		if let ep = position.enPassantableGridPoint {
+			enPassantPoint = (ep.y == 3
+							  ? GridPointXY(ep.x, 2).squareName
+							  : GridPointXY(ep.x, 5).squareName)
+		} else {
+			enPassantPoint = "-"
+		}
+
+		let halfMoveClock = String(movesWithoutCaptureOrPawnAdvance)
+		let fullMoveNumber = String(max(1, (moveHistory.count + 1) / 2))
+		
+		return String(format: "%@ %@ %@ %@ %@ %@ %@", pieces, activeColor, castling, enPassantPoint, halfMoveClock, fullMoveNumber)
+	}
+	
+	// MARK: - Lifecycle
 
 	/// Standard game setup, with all pieces on their home squares, with White
 	/// to move.
-	init(white: Player, black: Player) {
-		self.position = Position()
+	init(white: Player, black: Player, board: Board = Board.withMonaLisaPracticeLayout()   /*withClassicalLayout()*/) {
+		self.position = Position(board: board)
 		self.gameState = .awaitingMove
 		self.whitePlayer = white
 		self.blackPlayer = black
 
 		self.whitePlayer.owningGame = self
 		self.blackPlayer.owningGame = self
-	}
-
-	convenience init(humanPlaysWhite: Bool) {
-		if humanPlaysWhite {
-			self.init(white: HumanPlayer(), black: ChessEngine())
-		} else {
-			self.init(white: ChessEngine(), black: HumanPlayer())
-		}
 	}
 
 	// MARK: - Game play
@@ -70,6 +87,11 @@ class Game {
 		DispatchQueue.main.async { [weak self] in
 			guard let self = self else { return }
 			print(";;; \(move.debugString) (\(move.type)) played by \(position.whoseTurn.debugString) (\(playerWhoMoved.name))")
+			if position.board[move.start]?.type == .pawn || position.board[move.end] != nil {
+				movesWithoutCaptureOrPawnAdvance = 0
+			} else {
+				movesWithoutCaptureOrPawnAdvance += 1
+			}
 			position.makeMoveAndSwitchTurn(move)
 			moveHistory.append(move)
 			gameObserver?.gameDidApplyMove(self, move: move, player: playerWhoMoved)

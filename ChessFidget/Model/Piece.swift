@@ -79,6 +79,42 @@ struct Piece: Equatable {
 	let color: PieceColor
 	let type: PieceType
 
+	private static let piecesForFenCharacters: [Character: Piece] = [
+		"P": Piece(.white, .pawn), "R": Piece(.white, .rook), "N": Piece(.white, .knight),
+		"B": Piece(.white, .bishop), "Q": Piece(.white, .queen), "K": Piece(.white, .king),
+		"p": Piece(.black, .pawn), "r": Piece(.black, .rook), "n": Piece(.black, .knight),
+		"b": Piece(.black, .bishop), "q": Piece(.black, .queen), "k": Piece(.black, .king)
+	]
+	
+	var fenCharacter: Character {
+		switch color {
+		case .white:
+			switch type {
+			case .pawn: "P"
+			case .rook: "R"
+			case .knight: "N"
+			case .bishop: "B"
+			case .queen: "Q"
+			case .king: "K"
+			}
+		case .black:
+			switch type {
+			case .pawn: "p"
+			case .rook: "r"
+			case .knight: "n"
+			case .bishop: "b"
+			case .queen: "q"
+			case .king: "k"
+			}
+		}
+	}
+
+	init?(fen: Character) {
+		guard let piece = Self.piecesForFenCharacters[fen] else { return nil }
+		self.color = piece.color
+		self.type = piece.type
+	}
+	
 	init(_ color: PieceColor, _ type: PieceType) {
 		self.color = color
 		self.type = type

@@ -16,6 +16,14 @@ struct CastlingFlags {
 	private var blackCanStillCastleKingSide: Bool = true
 	private var blackCanStillCastleQueenSide: Bool = true
 
+	var fen: String {
+		let allPossibilities = ((whiteCanStillCastleKingSide ? "K" : "")
+								+ (whiteCanStillCastleQueenSide ? "Q" : "")
+								+ (blackCanStillCastleKingSide ? "k" : "")
+								+ (blackCanStillCastleQueenSide ? "q" : ""))
+		return allPossibilities.isEmpty ? "-" : allPossibilities
+	}
+
 	mutating func disableCastling(_ color: PieceColor) {
 		self[color, .kingSide] = false
 		self[color, .queenSide] = false

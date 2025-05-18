@@ -15,6 +15,14 @@ import Foundation
 /// <https://github.com/apple-oss-distributions/Chess>.  You can see the
 /// supported commands in `sjeng.c`.
 class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
+	override var owningGame: Game? {
+		didSet {
+			if let game = owningGame {
+				sendCommandToEngine("setboard \(game.fen)")
+			}
+		}
+	}
+	
 	/// Used for launching a Sjeng process and exchanging data with it.
 	private var processWrapper: ProcessWrapper
 	

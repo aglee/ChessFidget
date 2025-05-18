@@ -4,7 +4,7 @@
 - Is there a way to configure Sjeng without having to put the `sjeng.rc` file in the home directory?
 - Follow up on the bug I found in Sjeng's `sd` command: <https://github.com/apple-oss-distributions/Chess/compare/main...aglee:Chess:main?expand=1>, FB17637104.
 - Localize.
-
+- Add a little randomization to the Mona Lisa practice layout.
 
 
 
