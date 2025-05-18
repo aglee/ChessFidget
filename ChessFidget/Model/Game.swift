@@ -46,7 +46,7 @@ class Game {
 		let halfMoveClock = String(movesWithoutCaptureOrPawnAdvance)
 		let fullMoveNumber = String(max(1, (moveHistory.count + 1) / 2))
 		
-		return String(format: "%@ %@ %@ %@ %@ %@ %@", pieces, activeColor, castling, enPassantPoint, halfMoveClock, fullMoveNumber)
+		return String(format: "%@ %@ %@ %@ %@ %@", pieces, activeColor, castling, enPassantPoint, halfMoveClock, fullMoveNumber)
 	}
 	
 	// MARK: - Lifecycle
