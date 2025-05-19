@@ -26,11 +26,7 @@
 - `var game` should probably be `weak`.
 
 - Rename:
-	- `owningGame` -> `game`
-	- `squareName` -> `algebraicNotation`
-	- `fen` -> `fenNotation`
-	- `GameObserver` -> `GameDelegate`
-	- `checkForEndOfGame` -> `checkWhetherGameIsOver`
+	- `squareName` -> `algebraicNotation` (maybe)
 
 
 

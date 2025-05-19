@@ -12,7 +12,7 @@
 struct Board {
 	private var pieces: [Piece?] = Array<Piece?>(repeating: nil, count: 64)
 	
-	var fen: String {
+	var fenNotation: String {
 		var result = ""
 		for y in stride(from: 7, through: 0, by: -1) {
 			var gap = 0

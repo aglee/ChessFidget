@@ -25,10 +25,10 @@ class Game {
 	private(set) var moveHistory: [Move] = []
 	private(set) var movesWithoutCaptureOrPawnAdvance = 0  // Should this be here or in Position?
 
-	var fen: String {
-		let pieces = position.board.fen
+	var fenNotation: String {
+		let pieces = position.board.fenNotation
 		let activeColor = position.whoseTurn == .white ? "w" : "b"
-		let castling = position.castlingFlags.fen
+		let castling = position.castlingFlags.fenNotation
 		
 		// In FEN notation, this is the square the pawn passed over, not the square
 		// where it landed.
@@ -59,14 +59,14 @@ class Game {
 
 		// Make these connections last, because the Player objects may need to know stuff
 		// like what the board arrangement is before they can begin play.
-		self.whitePlayer.owningGame = self
-		self.blackPlayer.owningGame = self
+		self.whitePlayer.game = self
+		self.blackPlayer.game = self
 	}
 
 	// MARK: - Game play
 
 	func startPlay() {
-		checkForEndOfGame()
+		checkWhetherGameIsOver()
 		if case .awaitingMove = completionState {
 			whitePlayer.beginTurn()
 		}
@@ -97,7 +97,7 @@ class Game {
 		}
 		position.makeMoveAndSwitchTurn(move)
 		moveHistory.append(move)
-		checkForEndOfGame()
+		checkWhetherGameIsOver()
 		if case .awaitingMove = completionState {
 			playerWhoMovesNext.beginTurn()
 		}
@@ -106,7 +106,7 @@ class Game {
 	// MARK: - Private methods
 
 	// Checks whether the game is over.  If so, sets `completionState`.
-	private func checkForEndOfGame() {
+	private func checkWhetherGameIsOver() {
 		// If we already know the game is over, no need to check again.
 		if case .gameOver = completionState {
 			return

@@ -14,10 +14,10 @@ class RandomMover: EnginePlayer {
 	}
 
 	override func beginTurn() {
-		guard let owningGame else { return }
-		let validMoves = owningGame.position.validMoves
+		guard let game else { return }
+		let validMoves = game.position.validMoves
 		guard !validMoves.isEmpty else { return }
 		let moveIndex = Int(arc4random_uniform(UInt32(validMoves.count)))
-		owningGame.applyMove(validMoves[moveIndex])
+		game.applyMove(validMoves[moveIndex])
 	}
 }

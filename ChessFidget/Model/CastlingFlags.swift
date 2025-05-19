@@ -16,7 +16,7 @@ struct CastlingFlags {
 	private var blackCanStillCastleKingSide: Bool = true
 	private var blackCanStillCastleQueenSide: Bool = true
 
-	var fen: String {
+	var fenNotation: String {
 		let allPossibilities = ((whiteCanStillCastleKingSide ? "K" : "")
 								+ (whiteCanStillCastleQueenSide ? "Q" : "")
 								+ (blackCanStillCastleKingSide ? "k" : "")

@@ -15,10 +15,10 @@ import Foundation
 /// <https://github.com/apple-oss-distributions/Chess>.  You can see the
 /// supported commands in `sjeng.c`.
 class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
-	override var owningGame: Game? {
+	override var game: Game? {
 		didSet {
-			if let game = owningGame {
-				sendCommandToEngine("setboard \(game.fen)")
+			if let game = game {
+				sendCommandToEngine("setboard \(game.fenNotation)")
 			}
 		}
 	}
@@ -98,7 +98,7 @@ class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
 	// MARK: - Player methods
 
 	override func beginTurn() {
-		if let move = owningGame?.moveHistory.last {
+		if let move = game?.moveHistory.last {
 			sendCommandToEngine(move.algebraicString)
 		} else {
 			sendCommandToEngine("go")
@@ -131,9 +131,9 @@ class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
 		// move by the computer, play that move on the computer's behalf.
 		let lines = (lineFragment + s).components(separatedBy: "\n")
 		lines.enumerated().forEach { i, line in
-			if let move = owningGame?.position.moveFromAlgebraicString(line, reportErrors: false) {
+			if let move = game?.position.moveFromAlgebraicString(line, reportErrors: false) {
 				print(";;; Received move from engine: [\(line)]")
-				owningGame?.applyMove(move)
+				game?.applyMove(move)
 			} else if i < lines.count - 1 {
 				if printLinesReceived && (includePonderLines || !line.contains("ponder")) {
 					print(";;; \(line)")

@@ -11,7 +11,7 @@ import Foundation
 /// Abstract base class representing a player in a chess game.
 class Player {
 	/// Don't set this -- let the `Game` object set it.
-	weak var owningGame: Game?
+	weak var game: Game?
 	var name: String
 	var isHuman: Bool { fatalError("Must override 'isHuman'.") }
 
@@ -19,8 +19,7 @@ class Player {
 		self.name = name
 	}
 
-	/// If the player is non-human, it must generate a move and call `applyMove()` on its
-	/// `owningGame`.
+	/// If the player is non-human, it must generate a move and call `applyMove()` on its `game`.
 	func beginTurn() {
 		if !isHuman { fatalError("Must override 'beginTurn()'.") }
 	}
