@@ -87,13 +87,10 @@ class Game {
 			return
 		}
 
-		guard MoveValidator.isMoveValid(from: move.start,
-										to: move.end,
-										withType: move.type,
-										inPosition: position)
-		else {
-			print(";;; Move \(move.debugString) is invalid. Move will be ignored.")
-			return
+		// We're only checking start and end points here, not the move type, but this is
+		// probably good enough.
+		guard case .valid = validateMove(from: move.start, to: move.end) else {
+			assert(false, "Move \(move.debugString) is invalid")
 		}
 
 		let playerWhoMoved = (position.whoseTurn == .white ? whitePlayer : blackPlayer)
