@@ -78,11 +78,19 @@ class Game {
 	}
 
 	/// Each `EnginePlayer` must call this method when it has finished generating the
-	/// move it wants to make.  This method assumes `move` is a legal move for
-	/// the player whose turn it is in the current position.
+	/// move it wants to make.
 	func applyMove(_ move: Move) {
 		if case .gameOver = completionState {
 			print(";;; Game is over. Move will be ignored.")
+			return
+		}
+
+		guard MoveValidator.isMoveValid(from: move.start,
+										to: move.end,
+										withType: move.type,
+										inPosition: position)
+		else {
+			print(";;; Move \(move.debugString) is invalid. Move will be ignored.")
 			return
 		}
 

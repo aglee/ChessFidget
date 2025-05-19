@@ -25,7 +25,7 @@ enum PromotionType: Int {
 
 /// A MoveType is a kind of "metadata" about a move beyond its start and end
 /// squares.
-enum MoveType {
+enum MoveType: Equatable {
 	/// The common case: move the piece from the start square to the end square,
 	/// which might possibly contain an enemy piece being captured.
 	case plainMove

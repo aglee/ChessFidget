@@ -33,9 +33,22 @@ struct MoveValidator {
 	let startPoint: GridPointXY
 	let endPoint: GridPointXY
 
+	static func isMoveValid(from startPoint: GridPointXY,
+							to endPoint: GridPointXY,
+							withType moveType: MoveType,
+							inPosition position: Position) -> Bool {
+		let validator = MoveValidator(position: position, startPoint: startPoint, endPoint: endPoint)
+		let validity = validator.validateMove()
+		switch validity {
+		case .invalid:
+			return false
+		case .valid(let validMoveType):
+			return validMoveType == moveType
+		}
+	}
+
 	func validateMove() -> MoveValidity {
 		let validity = mostlyValidateMove()
-
 		switch validity {
 		case .invalid:
 			return validity
