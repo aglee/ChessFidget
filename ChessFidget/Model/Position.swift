@@ -69,7 +69,7 @@ struct Position {
 
 		guard str.length == 4 || str.length == 5 else {
 			if reportErrors {
-				print("ERROR: Engine string '\(str)' has unexpected length.")
+				print(";;; ERROR: Engine string '\(str)' has unexpected length.")
 			}
 			return nil
 		}
@@ -77,7 +77,7 @@ struct Position {
 		let startPointString = str.substring(with: NSMakeRange(0, 2))
 		guard let startPoint = GridPointXY(algebraic: startPointString) else {
 			if reportErrors {
-				print("ERROR: Engine string '\(str)' has invalid start square.")
+				print(";;; ERROR: Engine string '\(str)' has invalid start square.")
 			}
 			return nil
 		}
@@ -85,7 +85,7 @@ struct Position {
 		let endPointString = str.substring(with: NSMakeRange(2, 2))
 		guard let endPoint = GridPointXY(algebraic: endPointString) else {
 			if reportErrors {
-				print("ERROR: Engine string '\(str)' has invalid end square.")
+				print(";;; ERROR: Engine string '\(str)' has invalid end square.")
 			}
 			return nil
 		}

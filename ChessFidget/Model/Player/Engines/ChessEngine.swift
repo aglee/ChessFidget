@@ -114,8 +114,8 @@ class ChessEngine: EnginePlayer, ProcessWrapperDelegate {
 	}
 	
 	private func handleDataFromProcessStdout(_ data: Data) {
-		// This can be handy when debugging.
-		let printLinesReceived = true
+		// This can be handy to set to true when debugging.
+		let printLinesReceived = false
 		
 		// Avoids printing a flood of unhelpful lines that look like ";;; ponder e7e5".
 		let includePonderLines = false

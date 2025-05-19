@@ -109,6 +109,7 @@ struct MoveValidator {
 			// One-square advance.
 			if endPoint.y == startPoint.y + position.whoseTurn.forwardDirection {
 				if endPoint.y == position.whoseTurn.opponent.homeRow {
+					// Assume promotion to a queen.  It's up to the UI to present options.
 					return .valid(type: .pawnPromotion(type: .promoteToQueen))
 				} else {
 					return .valid(type: .plainMove)

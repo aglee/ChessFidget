@@ -277,7 +277,7 @@ class BoardView: NSView {
 
 		let stringBoundingRect = overlayRect.insetBy(dx: 8.0, dy: 0)
 		guard let scaledFont = overlayTextFont.sizedToFit(string: overlayText, into: stringBoundingRect.size) else {
-			Swift.print("ERROR: Could not scale font for drawing overlay text.")
+			print(";;; ERROR: Could not scale font for drawing overlay text.")
 			return
 		}
 		let stringWidth = overlayText.size(withAttributes:[NSAttributedStringKey.font: scaledFont]).width

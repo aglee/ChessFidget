@@ -106,7 +106,7 @@ extension GridPointXY {
 		let unichars = Array(algebraic.lowercased().unicodeScalars)
 
 		if unichars.count != 2 {
-			//print("ERROR: Cannot convert '\(algebraic)' - length must be 2.")
+			//print(";;; ERROR: Cannot convert '\(algebraic)' - length must be 2.")
 			return nil
 		}
 
@@ -114,12 +114,12 @@ extension GridPointXY {
 		let rankChar = unichars[1]
 
 		if fileChar < "a" || fileChar > "h" {
-			//print("ERROR: Cannot convert '\(algebraic)' - file character must be in 'a'...'h'.")
+			//print(";;; ERROR: Cannot convert '\(algebraic)' - file character must be in 'a'...'h'.")
 			return nil
 		}
 
 		if rankChar < "1" || rankChar > "8" {
-			//print("ERROR: Cannot convert '\(algebraic)' - rank character must be in '1'...'8'.")
+			//print(";;; ERROR: Cannot convert '\(algebraic)' - rank character must be in '1'...'8'.")
 			return nil
 		}
 

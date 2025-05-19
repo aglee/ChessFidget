@@ -8,7 +8,6 @@
 - Add the ability to play Mona Lisa with the black pieces, just for variety.
 - Add ability to premove.
 - If you click on one of your own pieces, then another, the second one should immediately become selected.
-- Add ability to drag the mouse.
 - Consider adding an eval bar.
 - Show moves more clearly (as in what moved from where to where; the red and blue square outlines only tell part of the story).
 - Make move history visible, including half move clock.

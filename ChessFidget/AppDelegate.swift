@@ -33,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		// Locate the user's Application Support directory.
 		guard let appSupportURL = fm.urls(for: .applicationSupportDirectory,
 		                                  in: .userDomainMask).first else {
-			print("ERROR: Could not locate Application Support directory")
+			print(";;; ERROR: Could not locate Application Support directory")
 			return
 		}
 
@@ -45,13 +45,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			                       withIntermediateDirectories: true,
 			                       attributes: nil)
 		} catch {
-			print("ERROR: Could not create directory \(appSpecificURL)")
+			print(";;; ERROR: Could not create directory \(appSpecificURL)")
 			return
 		}
 		
 		// Make that the working directory.
 		if !fm.changeCurrentDirectoryPath(appSpecificURL.path) {
-			print("ERROR: Could not change working directory to '\(appSpecificURL.path)'")
+			print(";;; ERROR: Could not change working directory to '\(appSpecificURL.path)'")
 		}
 	}
 }

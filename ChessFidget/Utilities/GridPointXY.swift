@@ -8,7 +8,7 @@
 
 // I put "XY" in the names "GridPointXY" and "VectorXY" to remind myself that:
 // 1. the coordinates are in (x,y) order, and
-// 2. the coordinates are 0-based.
+// 2. the coordinates are Cartesian (y increases upward).
 
 /// A point in 2D with integer coordinates.
 struct GridPointXY: Equatable, Hashable {
@@ -34,8 +34,8 @@ struct GridPointXY: Equatable, Hashable {
 	}
 }
 
-/// A vector in 2D with integer coordinates.  Tuple notation is convenient.
-typealias VectorXY = (dx: Int, dy: Int)  // dx, dy
+/// A vector in 2D with integer coordinates.  Tuple notation may help with clarity in some cases.
+typealias VectorXY = (dx: Int, dy: Int)
 
 func +(_ gridPoint: GridPointXY, _ vector: VectorXY) -> GridPointXY {
 	return GridPointXY(gridPoint.x + vector.dx, gridPoint.y + vector.dy)

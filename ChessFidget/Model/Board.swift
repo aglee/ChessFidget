@@ -186,7 +186,7 @@ struct Board {
 	                       to endPoint: GridPointXY,
 	                       type moveType: MoveType) {
 		guard let piece = self[startPoint] else {
-			print("ERROR: There's no piece on the starting square.")
+			print(";;; ERROR: There's no piece on the starting square.")
 			return
 		}
 
