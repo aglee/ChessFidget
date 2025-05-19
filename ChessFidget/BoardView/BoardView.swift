@@ -11,14 +11,30 @@ import Cocoa
 class BoardView: NSView {
 
 	// MARK: Properties - game play
-	
+
+	private var gameObserver: Any?
 	var game: Game? {
+		willSet {
+			if let game, let gameObserver {
+				let nc = NotificationCenter.default
+				nc.removeObserver(gameObserver, name: Game.didAddMove, object: game)
+				self.gameObserver = nil
+			}
+		}
 		didSet {
-			needsDisplay = true
-			needsLayout = true  // Because the BoardView may need to re-reckon things if isFlipped changes depending on which color the human player is in the new value of game.
 			if let game = game {
 				displayBlackPOV = (game.blackPlayer.isHuman && !game.whitePlayer.isHuman)
+
+				let nc = NotificationCenter.default
+				gameObserver = nc.addObserver(forName: Game.didAddMove,
+											  object: game,
+											  queue: OperationQueue.main) { [weak self] _ in
+					self?.needsDisplay = true
+				}
 			}
+
+			needsDisplay = true
+			needsLayout = true  // We may need to re-reckon things if isFlipped changes, depending on which color the human player is in the new value of game.
 
 			// TODO: Seems the above isn't enough to force proper redraw when the flippedness changes, hence the fudging below.
 			let sv = superview
@@ -49,6 +65,13 @@ class BoardView: NSView {
 	}
 
 	var pieceIcons = PieceIconSet.defaultSet()
+
+	// MARK: - Lifecycle
+
+	deinit {
+		// Stop observing.
+		game = nil
+	}
 
 	// MARK: - Geometry
 	
@@ -182,7 +205,6 @@ class BoardView: NSView {
 			if case .gameOver(let reason) = game.completionState {
 				overlayText = reason.rawValue
 			}
-			needsDisplay = true
 		}
 
 		switch game.validateMove(from: startPoint, to: endPoint) {

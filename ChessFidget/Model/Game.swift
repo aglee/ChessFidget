@@ -18,6 +18,8 @@ import Foundation
 /// Represents a chess game.  Players are represented by instances of `Player`
 /// subclasses.
 class Game {
+	static let didAddMove = Notification.Name("GameDidAddMoveNotification")
+
 	private(set) var position: Position
 	private(set) var completionState: GameCompletionState
 	private(set) var whitePlayer: Player
@@ -106,6 +108,7 @@ class Game {
 		position.makeMoveAndSwitchTurn(move)
 		moveHistory.append(move)
 		checkWhetherGameIsOver()
+		NotificationCenter.default.post(name: Self.didAddMove, object: self)
 		if case .awaitingMove = completionState {
 			playerWhoMovesNext.beginTurn()
 		}
