@@ -260,7 +260,7 @@
 				73963DEE1D6E607600C9D78B /* GameWindow */,
 				73963DF51D6E630C00C9D78B /* BoardView */,
 				73B820B52DD9064A00AC577B /* NewGameDialog */,
-				736C90F81D7F22AB00A9020F /* PromotionWindow */,
+				736C90F81D7F22AB00A9020F /* PromotionSheet */,
 				735E4B821D826CA400426794 /* Piece Icons */,
 				7352F7A51D6E08D000EF9B5F /* Assets.xcassets */,
 				7352F7A71D6E08D000EF9B5F /* MainMenu.xib */,
@@ -344,13 +344,13 @@
 			path = gyanl;
 			sourceTree = "<group>";
 		};
-		736C90F81D7F22AB00A9020F /* PromotionWindow */ = {
+		736C90F81D7F22AB00A9020F /* PromotionSheet */ = {
 			isa = PBXGroup;
 			children = (
 				736C90F91D7F22DD00A9020F /* PromotionSheetController.swift */,
 				736C90FA1D7F22DD00A9020F /* PromotionSheetController.xib */,
 			);
-			path = PromotionWindow;
+			path = PromotionSheet;
 			sourceTree = "<group>";
 		};
 		73963DEE1D6E607600C9D78B /* GameWindow */ = {
