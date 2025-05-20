@@ -107,7 +107,7 @@ struct MoveValidator {
 
 			// One-square advance.
 			if endPoint.y == startPoint.y + position.whoseTurn.forwardDirection {
-				if endPoint.y == position.whoseTurn.opponent.homeRow {
+				if endPoint.y == position.whoseTurn.queeningRow {
 					// Assume promotion to a queen.  It's up to the UI to present options.
 					return .valid(type: .pawnPromotion(type: .promoteToQueen))
 				} else {
@@ -116,7 +116,7 @@ struct MoveValidator {
 			}
 
 			// Two-square advance from the pawn's home square, not blocked by any pieces.
-			if startPoint.y == position.whoseTurn.pawnRow
+			if startPoint.y == position.whoseTurn.homeRowForPawns
 				&& endPoint.y == startPoint.y + (2 * position.whoseTurn.forwardDirection) {
 				if position.board[startPoint.x, startPoint.y + position.whoseTurn.forwardDirection] != nil {
 					return .invalid(reason: .moveIsBlockedByOccupiedSquare)
@@ -131,7 +131,7 @@ struct MoveValidator {
 
 			if let capturedPiece = position.board[endPoint] {
 				if capturedPiece.color != position.whoseTurn {
-					if endPoint.y == position.whoseTurn.opponent.homeRow {
+					if endPoint.y == position.whoseTurn.queeningRow {
 						return .valid(type: .pawnPromotion(type: .promoteToQueen))
 					} else {
 						return .valid(type: .plainMove)

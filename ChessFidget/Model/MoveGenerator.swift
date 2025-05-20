@@ -24,7 +24,7 @@ struct MoveGenerator {
 		// Scan the board for pieces owned by the current player.
 		for x in 0...7 {
 			for y in 0...7 {
-				addValidMovesWithstartPoint(GridPointXY(x, y))
+				addValidMovesWithStartPoint(GridPointXY(x, y))
 			}
 		}
 
@@ -36,18 +36,16 @@ struct MoveGenerator {
 		}
 	}
 
-	private mutating func addValidMovesWithstartPoint(_ startPoint: GridPointXY) {
-		guard let piece = position.board[startPoint]
-			else { return }
-		guard piece.color == position.whoseTurn
-			else { return }
+	private mutating func addValidMovesWithStartPoint(_ startPoint: GridPointXY) {
+		guard let piece = position.board[startPoint] else { return }
+		guard piece.color == position.whoseTurn else { return }
 
 		if piece.type == .pawn {
 			addPawnForwardMoves(from: startPoint)
 			addRegularPawnCaptures(from: startPoint)
 		} else {
 			for vector in piece.type.movement.vectors {
-				addMovesAlongVector(from: startPoint, vector: vector, canRepeat: piece.type.movement.canRepeat)
+				addNonPawnMovesAlongVector(from: startPoint, vector: vector, canRepeat: piece.type.movement.canRepeat)
 			}
 		}
 	}
@@ -59,14 +57,14 @@ struct MoveGenerator {
 		let oneSquareForward = startPoint + (0, forward)
 		guard Board.isWithinBounds(oneSquareForward) && position.board[oneSquareForward] == nil
 			else { return }
-		if oneSquareForward.y == position.whoseTurn.opponent.homeRow {
+		if oneSquareForward.y == position.whoseTurn.queeningRow {
 			addPawnPromotionMoves(from: startPoint, to: oneSquareForward)
 		} else {
 			addMoveIfNoCheck(startPoint, oneSquareForward, .plainMove)
 		}
 
 		// Can the pawn move two squares forward?
-		if startPoint.y == position.whoseTurn.pawnRow {
+		if startPoint.y == position.whoseTurn.homeRowForPawns {
 			let twoSquaresForward = oneSquareForward + (0, forward)
 			if Board.isWithinBounds(twoSquaresForward) && position.board[twoSquaresForward] == nil {
 				addMoveIfNoCheck(startPoint, twoSquaresForward, .pawnTwoSquares)
@@ -81,7 +79,7 @@ struct MoveGenerator {
 				else { continue }
 			guard position.board[endPoint]?.color == position.whoseTurn.opponent
 				else { continue }
-			if endPoint.y == position.whoseTurn.opponent.homeRow {
+			if endPoint.y == position.whoseTurn.queeningRow {
 				addPawnPromotionMoves(from: startPoint, to: endPoint)
 			} else {
 				addMoveIfNoCheck(startPoint, endPoint, .plainMove)
@@ -117,7 +115,7 @@ struct MoveGenerator {
 		}
 	}
 
-	private mutating func addMovesAlongVector(from startPoint: GridPointXY, vector: VectorXY, canRepeat: Bool) {
+	private mutating func addNonPawnMovesAlongVector(from startPoint: GridPointXY, vector: VectorXY, canRepeat: Bool) {
 		assert(vector.dx != 0 || vector.dy != 0, "Piece movement can't have a zero-length vector.")
 		var endPoint = startPoint
 		while true {

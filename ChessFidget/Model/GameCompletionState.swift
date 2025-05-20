@@ -13,7 +13,7 @@ enum GameCompletionState: Equatable {
 }
 
 /// Reasons a game can be over.
-enum ReasonGameIsOver: String {  // TODO: Localize.
+enum ReasonGameIsOver: String {
 	case blackWinsByCheckmate = "Black wins by checkmate"
 	case whiteWinsByCheckmate = "White wins by checkmate"
 	case drawDueToStalemate = "Draw due to stalemate"

@@ -24,10 +24,14 @@ enum PieceColor: Int {
 		return self == .white ? 0 : 7
 	}
 
-	var pawnRow: Int {
+	var homeRowForPawns: Int {
 		return homeRow + forwardDirection
 	}
-
+	
+	var queeningRow: Int {
+		return opponent.homeRow
+	}
+	
 	var debugString: String {
 		switch self {
 		case .black: return "Black"
@@ -36,6 +40,9 @@ enum PieceColor: Int {
 	}
 }
 
+// MARK: -
+// MARK: -
+
 /// Describes the ways a chess piece can move.
 /// - `vectors` contains the smallest possible movements in all directions.
 /// - `canRepeat` indicates whether multiples of vectors are allowed.
@@ -43,6 +50,9 @@ enum PieceColor: Int {
 /// vectors (assuming no obstruction), but a knight can only do one hop along
 /// one of its L-shaped vectors.
 typealias PieceMovement = (vectors: [VectorXY], canRepeat: Bool)
+
+// MARK: -
+// MARK: -
 
 /// Pawn, knight, etc.
 enum PieceType {
@@ -73,6 +83,8 @@ enum PieceType {
 	]
 }
 
+// MARK: -
+// MARK: -
 
 /// A chess piece.
 struct Piece: Equatable {
@@ -120,7 +132,7 @@ struct Piece: Equatable {
 		self.type = type
 	}
 
-	// MARK: - Equatable protocol
+	// MARK: - (Equatable)
 
 	public static func ==(lhs: Piece, rhs: Piece) -> Bool {
 		return lhs.color == rhs.color && lhs.type == rhs.type

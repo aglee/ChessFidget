@@ -1,8 +1,11 @@
 
 - **DID THE LICENSE FOR THE ICONS CHANGE?**
 
+- **BUG: The RandomMover moved its king into check.  See notes 2025-05-19-Mon.**
+
 - Quickies:
-	- Add a mate-in-one initial-board option to help with testing.
+	- Add a mate-in-one initial-board option, and others, to help with testing.
+	- Add a way to take a snapshot that I can use later to recreate bugs.
 	- Impose a minimum window size.
 	- Provide initial-board variations for useful exercises like mating with bishop and knight.
 	- Handle failure to connect to chess engine, in case Apple moves it again, or removes it, or whatever.
@@ -25,6 +28,7 @@
 	- Maybe a time limit.
 - Maybe add a Mona Lisa scoreboard.
 
+- Retest castling rules -- setting up test boards will help.
 - Stress-test with longer games -- will the computer ever run out of time?  I imagine it shouldn't, when there is non-zero increment.
 - Keep an eye out for the problem where sometimes no move is received from the Sjeng engine, and we seem to be sitting there waiting forever.  Maybe I need to ping periodically?
 	- See commit 7f9bd97, where I corrected `outputPipe` to `errorPipe`.  I suspect this fixed it, as I haven't seen this problem ever since.
@@ -43,7 +47,7 @@
 - Add timestamps to moves to make games replayable with each move at actual speed.
 - Thinking of changing how I think of the `Player` objects.  Each of them could be treated like a stream of moves.  The job of the `Game` object would then be to alternate between pulling from the two streams, rather than the current conceptual model, where it's each `Player` object's job to call `applyMove()`.
 - Add an option to flip the board at any time regardless of which color the user is playing.
-
+- Consider what it would take to support Fischer Random -- offhand, aside from the initial board arrangement, the only change I can think of that I'd have to make is the implementation of castling rules.
 - Rename:
 	- `squareName` -> `algebraicNotation` (maybe)
 

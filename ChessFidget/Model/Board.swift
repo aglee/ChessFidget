@@ -35,22 +35,21 @@ struct Board {
 	
 	/// Arranges the pieces in classical starting positions.
 	static func withClassicalLayout() -> Board {
-		var board = Board()
-		for x in 0...7 {
-			board[x, 1] = Piece(.white, .pawn)
-			board[x, 6] = Piece(.black, .pawn)
-		}
-		let pieceTypes: [PieceType] = [.rook, .knight, .bishop, .queen, .king,
-									   .bishop, .knight, .rook]
-		for (x, pieceType) in pieceTypes.enumerated() {
-			board[x, 0] = Piece(.white, pieceType)
-			board[x, 7] = Piece(.black, pieceType)
-		}
-		return board
+		return Board(pieceLayout: [
+			"rnbqkbnr",
+			"pppppppp",
+			"........",
+			"........",
+			"........",
+			"........",
+			"PPPPPPPP",
+			"RKBQKBNR",
+		])!
 	}
 
+	/// Sets up a board you can use to try doing a "Mona Lisa" checkmate.
 	static func withMonaLisaPracticeLayout() -> Board {
-		let board = Board(pieceLayout: [
+		return Board(pieceLayout: [
 			"...k....",
 			"........",
 			"........",
@@ -60,7 +59,6 @@ struct Board {
 			"........",
 			"......K.",
 		])!
-		return board
 	}
 	
 	/// Expects an array of exactly 8 strings, all of length 8, starting with the 8th
@@ -116,20 +114,14 @@ struct Board {
 	}
 
 	func isInCheck(_ color: PieceColor) -> Bool {
-		guard let kingGridPoint = gridPointForSquareContainingKing(color) else {
-			return false
-		}
+		guard let kingGridPoint = gridPointForSquareContainingKing(color) else { return false }
 
 		// Find all enemy pieces on the board and see if they attack the square
 		// the king is on.
 		for x in 0...7 {
 			for y in 0...7 {
-				guard let piece = self[x, y] else {
-					continue
-				}
-				if piece.color != color.opponent {
-					continue
-				}
+				guard let piece = self[x, y] else { continue }
+				if piece.color == color { continue }
 
 				if piece.type == .pawn {
 					// Special handling for pawns.
