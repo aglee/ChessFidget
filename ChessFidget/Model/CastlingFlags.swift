@@ -10,49 +10,45 @@ enum CastlingSide {
 	case kingSide, queenSide
 }
 
-struct CastlingFlags {
-	private var whiteCanStillCastleKingSide: Bool = true
-	private var whiteCanStillCastleQueenSide: Bool = true
-	private var blackCanStillCastleKingSide: Bool = true
-	private var blackCanStillCastleQueenSide: Bool = true
+struct CastlingFlags: OptionSet {
+	let rawValue: Int
+	
+	static let whiteKingSide  = CastlingFlags(rawValue: 1 << 0)
+	static let whiteQueenSide = CastlingFlags(rawValue: 1 << 1)
+	static let blackKingSide  = CastlingFlags(rawValue: 1 << 2)
+	static let blackQueenSide = CastlingFlags(rawValue: 1 << 3)
+	
+	static let allCastlingAllowed: CastlingFlags = [.whiteKingSide, .whiteQueenSide,
+													.blackKingSide, .blackQueenSide]
 
 	var fenNotation: String {
-		let allPossibilities = ((whiteCanStillCastleKingSide ? "K" : "")
-								+ (whiteCanStillCastleQueenSide ? "Q" : "")
-								+ (blackCanStillCastleKingSide ? "k" : "")
-								+ (blackCanStillCastleQueenSide ? "q" : ""))
-		return allPossibilities.isEmpty ? "-" : allPossibilities
+		let flagsString = ((contains(.whiteKingSide) ? "K" : "") +
+						   (contains(.whiteQueenSide) ? "Q" : "") +
+						   (contains(.blackKingSide) ? "k" : "") +
+						   (contains(.blackQueenSide) ? "q" : ""))
+		return flagsString.isEmpty ? "-" : flagsString
 	}
 
-	mutating func disableCastling(_ color: PieceColor) {
-		self[color, .kingSide] = false
-		self[color, .queenSide] = false
+	mutating func disableCastling(_ pieceColor: PieceColor) {
+		disableCastling(pieceColor, .kingSide)
+		disableCastling(pieceColor, .queenSide)
 	}
 
 	mutating func disableCastling(_ color: PieceColor, _ side: CastlingSide) {
-		self[color, side] = false
+		switch (color, side) {
+		case (.white, .kingSide): remove(.whiteKingSide)
+		case (.white, .queenSide): remove(.whiteQueenSide)
+		case (.black, .kingSide): remove(.blackKingSide)
+		case (.black, .queenSide): remove(.blackQueenSide)
+		}
 	}
 
 	func canCastle(_ color: PieceColor, _ side: CastlingSide) -> Bool {
-		return self[color, side]
-	}
-
-	private subscript(_ color: PieceColor, _ side: CastlingSide) -> Bool {
-		get {
-			switch (color, side) {
-			case (.white, .kingSide): return whiteCanStillCastleKingSide
-			case (.white, .queenSide): return whiteCanStillCastleQueenSide
-			case (.black, .kingSide): return blackCanStillCastleKingSide
-			case (.black, .queenSide): return blackCanStillCastleQueenSide
-			}
-		}
-		set {
-			switch (color, side) {
-			case (.white, .kingSide): whiteCanStillCastleKingSide = newValue
-			case (.white, .queenSide): whiteCanStillCastleQueenSide = newValue
-			case (.black, .kingSide): blackCanStillCastleKingSide = newValue
-			case (.black, .queenSide): blackCanStillCastleQueenSide = newValue
-			}
+		return switch (color, side) {
+		case (.white, .kingSide): contains(.whiteKingSide)
+		case (.white, .queenSide): contains(.whiteQueenSide)
+		case (.black, .kingSide): contains(.blackKingSide)
+		case (.black, .queenSide): contains(.blackQueenSide)
 		}
 	}
 }

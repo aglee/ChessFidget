@@ -8,12 +8,13 @@
 
 import Foundation
 
-/// Represents the state of a chess game, including all information needed to determine whether any proposed move is legal.  The default initializer sets up the board with all pieces on their home squares and White to move.
+/// Represents the state of a chess game, including all information needed to determine
+/// whether any proposed move is legal.
 struct Position {
 	var board: Board
 	var whoseTurn = PieceColor.white
 	var enPassantableGridPoint: GridPointXY? = nil
-	var castlingFlags = CastlingFlags()
+	var castlingFlags = CastlingFlags.allCastlingAllowed
 
 	var canCastleKingSide: Bool {
 		return castlingFlags.canCastle(whoseTurn, .kingSide)
