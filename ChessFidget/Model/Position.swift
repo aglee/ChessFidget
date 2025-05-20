@@ -14,14 +14,14 @@ struct Position {
 	var board: Board
 	var whoseTurn = PieceColor.white
 	var enPassantableGridPoint: GridPointXY? = nil
-	var castlingFlags = CastlingFlags.allCastlingAllowed
+	var castlingFlags = CastlingFlags()
 
 	var canCastleKingSide: Bool {
-		return castlingFlags.canCastle(whoseTurn, .kingSide)
+		return castlingFlags.canCastleKingSide(whoseTurn)
 	}
 
 	var canCastleQueenSide: Bool {
-		return castlingFlags.canCastle(whoseTurn, .queenSide)
+		return castlingFlags.canCastleQueenSide(whoseTurn)
 	}
 
 	var validMoves: [Move] {
@@ -45,16 +45,17 @@ struct Position {
 			enPassantableGridPoint = nil
 		}
 
-		// Update castling flags.
-		if move.start.y == whoseTurn.homeRow {
-			if move.start.x == 0 {
-				castlingFlags.disableCastling(whoseTurn, .queenSide)
-			} else if move.start.x == 4 {
-				castlingFlags.disableCastling(whoseTurn)
-			} else if move.start.x == 7 {
-				castlingFlags.disableCastling(whoseTurn, .kingSide)
+		// Update castling flags if a king or rook is leaving its home square.
+		func castlingFlagToInsert() -> CastlingFlags? {
+			guard move.start.y == whoseTurn.homeRow else { return nil }
+			return switch move.start.x {
+			case 0: (whoseTurn == .white ? .whiteQueenRookHasMoved : .blackQueenRookHasMoved)
+			case 4: (whoseTurn == .white ? .whiteKingHasMoved : .blackKingHasMoved)
+			case 7: (whoseTurn == .white ? .whiteKingRookHasMoved : .blackKingRookHasMoved)
+			default: nil
 			}
 		}
+		if let flag = castlingFlagToInsert() { castlingFlags.insert(flag) }
 
 		// It's the other player's turn now.
 		whoseTurn = whoseTurn.opponent
